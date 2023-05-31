@@ -43,15 +43,55 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = () => {
   const classes = useStyles();
-  const [fullname, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [contactNo, setContactNo] = useState("");
-  const [pincode, setPincode] = useState("");
+  
+  const [status, setStatus] = useState(null);
 
-  const handleSubmit = (e) => {
+  const [userData, setUserData] = useState({
+    username:"",
+    password:"",
+    email:"",
+    contactNo:"",
+    pincode:"",
+  })
+
+  function handleChange (e) {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setUserData((prevData) => ({...prevData, [name]: value}));
+  }
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle user registration logic here
+    try{
+      const response = await fetch('/api/saveuser', {
+        method: 'POST',
+        headers: {"Content_Type":"application/json"},
+        body:JSON.stringify({
+          username: userData.username,
+          email: userData.email,
+          password:userData.password,
+          contactNo: userData.contactNo,
+          pincode: userData.pincode
+        })
+      })
+      if(response.status === 200){
+        setUserData({
+          username:"",
+          email:"",
+          contactNo: "",
+          pincode:"",
+          password:""
+        })
+        setStatus('success')
+      } else {
+        setStatus('error')
+      }
+    } catch(e) {
+      console.log(e);
+    }
   };
+
+  
 
   return (
     <Box className={classes.backgroundImage}>
@@ -70,13 +110,26 @@ const Register = () => {
               margin="normal"
               required
               fullWidth
-              id="fullname"
+              id="username"
               label="Full Name"
-              name="fullname"
-              autoComplete="Full Name"
+              name="username"
+              autoComplete="username"
               autoFocus
-              value={fullname}
-              onChange={(e) => setFullName(e.target.value)}
+              value={userData.username}
+              onChange={handleChange}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="password"
+              label="password"
+              name="password"
+              autoComplete="Password"
+              autoFocus
+              value={userData.password}
+              onChange={handleChange}
             />
             <TextField
               variant="outlined"
@@ -88,8 +141,8 @@ const Register = () => {
               name="email"
               autoComplete="Email id"
               autoFocus
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={userData.email}
+              onChange={handleChange}
             />
             <TextField
               variant="outlined"
@@ -101,8 +154,8 @@ const Register = () => {
               name="contactNo"
               autoComplete="Contact Number"
               autoFocus
-              value={contactNo}
-              onChange={(e) => setContactNo(e.target.value)}
+              value={userData.contactNo}
+              onChange={handleChange}
             />
             <TextField
               variant="outlined"
@@ -114,8 +167,8 @@ const Register = () => {
               type="pincode"
               id="pincode"
               autoComplete="Pincode"
-              value={pincode}
-              onChange={(e) => setPincode(e.target.value)}
+              value={userData.pincode}
+              onChange={handleChange}
             />
             <div>
               <Link href="/components/login">
@@ -124,6 +177,9 @@ const Register = () => {
                 </h1>
               </Link>
             </div>
+            
+            {status === 'success' && <p className="text-green-600">Data saved successfully!</p>}
+            {status === 'error' && <p className="text-red-600">There was an error submitting your data. Please try again.</p>}
             <Button
               type="submit"
               fullWidth
