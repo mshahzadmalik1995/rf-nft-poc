@@ -43,8 +43,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = () => {
   const classes = useStyles();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [fullname, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [contactNo, setContactNo] = useState("");
+  const [pincode, setPincode] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -68,26 +70,52 @@ const Register = () => {
               margin="normal"
               required
               fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
+              id="fullname"
+              label="Full Name"
+              name="fullname"
+              autoComplete="Full Name"
               autoFocus
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={fullname}
+              onChange={(e) => setFullName(e.target.value)}
             />
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="new-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              id="email"
+              label="Email Id"
+              name="email"
+              autoComplete="Email id"
+              autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="contactNo"
+              label="Contact Number"
+              name="contactNo"
+              autoComplete="Contact Number"
+              autoFocus
+              value={contactNo}
+              onChange={(e) => setContactNo(e.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="pincode"
+              label="Pincode"
+              type="pincode"
+              id="pincode"
+              autoComplete="Pincode"
+              value={pincode}
+              onChange={(e) => setPincode(e.target.value)}
             />
             <div>
               <Link href="/components/login">
