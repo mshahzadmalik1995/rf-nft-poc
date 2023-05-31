@@ -13,6 +13,8 @@
     "@emotion/styled": "^11.11.0",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
     "@mui/material": "^5.13.2",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.6",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.8",
@@ -28,14 +30,17 @@
     "hardhat": "^2.14.0",
     "hardhat-gas-reporter": "^1.0.9",
     "mongodb": "^5.5.0",
-    "mongoose": "^7.2.1",
     "next": "13.4.4",
     "postcss": "8.4.24",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.9.0",
+    "react-router-dom": "^6.11.2",
     "solidity-coverage": "^0.8.2",
     "tailwindcss": "3.3.2",
     "typechain": "^8.2.0"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/mshahzadmalik1995/rf-nft-poc.git",
+  "license": "MIT"
 }
