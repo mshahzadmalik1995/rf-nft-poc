@@ -26,19 +26,19 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "40%",
+    width: "90%",
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  backgroundImage: {
-    backgroundImage: `url(${bgImage.src})`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    height: "120vh",
-  },
+  // backgroundImage: {
+  //   backgroundImage: `url(${bgImage.src})`,
+  //   backgroundRepeat: "no-repeat",
+  //   backgroundSize: "top",
+  //   backgroundPosition: "center",
+  //   height: "20vh",
+  // },
 }));
 
 const Register = () => {
@@ -91,12 +91,13 @@ const Register = () => {
     }
   };
 
-  
+
 
   return (
-    <Box className={classes.backgroundImage}>
+    <Box>
       <Container component="main">
         <CssBaseline />
+        <img src="/RE1.jpg" alt="Royal enfield" className="w-96 h-50 rounded-lg"/>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -171,6 +172,16 @@ const Register = () => {
               onChange={handleChange}
             />
             <div>
+              <br></br>
+              <label>
+                <b>Disclaimer:</b> By signing this form/checking this box, you acknowledge and agree that we may use the information you share with us, to communicate with you through e-mails, text messages, WhatsApp and calls, in order to provide our product or service related information and/or for promotional and marketing purposes. All information provided will be secured and processed as per our privacy policy. 
+              </label>
+              <br></br>
+              <br></br>
+              <input type="checkbox" id="disclaimer" name="disclaimer"/>
+              <label>    I accept the terms and conditions as well as the privacy policy </label> 
+            </div>
+            <div>
               <Link href="/components/login">
                 <h1 style={{ textAlign: "right" }}>
                   Back to Sign in
@@ -195,5 +206,4 @@ const Register = () => {
     </Box>
   );
 };
-
 export default Register;
