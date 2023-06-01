@@ -1,11 +1,37 @@
 'use client';
 
 import sampleData from "@/app/data/data";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MissionCard from "../missioncard";
 import Header from "../header/page";
 const Home = () => {
-    const [data, setData] = useState(sampleData);
+    //const [data, setData] = useState(sampleData);
+    const [data, setData] = useState();
+
+    useEffect(() => {
+        const getMission = async () => {
+            try{
+
+                const response = await fetch(`/api/getmission`, {
+                    method: 'GET',
+                    headers: {"Content_Type":"application/json"},
+                })
+                const data = await response.json()
+                setData(data.mission);
+                console.log(data)
+                if(response.status === 200){
+                 //  router.push("/components/home")
+                 //setData(data);
+                 console.log("inside if block")
+                } else {
+                    console.log("no data found while fetching mission!")
+                }
+            } catch(e) {
+                console.error('Error fetching data in fetching mission :', error);
+            }
+        }
+        getMission();
+    },[])
 
     return (
         <div className="flex flex-col gap-2 relative">
