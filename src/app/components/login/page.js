@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import bgImage from '../images/image.jpg'
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import {
     Avatar,
@@ -46,7 +47,7 @@ const Login = () => {
     const classes = useStyles();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-
+    const router = useRouter();
     const handleUsernameChange = (e) => {
         setUsername(e.target.value);
     };
@@ -57,7 +58,7 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(bgImage);
+        router.push("/components/home")
     };
 
     return (
