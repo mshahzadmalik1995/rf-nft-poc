@@ -45,20 +45,38 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
     const classes = useStyles();
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [status, setStatus] = useState(null);
+    const [userData, setUserData] = useState({
+        username: "",
+        password: ""
+    })
     const router = useRouter();
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
-    };
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
+  function handleChange (e) {
+    const name = e.target.name;
+    const value = e.target.value;
 
-    const handleSubmit = (e) => {
+    setUserData((prevData) => ({...prevData, [name]: value}));
+  }
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        router.push("/components/home")
+        try{
+            const response = await fetch(`/api/getuser?username=${userData.username}&password=${userData.password}`, {
+                method: 'GET',
+                headers: {"Content_Type":"application/json"},
+            })
+            const data = await response.json()
+            console.log(response)
+            if(response.status === 200){
+                setStatus('success')
+               router.push("/components/home")
+            } else {
+                setStatus('error')
+            }
+        } catch(e) {
+            console.log(e)
+        }
     };
 
     return (
@@ -83,8 +101,8 @@ const Login = () => {
                             name="username"
                             autoComplete="username"
                             autoFocus
-                            value={username}
-                            onChange={handleUsernameChange}
+                            value={userData.username}
+                            onChange={handleChange}
                         />
                         <TextField
                             variant="outlined"
@@ -96,8 +114,8 @@ const Login = () => {
                             type="password"
                             id="password"
                             autoComplete="current-password"
-                            value={password}
-                            onChange={handlePasswordChange}
+                            value={userData.password}
+                            onChange={handleChange}
                         />
 
                         <div>
@@ -107,7 +125,7 @@ const Login = () => {
                                 </h1>
                             </Link>
                         </div>
-
+                        {status === 'error' && <p className="text-red-600">Wrong credential, try again.</p>}
                         <Button
                             type="submit"
                             fullWidth
