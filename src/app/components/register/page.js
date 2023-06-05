@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import bgImage from '../images/image.jpg';
 import {
   Avatar,
   Box,
@@ -14,7 +13,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     // marginTop: theme.spacing(8),
@@ -40,7 +38,8 @@ const Register = () => {
   const router = useRouter();
     
   const [status, setStatus] = useState(null);
-
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [isCheck, setIsCheck] = useState(false);
   const [userData, setUserData] = useState({
     username:"",
     password:"",
@@ -55,43 +54,55 @@ const Register = () => {
 
     setUserData((prevData) => ({...prevData, [name]: value}));
   }
+
+  
+  function checkboxChange(e) {
+    if(e.target.checked){
+      setIsCheck(current => !current);
+      setButtonDisabled(current => !current);
+    } else {
+      setButtonDisabled(current => !current);
+    }
+  }
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const response = await fetch('/api/saveuser', {
-        method: 'POST',
-        headers: {"Content_Type":"application/json"},
-        body:JSON.stringify({
-          username: userData.username,
-          email: userData.email,
-          password:userData.password,
-          contactNo: userData.contactNo,
-          pincode: userData.pincode
-        })
-      })
-      if(response.status === 200){
-        setUserData({
-          username:"",
-          email:"",
-          contactNo: "",
-          pincode:"",
-          password:""
-        })
-        setStatus('success')
-      } else {
-        setStatus('error')
-      }
-    } catch(e) {
-      console.log(e);
-    }
-    router.push("/components/home")
+       const response = await fetch('/api/saveuser', {
+       method: 'POST',
+       headers: {"Content_Type":"application/json"},
+       body:JSON.stringify({
+       username: userData.username,
+       email: userData.email,
+       password:userData.password,
+       contactNo: userData.contactNo,
+       pincode: userData.pincode
+     })
+     })
+       if(response.status === 200){
+         setUserData({
+           username:"",
+           email:"",
+           contactNo: "",
+           pincode:"",
+           password:""
+         })
+         setStatus('success')
+        router.push("/components/home")
+       } else {
+         setStatus('error')
+       }
+     } catch(e) {
+       console.log(e);
+     }
   };
 
   return (
     <Box>
       <Container component="main">
         <CssBaseline />
-        <img src="/RE1.jpg" alt="Royal enfield" className="w-96 h-50 rounded-lg"/>
+        <img src="/RE1.jpg" alt="Royal enfield" className="w-150 h-30 rounded-lg"/>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -99,7 +110,7 @@ const Register = () => {
           <Typography component="h1" variant="h4">
             Royal Enfield Register
           </Typography>
-          <form className={classes.form} onSubmit={handleSubmit} action={"/components/Home/page.js"}>
+          <form className={classes.form} onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -119,10 +130,10 @@ const Register = () => {
               required
               fullWidth
               id="password"
-              label="password"
+              label="Password"
               name="password"
+              type="password"
               autoComplete="Password"
-              autoFocus
               value={userData.password}
               onChange={handleChange}
             />
@@ -134,8 +145,8 @@ const Register = () => {
               id="email"
               label="Email Id"
               name="email"
+              type="email"
               autoComplete="Email id"
-              autoFocus
               value={userData.email}
               onChange={handleChange}
             />
@@ -147,8 +158,8 @@ const Register = () => {
               id="contactNo"
               label="Contact Number"
               name="contactNo"
+              type="number"
               autoComplete="Contact Number"
-              autoFocus
               value={userData.contactNo}
               onChange={handleChange}
             />
@@ -159,7 +170,7 @@ const Register = () => {
               fullWidth
               name="pincode"
               label="Pincode"
-              type="pincode"
+              type="number"
               id="pincode"
               autoComplete="Pincode"
               value={userData.pincode}
@@ -172,7 +183,7 @@ const Register = () => {
               </label>
               <br></br>
               <br></br>
-              <input type="checkbox" id="disclaimer" name="disclaimer"/>
+              <input type="checkbox" id="disclaimer" name="disclaimer" value={isCheck} onChange={checkboxChange}/>
               <label>    I accept the terms and conditions as well as the privacy policy </label> 
             </div>
             <div>
@@ -188,10 +199,12 @@ const Register = () => {
             <Button
               type="submit"
               fullWidth
+              id="registerbutton"
               variant="contained"
               color="primary"
               className={classes.submit}
-              onclick={handleSubmit}
+              onClick={handleSubmit}
+              disabled={buttonDisabled}
             >
               Register
             </Button>
