@@ -14,14 +14,18 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        pincode : {
+        pincode: {
             type: String,
             required: true
         },
         contactNo: {
             type: String,
             required: true
-        }
+        },
+        role: {
+            type: String,
+            required: true,
+        },
     },
     {
         timestamps: true,
