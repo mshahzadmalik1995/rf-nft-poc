@@ -18,6 +18,10 @@ const missionSchema = new mongoose.Schema(
             type: Array,
             required: true
         },
+        imageUrl: {
+            type: String,
+            required: true,
+        },
         startDate: {
             type:Date,
             required: true

@@ -40,6 +40,8 @@ const Register = () => {
   const router = useRouter();
     
   const [status, setStatus] = useState(null);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [isCheck, setIsCheck] = useState(false);
 
   const [userData, setUserData] = useState({
     username:"",
@@ -54,6 +56,15 @@ const Register = () => {
     const value = e.target.value;
 
     setUserData((prevData) => ({...prevData, [name]: value}));
+  }
+
+  function checkboxChange(e) {
+    if(e.target.checked){
+      setIsCheck(current => !current);
+      setButtonDisabled(current => !current);
+    } else {
+      setButtonDisabled(current => !current);
+    }
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -172,7 +183,7 @@ const Register = () => {
               </label>
               <br></br>
               <br></br>
-              <input type="checkbox" id="disclaimer" name="disclaimer"/>
+              <input type="checkbox" id="disclaimer" name="disclaimer" value={isCheck} onChange={checkboxChange}/>
               <label>    I accept the terms and conditions as well as the privacy policy </label> 
             </div>
             <div>
@@ -192,6 +203,7 @@ const Register = () => {
               color="primary"
               className={classes.submit}
               onclick={handleSubmit}
+              disabled={buttonDisabled}
             >
               Register
             </Button>
