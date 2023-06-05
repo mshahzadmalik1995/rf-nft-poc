@@ -102,6 +102,7 @@ const AddMissionForm = () => {
 
     return (
         <div align="center">
+            <img src="/RE1.jpg" alt="Royal enfield" className="w-150 h-30 rounded-lg" />
             <Box display="flex" justifyContent="center" align="center" height="150vh">
                 <form onSubmit={handleSubmit} className={classes.form}>
                     <Typography variant="h5" align="center" gutterBottom>
