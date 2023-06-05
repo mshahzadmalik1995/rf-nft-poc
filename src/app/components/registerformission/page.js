@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-const RegisterUser = () => {
+const RegisterForMission = () => {
 
     
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -74,4 +74,4 @@ const RegisterUser = () => {
     )
 }
 
-export default RegisterUser;
+export default RegisterForMission;
