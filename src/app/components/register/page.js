@@ -100,9 +100,9 @@ const Register = () => {
 
   return (
     <Box>
+      <img src="/RE1.jpg" alt="Royal enfield" className="w-150 h-30 rounded-lg"/>
       <Container component="main">
         <CssBaseline />
-        <img src="/RE1.jpg" alt="Royal enfield" className="w-150 h-30 rounded-lg"/>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -183,7 +183,7 @@ const Register = () => {
               </label>
               <br></br>
               <br></br>
-              <input type="checkbox" id="disclaimer" name="disclaimer" value={isCheck} onChange={checkboxChange}/>
+              <input type="checkbox" required id="disclaimer" name="disclaimer" value={isCheck} onChange={checkboxChange}/>
               <label>    I accept the terms and conditions as well as the privacy policy </label> 
             </div>
             <div>
@@ -199,11 +199,10 @@ const Register = () => {
             <Button
               type="submit"
               fullWidth
-              id="registerbutton"
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={handleSubmit}
+              onclick={handleSubmit}
               disabled={buttonDisabled}
             >
               Register
