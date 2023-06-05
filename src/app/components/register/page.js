@@ -89,7 +89,7 @@ const Register = () => {
            password:""
          })
          setStatus('success')
-        router.push("/components/home")
+        router.push("/")
        } else {
          setStatus('error')
        }
