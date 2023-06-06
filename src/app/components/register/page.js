@@ -38,9 +38,9 @@ const useStyles = makeStyles((theme) => ({
 const Register = () => {
   const classes = useStyles();
   const router = useRouter();
-    
   const [status, setStatus] = useState(null);
-
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [isCheck, setIsCheck] = useState(false);
   const [userData, setUserData] = useState({
     username:"",
     password:"",
@@ -55,6 +55,16 @@ const Register = () => {
 
     setUserData((prevData) => ({...prevData, [name]: value}));
   }
+
+  function checkboxChange(e) {
+    if(e.target.checked){
+      setIsCheck(current => !current);
+      setButtonDisabled(current => !current);
+    } else {
+      setButtonDisabled(current => !current);
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
@@ -78,13 +88,14 @@ const Register = () => {
           password:""
         })
         setStatus('success')
+        router.push("/")
       } else {
         setStatus('error')
       }
     } catch(e) {
       console.log(e);
     }
-    router.push("/components/home")
+
   };
 
   return (
@@ -172,7 +183,7 @@ const Register = () => {
               </label>
               <br></br>
               <br></br>
-              <input type="checkbox" id="disclaimer" name="disclaimer"/>
+              <input type="checkbox" id="disclaimer" name="disclaimer" value={isCheck} onChange={checkboxChange}/>
               <label>    I accept the terms and conditions as well as the privacy policy </label> 
             </div>
             <div>
@@ -192,6 +203,7 @@ const Register = () => {
               color="primary"
               className={classes.submit}
               onclick={handleSubmit}
+              disabled={buttonDisabled}
             >
               Register
             </Button>
