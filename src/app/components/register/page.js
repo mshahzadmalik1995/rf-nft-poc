@@ -100,9 +100,10 @@ const Register = () => {
 
   return (
     <Box>
+      <img src="/RE1.jpg" alt="Royal enfield" className="w-100 h-30 rounded-lg"/>
       <Container component="main">
         <CssBaseline />
-        <img src="/RE1.jpg" alt="Royal enfield" className="w-96 h-50 rounded-lg"/>
+        
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -130,7 +131,7 @@ const Register = () => {
               required
               fullWidth
               id="password"
-              label="password"
+              label="Password"
               name="password"
               autoComplete="Password"
               autoFocus
