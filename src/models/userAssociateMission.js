@@ -32,7 +32,7 @@ const userAssociateMissionSchema = new mongoose.Schema(
         },
         missionCheckList:[
             {
-                id:Integer,
+                id:Number,
                 task:String,
                 status:Boolean
             }
