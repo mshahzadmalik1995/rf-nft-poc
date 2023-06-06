@@ -2,24 +2,11 @@
 import { useState } from "react";
 const RegisterForMission = () => {
 
-    
-  const [buttonDisabled, setButtonDisabled] = useState(true);
-  const [isCheck, setIsCheck] = useState(false);
-
-
     const str1 = "All Explorer take the wheel";
     function getPosition(string, substring, index) {
         return string.split(substring, index).join(substring).length;
     }
 
-    function checkboxChange(e) {
-        if(e.target.checked){
-          setIsCheck(current => !current);
-          setButtonDisabled(current => !current);
-        } else {
-          setButtonDisabled(current => !current);
-        }
-    }
     return(
         <div className="flex flex-col items-center mt-2">
              <div className="relative flex items-center justify-center w-92 h-48 p-1 mt-1">

@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 
 const nftConfigurationSchema = new mongoose.Schema(
     {
-        userId: {
+        missionId: {
             type:String,
             required:true
         },
-        missionId: {
+        imageName: {
             type:String,
             required:true
         },
@@ -22,3 +22,7 @@ const nftConfigurationSchema = new mongoose.Schema(
     }, {
     timestamps: true,
 })
+
+const NftConfiguration = mongoose.models.NftConfiguration || mongoose.model("NftConfiguration", nftConfigurationSchema);
+
+export default NftConfiguration;
