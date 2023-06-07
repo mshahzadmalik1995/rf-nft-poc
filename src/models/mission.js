@@ -22,13 +22,10 @@ const missionSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        missionCheckList:[
-            {
-                id:Number,
-                task:String,
-                status:Boolean
-            }
-        ],
+        missionCheckList: {
+            type: Array,
+            required: true
+        },
         isValid: {
             type: Boolean,
             required: true
