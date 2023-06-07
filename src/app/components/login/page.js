@@ -71,7 +71,7 @@ const Login = () => {
                 headers: {"Content_Type":"application/json"},
             })
             const data = await response.json()
-            console.log(response)
+            //console.log(response)
             if(response.status === 200){
                 setStatus('success')
                 userUpdateValue(data.user)

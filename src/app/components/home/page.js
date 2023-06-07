@@ -9,7 +9,7 @@ const Home = () => {
     //const [data, setData] = useState(sampleData);
     const [data, setData] = useState();
     const {userLoginData} = useContext(MyContext);
-    console.log(`userLoginData ${userLoginData.username}`)
+   // console.log(`userLoginData ${userLoginData.username}`)
     useEffect(() => {
         const getMission = async () => {
             try{

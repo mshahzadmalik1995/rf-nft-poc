@@ -1,7 +1,13 @@
+"use client"
 import {RxAvatar} from 'react-icons/rx'
 import {FaShoppingCart} from 'react-icons/fa'
 import {BsFillDatabaseFill} from 'react-icons/bs'
+import MyContext from "@/app/context/mycontext";
+import { useContext } from 'react';
 const Header = () => {
+
+    
+    const {userLoginData} = useContext(MyContext);
     return (
         <div className="flex flex-col  h-60 p-2 mt-2">
             <div className="relative  h-60 p-3">
@@ -29,7 +35,7 @@ const Header = () => {
                     </div>
                 </div>
                 <div className="relative z-10 flex flex-col mt-3">
-                    <h1 className='text-lg font-bold text-white  break-word'>Hi <span className="text-red-600 text-lg">Jack</span></h1>
+                    <h1 className='text-lg font-bold text-white  break-word'>Hi <span className="text-red-600 text-lg">{userLoginData?.username ? userLoginData.username : `Jack`}</span></h1>
                     <p className='mt-4 text-sm text-white  break-word'>Welcome to Royal Enfield</p>
                 </div>
                 <div className="relative z-10 flex justify-end items-end mr-5">

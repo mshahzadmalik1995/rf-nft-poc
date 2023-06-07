@@ -1,14 +1,19 @@
 "use client";
-import { useState,useEffect } from "react";
+import { useState,useEffect, useContext } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import MyContext from "@/app/context/mycontext";
 const RegisterForMission = () => {
 
-    const [data, setData] = useState();
+    const [missionData, setMissionData] = useState();
     const [buttonDisabled, setButtonDisabled] = useState(true);
+    
+    const [status, setStatus] = useState(null);
+    const {userLoginData} = useContext(MyContext);
+    //console.log(userLoginData)
     const [isCheck, setIsCheck] = useState(false);
     const [userData, setUserData] = useState({
       fullName:"",
-      email:"",
+      emailId:"",
       contactNo:"",
       pincode:"",
       cryptoAddress:""
@@ -28,7 +33,7 @@ const RegisterForMission = () => {
                 const data = await response.json()
                 console.log(data)
                 if(response.status === 200){
-                    setData(data.mission);
+                    setMissionData(data.mission);
                 } else {
                     console.log("no data found while fetching mission!")
                 }
@@ -60,6 +65,47 @@ const RegisterForMission = () => {
         }
       }
 
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        try{
+          const response = await fetch('/api/saveuserassociatemission', {
+            method: 'POST',
+            headers: {"Content_Type":"application/json"},
+            body:JSON.stringify({
+                fullName:userData.fullName,
+                emailId:userData.emailId,
+                contactNo:userData.contactNo,
+                pinCode:userData.pincode,
+                cryptoAddress:userData.cryptoAddress,
+                userId:userLoginData._id,
+                missionId:missionId,
+                missionCode:missionData.missionCode,
+                missionName:missionData.missionName,
+                missionDescription: missionData.missionDescription,
+                missionDetails:missionData.missionDetails,
+                missionCompleted:true,
+                missionCheckList: missionData.missionCheckList
+            })
+          })
+          if(response.status === 200){
+            setUserData({
+                fullName:"",
+                emailId:"",
+                contactNo:"",
+                pincode:"",
+                cryptoAddress:""
+            })
+            setStatus('success')
+           // router.push("/components/home")
+          } else {
+            setStatus('error')
+          }
+        } catch(e) {
+          console.log(e);
+        }
+    
+      };
+
     return(
         <div className="flex flex-col items-center mt-2">
              <div className="relative flex items-center justify-center w-92 h-48 p-1 mt-1">
@@ -80,27 +126,27 @@ const RegisterForMission = () => {
                 <div className="flex flex-col gap-2">
                     <label className="text-sm text-black font-bold">Full Name:</label>
                     <input type="text" placeholder="Enter the name" 
-                    className="border-2 rounded-lg p-1 w-72" value={userData.fullName} onChange={handleChange}/>
+                    className="border-2 rounded-lg p-1 w-72" name="fullName" value={userData.fullName} onChange={handleChange}/>
                 </div>
                 <div className="flex flex-col gap-2">
                     <label className="text-sm text-black font-bold">Email Id:</label>
                     <input type="text" placeholder="Enter the emailId" 
-                    className="border-2 rounded-lg p-1 w-72" value={userData.email} onChange={handleChange}/>
+                    className="border-2 rounded-lg p-1 w-72" name="emailId" value={userData.emailId} onChange={handleChange}/>
                 </div>
                 <div className="flex flex-col gap-2">
                     <label className="text-sm text-black font-bold">Contact Number:</label>
                     <input type="number" placeholder="Enter the number" 
-                    className="border-2 rounded-lg p-1 w-72"  value={userData.contactNo} onChange={handleChange}/>
+                    className="border-2 rounded-lg p-1 w-72"  name="contactNo" value={userData.contactNo} onChange={handleChange}/>
                 </div>
                 <div className="flex flex-col gap-2">
                     <label className="text-sm text-black font-bold">Pincode:</label>
                     <input type="number" placeholder="Enter the pincode" 
-                    className="border-2 rounded-lg p-1 w-72"  value={userData.pincode} onChange={handleChange}/>
+                    className="border-2 rounded-lg p-1 w-72" name="pincode" value={userData.pincode} onChange={handleChange}/>
                 </div>
                 <div className="flex flex-col gap-2">
                     <label className="text-sm text-black font-bold">Crypto Address:</label>
                     <input type="text" placeholder="Enter the eth address" 
-                    className="border-2 rounded-lg p-1 w-72"  value={userData.cryptoAddress} onChange={handleChange}/>
+                    className="border-2 rounded-lg p-1 w-72"  name="cryptoAddress" value={userData.cryptoAddress} onChange={handleChange}/>
                 </div>
                 
                 <div className="flex flex-col gap-2">
@@ -112,8 +158,10 @@ const RegisterForMission = () => {
                     <input type="checkbox" id="disclaimer" name="disclaimer" value={isCheck} onChange={checkboxChange}/>
                     <label className="text-xs break-words">I accept the terms and conditions as well as the privacy policy </label> 
                 </div>
+                {status === 'success' && <p className="text-green-600">Data saved successfully!</p>}
+            {status === 'error' && <p className="text-red-600">There was an error submitting your data. Please try again.</p>}
                 <button className="w-72 text-white bg-red-700 p-1 rounded-lg mt-2 mb-2 disabled:opacity-25" 
-                    disabled={buttonDisabled}>Register</button>
+                    disabled={buttonDisabled} onClick={handleSubmit}>Register</button>
               </div>
         </div>
     )
