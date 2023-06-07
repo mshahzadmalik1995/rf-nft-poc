@@ -1,13 +1,15 @@
 'use client';
 
 import sampleData from "@/app/data/data";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import MissionCard from "../missioncard";
 import Header from "../header/page";
+import MyContext from "@/app/context/mycontext";
 const Home = () => {
     //const [data, setData] = useState(sampleData);
     const [data, setData] = useState();
-
+    const {userLoginData} = useContext(MyContext);
+    console.log(`userLoginData ${userLoginData.username}`)
     useEffect(() => {
         const getMission = async () => {
             try{

@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import bgImage from '../images/image.jpg'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useContext } from "react";
+import MyContext from "@/app/context/mycontext";
 
 import {
     Avatar,
@@ -46,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
     const classes = useStyles();
     const [status, setStatus] = useState(null);
+    const{userUpdateValue} = useContext(MyContext);
     
     const [userData, setUserData] = useState({
         username: "",
@@ -71,6 +74,7 @@ const Login = () => {
             console.log(response)
             if(response.status === 200){
                 setStatus('success')
+                userUpdateValue(data.user)
                router.push("/components/home")
             } else {
                 setStatus('error')
