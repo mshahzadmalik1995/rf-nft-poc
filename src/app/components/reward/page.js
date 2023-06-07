@@ -4,21 +4,16 @@ import sampleData from "@/app/data/data";
 import { useState } from "react";
 import Header from "../header/page";
 import { useRouter } from 'next/navigation';
-
 import {
     Button,
   } from "@material-ui/core";
-const Reward = () => {
+
+  const Reward = () => {
     const [data, setData] = useState(sampleData);
     const router = useRouter();
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try{
-            router.push("/components/dashboard")
-            } 
-     catch(e) {
-       console.log(e);
-     }
+        router.push("/components/dashboard");
       };
     
     return (
@@ -64,7 +59,7 @@ const Reward = () => {
                         type="submit"
                         variant="contained"
                         color="primary"
-                        onclick={handleSubmit}
+                        onClick={handleSubmit}
                     >
                     My Dashboard
                     </Button>

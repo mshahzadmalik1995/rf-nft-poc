@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import bgImage from '../images/image.jpg';
 import {
   Avatar,
   Box,
@@ -134,6 +133,7 @@ const Register = () => {
               label="Password"
               name="password"
               autoComplete="Password"
+              type="password"
               autoFocus
               value={userData.password}
               onChange={handleChange}
@@ -147,6 +147,7 @@ const Register = () => {
               label="Email Id"
               name="email"
               autoComplete="Email id"
+              type="email"
               autoFocus
               value={userData.email}
               onChange={handleChange}
@@ -159,6 +160,7 @@ const Register = () => {
               id="contactNo"
               label="Contact Number"
               name="contactNo"
+              type="number"
               autoComplete="Contact Number"
               autoFocus
               value={userData.contactNo}
@@ -171,7 +173,7 @@ const Register = () => {
               fullWidth
               name="pincode"
               label="Pincode"
-              type="pincode"
+              type="number"
               id="pincode"
               autoComplete="Pincode"
               value={userData.pincode}
