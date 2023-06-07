@@ -1,4 +1,4 @@
-import dbConnect from "@/utils/dbConn";
+import {dbConnect} from "@/utils/dbConn";
 import { NextResponse } from "next/server";
 import NftConfiguration from "@/models/nftconfiguration";
 

@@ -1,7 +1,16 @@
+
+import { useRouter } from 'next/navigation';
+
 const MissionCard = ({props}) => {
     //const {name, missionName, description, backgroundImage, tokenImage, tokenDescription} = props;
 
+    const router = useRouter();
     const {_id, missionName, missionDescription, missionDetails, subMissionList } = props;
+
+    const buttonSubmit = (e) => {
+        e.preventDefault();
+        router.push(`/components/viewmission/${_id}`)
+    }
     return(
         <div className="flex flex-col p-2 mt-2">
             <h1 className="text-lg text-red-500 ">{missionName}</h1>
@@ -23,7 +32,8 @@ const MissionCard = ({props}) => {
                         <p className="text-sm text-white">NFT Token Reward</p>
                     </div>
                     <div className="items-center">
-                        <button className="bg-red-600 text-white text-sm cursor-pointer rounded-lg p-1">View Mission</button>
+                        <button className="bg-red-600 text-white text-sm cursor-pointer rounded-lg p-1" 
+                        onClick={buttonSubmit}>View Mission</button>
                     </div>
                 </div>
             </div>

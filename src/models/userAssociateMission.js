@@ -6,6 +6,22 @@ const userAssociateMissionSchema = new mongoose.Schema(
             type:String,
             required: true
         },
+        fullName:{
+            type:String,
+            required:true
+        },
+        emailId:{
+            type:String,
+            required:true,
+        },
+        contactNo:{
+            type:String,
+            required:true,
+        },
+        pinCode:{
+            type:String,
+            required:true
+        },
         missionId:{
             type:String,
             required: true,
@@ -17,6 +33,10 @@ const userAssociateMissionSchema = new mongoose.Schema(
         missionName:{
             type:String,
             required: true
+        },
+        missionDetails:{
+            type:String,
+            required:true
         },
         missionDescription: {
             type:String,

@@ -1,20 +1,21 @@
 import {dbConnect} from "@/utils/dbConn";
-import Mission from "@/models/mission";
 import { NextResponse } from "next/server";
+import UserAssociateMission from "@/models/userAssociateMission";
 
-export async function POST(req, rest) {
+export async function POST(req, res) {
     try{
         const body = await req.json();
         await dbConnect();
-        await Mission.create(body);
+        await UserAssociateMission.create(body);
         return NextResponse.json({
-            message: "data saved successfully!"
+            message: "user associate mission saved successfully"
         }, {
             status: 200
-        })
+        });
+
     } catch(e) {
         return NextResponse.json({
-            message: `Server error while user saving ${e}`
+            message: `Server error while user associati mission saving ${e}`
         }, {status: 500})
 
     }

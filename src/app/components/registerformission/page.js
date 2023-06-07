@@ -1,11 +1,64 @@
 "use client";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 const RegisterForMission = () => {
+
+    const [data, setData] = useState();
+    const [buttonDisabled, setButtonDisabled] = useState(true);
+    const [isCheck, setIsCheck] = useState(false);
+    const [userData, setUserData] = useState({
+      fullName:"",
+      email:"",
+      contactNo:"",
+      pincode:"",
+      cryptoAddress:""
+    })
+    const searchParams = useSearchParams();
+    const missionId = searchParams.get("missionId");
+
+   
+
+    useEffect(() => {
+        const getMission = async (missionId) => {
+            try{
+                const response = await fetch(`/api/getmission?missionId=${missionId}`, {
+                    method: 'GET',
+                    headers: {"Content_Type":"application/json"},
+                })
+                const data = await response.json()
+                console.log(data)
+                if(response.status === 200){
+                    setData(data.mission);
+                } else {
+                    console.log("no data found while fetching mission!")
+                }
+            } catch(e) {
+                console.error('Error fetching data in fetching mission :', error);
+            }
+        }
+        getMission(missionId);
+    },[])
 
     const str1 = "All Explorer take the wheel";
     function getPosition(string, substring, index) {
         return string.split(substring, index).join(substring).length;
     }
+
+    function handleChange (e) {
+        const name = e.target.name;
+        const value = e.target.value;
+    
+        setUserData((prevData) => ({...prevData, [name]: value}));
+      }
+
+      function checkboxChange(e) {
+        if(e.target.checked){
+          setIsCheck(current => !current);
+          setButtonDisabled(current => !current);
+        } else {
+          setButtonDisabled(current => !current);
+        }
+      }
 
     return(
         <div className="flex flex-col items-center mt-2">
@@ -26,23 +79,28 @@ const RegisterForMission = () => {
                 <h1 className="text-sm text-red-700">Fill details to register:</h1>
                 <div className="flex flex-col gap-2">
                     <label className="text-sm text-black font-bold">Full Name:</label>
-                    <input type="text" placeholder="Enter the name" className="border-2 rounded-lg p-1 w-72"/>
+                    <input type="text" placeholder="Enter the name" 
+                    className="border-2 rounded-lg p-1 w-72" value={userData.fullName} onChange={handleChange}/>
                 </div>
                 <div className="flex flex-col gap-2">
                     <label className="text-sm text-black font-bold">Email Id:</label>
-                    <input type="text" placeholder="Enter the emailId" className="border-2 rounded-lg p-1 w-72"/>
+                    <input type="text" placeholder="Enter the emailId" 
+                    className="border-2 rounded-lg p-1 w-72" value={userData.email} onChange={handleChange}/>
                 </div>
                 <div className="flex flex-col gap-2">
                     <label className="text-sm text-black font-bold">Contact Number:</label>
-                    <input type="number" placeholder="Enter the number" className="border-2 rounded-lg p-1 w-72"/>
+                    <input type="number" placeholder="Enter the number" 
+                    className="border-2 rounded-lg p-1 w-72"  value={userData.contactNo} onChange={handleChange}/>
                 </div>
                 <div className="flex flex-col gap-2">
                     <label className="text-sm text-black font-bold">Pincode:</label>
-                    <input type="number" placeholder="Enter the pincode" className="border-2 rounded-lg p-1 w-72"/>
+                    <input type="number" placeholder="Enter the pincode" 
+                    className="border-2 rounded-lg p-1 w-72"  value={userData.pincode} onChange={handleChange}/>
                 </div>
                 <div className="flex flex-col gap-2">
                     <label className="text-sm text-black font-bold">Crypto Address:</label>
-                    <input type="text" placeholder="Enter the eth address" className="border-2 rounded-lg p-1 w-72"/>
+                    <input type="text" placeholder="Enter the eth address" 
+                    className="border-2 rounded-lg p-1 w-72"  value={userData.cryptoAddress} onChange={handleChange}/>
                 </div>
                 
                 <div className="flex flex-col gap-2">

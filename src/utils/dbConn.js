@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import {ObjectId} from 'mongodb'
 
 const MONGODB_URL = process.env.NEXT_PUBLIC_MONGODB_URL;
 
@@ -42,4 +43,8 @@ const dbConnect = async () => {
     return cached.conn;
 }
 
-export default dbConnect;
+const parseObjectId = (id) => {
+    return new ObjectId(id);
+}
+
+export {dbConnect, parseObjectId};
