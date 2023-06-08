@@ -48,38 +48,42 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
     const classes = useStyles();
     const [status, setStatus] = useState(null);
-    const{userUpdateValue} = useContext(MyContext);
-    
+    const { userUpdateValue } = useContext(MyContext);
+
     const [userData, setUserData] = useState({
         username: "",
         password: ""
     })
     const router = useRouter();
 
-  function handleChange (e) {
-    const name = e.target.name;
-    const value = e.target.value;
+    function handleChange(e) {
+        const name = e.target.name;
+        const value = e.target.value;
 
-    setUserData((prevData) => ({...prevData, [name]: value}));
-  }
+        setUserData((prevData) => ({ ...prevData, [name]: value }));
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
+        try {
             const response = await fetch(`/api/getuser?username=${userData.username}&password=${userData.password}`, {
                 method: 'GET',
-                headers: {"Content_Type":"application/json"},
+                headers: { "Content_Type": "application/json" },
             })
             const data = await response.json()
             //console.log(response)
-            if(response.status === 200){
+            if (response.status === 200) {
                 setStatus('success')
                 userUpdateValue(data.user)
-               router.push("/components/home")
+                if (data.user.role == 'Admin') {
+                    router.push("/components/admin/home")
+                } else {
+                    router.push("/components/home")
+                }
             } else {
                 setStatus('error')
             }
-        } catch(e) {
+        } catch (e) {
             console.log(e)
         }
     };
