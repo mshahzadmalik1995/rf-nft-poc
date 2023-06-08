@@ -51,7 +51,7 @@ const ViewMission = ({params}) => {
             <div className="relative flex items-center justify-center w-92 h-48 p-1 mt-1">
                 <div className="absolute inset-0 rounded-lg">
                     <img
-                        src={`/${missionData.missionImageName}`}
+                        src="/expedition1.jpg"
                         alt="background image"
                         className="w-92 h-48 items-center justify-center rounded-lg"
                     />
