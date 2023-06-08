@@ -57,8 +57,8 @@ const ViewMission = ({params}) => {
                     />
                 </div>
                 <div className="relative z-10  top-16 w-80 h-10 capitalize mx-1 ">
-                    <h1 className='text-lg font-bold text-white  break-word'>{missionData.missionDescription.substring(0, getPosition(missionData.missionDescription, " ", 2))}</h1>
-                    <h1 className="text-lg font-bold text-red-700">{missionData.missionDescription.substring(getPosition(missionData.missionDescription, " ", 2)+1)}</h1>
+                    <h1 className='text-lg font-bold text-white  break-word'>{missionData.missionName.substring(0, getPosition(missionData.missionName, " ", 2))}</h1>
+                    <h1 className="text-lg font-bold text-red-700">{missionData.missionName.substring(getPosition(missionData.missionName, " ", 2)+1)}</h1>
                 </div>
             </div>
               <div className="flex flex-col  items-start mt-3 w-72 gap-2">
@@ -76,7 +76,7 @@ const ViewMission = ({params}) => {
                 <div className="flex flex-col gap-2">
                     <h1 className="text-sm text-red-700">Mission Details:</h1>
                     <p className="text-sm break-words">
-                        {missionData.missionDetails}
+                        {missionData.missionDescription}
                     </p>
                 </div>
                 {missionData.missionCheckList && <div className="flex flex-col gap-2">

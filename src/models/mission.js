@@ -10,10 +10,6 @@ const missionSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        missionDetails:{
-            type:String,
-            required:true
-        },
         missionDescription: {
             type: String,
             required: true

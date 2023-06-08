@@ -80,7 +80,6 @@ const RegisterForMission = () => {
                 missionCode:missionData.missionCode,
                 missionName:missionData.missionName,
                 missionDescription: missionData.missionDescription,
-                missionDetails:missionData.missionDetails,
                 missionCompleted:true,
                 missionCheckList: missionData.missionCheckList
             })
@@ -115,8 +114,8 @@ const RegisterForMission = () => {
                     />
                 </div>
                 <div className="relative z-10  top-16 w-80 h-10 capitalize mx-1 ">
-                    <h1 className='text-lg font-bold text-white  break-word'>{str1.substring(0, getPosition(str1, " ", 2))}</h1>
-                    <h1 className="text-lg font-bold text-red-700">{str1.substring(getPosition(str1, " ", 2)+1)}</h1>
+                    <h1 className='text-lg font-bold text-white  break-word'>{missionData.missionName.substring(0, getPosition(missionData.missionName, " ", 2))}</h1>
+                    <h1 className="text-lg font-bold text-red-700">{missionData.missionName.substring(getPosition(missionData.missionName, " ", 2)+1)}</h1>
                 </div>
               </div>
               <div className="flex flex-col  items-start mt-3 w-72 gap-2">

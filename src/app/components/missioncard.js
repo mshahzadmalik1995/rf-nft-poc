@@ -5,7 +5,7 @@ const MissionCard = ({props}) => {
     //const {name, missionName, description, backgroundImage, tokenImage, tokenDescription} = props;
 
     const router = useRouter();
-    const {_id, missionName, missionDescription, missionDetails } = props;
+    const {_id, missionCode, missionName, missionDescription } = props;
 
     const buttonSubmit = (e) => {
         e.preventDefault();
@@ -13,7 +13,7 @@ const MissionCard = ({props}) => {
     }
     return(
         <div className="flex flex-col p-2 mt-2">
-            <h1 className="text-lg text-red-500 ">{missionName}</h1>
+            <h1 className="text-lg text-red-500 ">{missionCode}</h1>
             <div className="relative w-96 h-50 p-1 mt-1">
                 <div className="absolute inset-0 rounded-lg">
                     <img
@@ -23,8 +23,8 @@ const MissionCard = ({props}) => {
                     />
                 </div>
                 <div className="relative z-10 flex flex-col items-center justify-center w-80 h-40 ">
-                    <h1 className='text-lg font-bold text-white  break-word'>{missionDescription}</h1>
-                    <p className='mt-4 text-sm text-white  break-word'>{missionDetails.substring(0, 40)}</p>
+                    <h1 className='text-lg font-bold text-white  break-word'>{missionName}</h1>
+                    <p className='mt-4 text-sm text-white  break-word'>{missionDescription.substring(0, 40)}</p>
                 </div>
                 <div className="relative z-10 flex justify-between items-center">
                     <div className="flex gap-1 items-center">
