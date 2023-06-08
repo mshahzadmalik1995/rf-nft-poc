@@ -14,18 +14,17 @@ const missionSchema = new mongoose.Schema(
             type:String,
             required:true
         },
-        missionImageName:{
-            type:String,
-            required:true
-        },
         missionDescription: {
             type: String,
             required: true
         },
-        missionCheckList: {
-            type: Array,
-            required: true
-        },
+        missionCheckList:[
+            {
+                id:Number,
+                task:String,
+                status:Boolean
+            }
+        ],
         isValid: {
             type: Boolean,
             required: true

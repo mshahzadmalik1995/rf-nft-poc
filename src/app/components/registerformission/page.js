@@ -21,8 +21,6 @@ const RegisterForMission = () => {
     const searchParams = useSearchParams();
     const missionId = searchParams.get("missionId");
 
-   
-
     useEffect(() => {
         const getMission = async (missionId) => {
             try{
@@ -77,7 +75,7 @@ const RegisterForMission = () => {
                 contactNo:userData.contactNo,
                 pinCode:userData.pincode,
                 cryptoAddress:userData.cryptoAddress,
-                userId:userLoginData._id,
+                userId:userLoginData?._id,
                 missionId:missionId,
                 missionCode:missionData.missionCode,
                 missionName:missionData.missionName,

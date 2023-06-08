@@ -5,7 +5,7 @@ const MissionCard = ({props}) => {
     //const {name, missionName, description, backgroundImage, tokenImage, tokenDescription} = props;
 
     const router = useRouter();
-    const {_id, missionName, missionDescription, missionDetails, missionImageName } = props;
+    const {_id, missionName, missionDescription, missionDetails } = props;
 
     const buttonSubmit = (e) => {
         e.preventDefault();
@@ -17,7 +17,7 @@ const MissionCard = ({props}) => {
             <div className="relative w-96 h-50 p-1 mt-1">
                 <div className="absolute inset-0 rounded-lg">
                     <img
-                        src={`/${missionImageName}`}
+                        src="/expedition1.jpg"
                         alt="background image"
                         className="w-96 h-50 rounded-lg"
                     />
