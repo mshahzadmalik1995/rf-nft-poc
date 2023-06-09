@@ -3,11 +3,19 @@ import {RxAvatar} from 'react-icons/rx'
 import {FaShoppingCart} from 'react-icons/fa'
 import {BsFillDatabaseFill} from 'react-icons/bs'
 import MyContext from "@/app/context/mycontext";
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 const Header = () => {
 
     
-    const {userLoginData} = useContext(MyContext);
+    //const {userLoginData} = useContext(MyContext);
+    //const userLoginData = localStorage.getItem("myUserState");
+    let updatedUserLoginData;
+    //console.log(updatedUserLoginData.username)
+
+    useEffect(() => {
+        const userLoginData = localStorage.getItem("myUserState");
+        updatedUserLoginData = JSON.parse(userLoginData);
+    },[])
     return (
         <div className="flex flex-col  h-60 p-2 mt-2">
             <div className="relative  h-60 p-3">
@@ -35,7 +43,7 @@ const Header = () => {
                     </div>
                 </div>
                 <div className="relative z-10 flex flex-col mt-3">
-                    <h1 className='text-lg font-bold text-white  break-word'>Hi <span className="text-red-600 text-lg">{userLoginData?.username ? userLoginData.username : `Jack`}</span></h1>
+                    <h1 className='text-lg font-bold text-white  break-word'>Hi <span className="text-red-600 text-lg">{updatedUserLoginData?.username ? updatedUserLoginData.username : `Jack`}</span></h1>
                     <p className='mt-4 text-sm text-white  break-word'>Welcome to Royal Enfield</p>
                 </div>
                 <div className="relative z-10 flex justify-end items-end mr-5">

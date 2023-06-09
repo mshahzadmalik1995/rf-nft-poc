@@ -3,17 +3,35 @@
 
 import {MdOutlineLocationOn} from 'react-icons/md';
 import {GiCheckeredFlag} from 'react-icons/gi'
-import { useEffect, useState } from "react";
-import { useRouter } from 'next/navigation';
+import { useEffect, useState, useContext } from "react";
+import { useRouter,useSearchParams } from 'next/navigation';
 import MissionCheckList from '../missionchecklist';
+import MissionCheckListForRegisterUser from '../missionchecklistforregisteruser';
+import MyContext from "@/app/context/mycontext";
+import { checkCustomRoutes } from 'next/dist/lib/load-custom-routes';
 
 const ViewMission = ({params}) => {
 
     const missionId = params.missionId;
 
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const missionCode = searchParams.get("missionCode");
+
+    //console.log(missionCode)
 
     const [missionData, setMissionData] = useState();
+    const [status, setStatus] = useState(null);
+    const [userAssociateMissionData, setUserAssociateMissionData] = useState();
+    const [checkUserAssociate, setCheckUserAssociate] = useState(false);
+    const [updatedUserCheckListData, setUpdatedUserCheckListData] = useState([])
+    const [userId, setUserId] = useState();
+    const {userLoginData} = useContext(MyContext);
+   // console.log(`_id ${userLoginData.username}`)
+    const [imageName, setImageName] = useState(null);
+
+    
+    
 
     useEffect(() => {
         const getMission = async (missionId) => {
@@ -36,9 +54,101 @@ const ViewMission = ({params}) => {
         getMission(missionId);
     },[])
 
+    useEffect(() => {
+       // console.log(updateDatad.username)
+       // console.log("hi second useeffect")
+        const userData = localStorage.getItem("myUserState");
+        //console.log(userData)
+        const updateDatad = JSON.parse(userData);
+        console.log(updateDatad._id)
+        setUserId(updateDatad._id)
+        const getUserAssociateMissionData = async (missionId) => {
+            try{
+                const response = await fetch(`/api/getuserassociatemission?missionId=${missionId}&userId=${updateDatad._id}`, {
+                    method: 'GET',
+                    headers: {"Content_Type":"application/json"},
+                })
+                const data = await response.json()
+                console.log(data)
+
+                if(response.status === 200){
+                    console.log("in status blcok");
+                    if(data.userMission && data.userMission !== null){
+                        setCheckUserAssociate(true);
+                        console.log("in if blcok");
+                        setUserAssociateMissionData(data.userMission);
+                        setUpdatedUserCheckListData(data.userMission.missionCheckList);
+                    } else {
+                        setCheckUserAssociate(false);
+                    }
+                    console.log(userAssociateMissionData)
+                } else {
+                    console.log("no data found while fetching mission!")
+                }
+                console.log(`checkUserAssociate ${checkUserAssociate}`)
+            } catch(e) {
+                console.error('Error fetching data in fetching mission :', error);
+            }
+        }
+        getUserAssociateMissionData(missionId);
+    },[])
+
+    useEffect(() => {
+        const getMissionNftConfigurations = async (missionCode) => {
+            try{
+                const response = await fetch(`/api/getnftconfiguration?missionCode=${missionCode}`, {
+                    method: 'GET',
+                    headers: {"Content_Type":"application/json"},
+                })
+                const data = await response.json()
+                console.log(data)
+                if(response.status === 200){
+                    setImageName(data.configuration.imageName)
+                } else {
+                    console.log("no data found while fetching mission!")
+                }
+            } catch(e) {
+                console.error('Error fetching data in fetching mission :', error);
+            }
+        }
+        getMissionNftConfigurations(missionCode);
+    },[])
+
     const buttonSubmit = (e) => {
         e.preventDefault();
-        router.push(`/components/registerformission?missionId=${missionId}`)
+        if(!checkUserAssociate){
+            router.push(`/components/registerformission?missionId=${missionId}`)
+        } 
+    }
+
+    const handleCheckboxChange = (event, id) => {
+        console.log(`id ${id}`);
+        const isChecked = event.target.checked;
+        console.log(`isChecked ${isChecked}`)
+        setUpdatedUserCheckListData(prevData => prevData.map(obj => obj.id === id ? {...obj, status: isChecked} : obj));
+        console.log(updatedUserCheckListData)
+    }
+
+    const uploadDataToDb = async(e) => {
+        e.preventDefault();
+        console.log("in updatedatatodb")
+        console.log(updatedUserCheckListData)
+        try {
+            const response = await fetch(`/api/updateuserassociatemission?userId=${userId}&missionId=${missionId}`, {
+              method: 'POST',
+              headers: { "Content_Type": "application/json" },
+              body: JSON.stringify(updatedUserCheckListData)
+            })
+            if (response.status === 200) {
+                console.log("data save successfully")
+              setStatus('success')
+            } else {
+              setStatus('error')
+            }
+          } catch (e) {
+            console.log(e);
+          }
+          //setStatus(null)
     }
 
     const str1 = "All Explorer take the wheel";
@@ -46,12 +156,14 @@ const ViewMission = ({params}) => {
     function getPosition(string, substring, index) {
         return string.split(substring, index).join(substring).length;
     }
+
+    console.log(updatedUserCheckListData)
     return(
         missionData && <div className="flex flex-col items-center mt-2">
             <div className="relative flex items-center justify-center w-92 h-48 p-1 mt-1">
                 <div className="absolute inset-0 rounded-lg">
                     <img
-                        src="/expedition1.jpg"
+                        src={`/${imageName}`}
                         alt="background image"
                         className="w-92 h-48 items-center justify-center rounded-lg"
                     />
@@ -79,15 +191,30 @@ const ViewMission = ({params}) => {
                         {missionData.missionDescription}
                     </p>
                 </div>
-                {missionData.missionCheckList && <div className="flex flex-col gap-2">
+                { checkUserAssociate == false ? missionData.missionCheckList && <div className="flex flex-col gap-2">
                     {
                         missionData.missionCheckList.map((value, index) => {
                             return <MissionCheckList props={value} key={index} />
                         })
                     }
-                </div>}
-                <button className="w-72 text-white bg-red-700 p-1 rounded-lg mt-4 mb-2 " 
-                  onClick={buttonSubmit}>Register</button>
+                    </div> : userAssociateMissionData.missionCheckList && <div className="flex flex-col gap-2">
+                        {
+                            userAssociateMissionData.missionCheckList.map((value, index) => {
+                                return <MissionCheckListForRegisterUser value={value} key={index} handleCheckboxChange={handleCheckboxChange}/>
+
+                               // return <MissionCheckListForRegisterUser value={value} key={index}/>
+                            })
+                        }
+                    </div>}
+                    {
+                        checkUserAssociate == false ?
+                         <div>
+                        <button className="w-72 text-white bg-red-700 p-1 rounded-lg mt-4 mb-2 " 
+                          onClick={buttonSubmit}>Register</button></div> : <div className="flex text-center justify-between w-full mt-3">
+                            <button className="bg-red-700 p-2 text-white rounded-lg text-sm" onClick = {uploadDataToDb}>submit</button>
+                            <button className="bg-red-700 p-2 text-white rounded-lg text-sm" onClick={(back) => router.back()}>Back</button>
+                          </div>
+                    }
               </div>
         </div>
     )

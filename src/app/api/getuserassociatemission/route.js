@@ -7,6 +7,8 @@ export async function GET(req, res) {
         const {searchParams} = new URL(req.url);
         const userId = searchParams.get("userId");
         const missionId = searchParams.get("missionId");
+        let flag = false;
+        let userMission;
        // console.log(userId)
         //console.log(missionId)
         let searchCriteria;
@@ -20,11 +22,15 @@ export async function GET(req, res) {
                 userId: userId,
                 missionId: missionId
             }
+            flag = true;
         }
        // console.log(searchCriteria)
         await dbConnect();
-        
-        const userMission = await UserAssociateMission.find(searchCriteria)
+        if(flag) {
+            userMission = await UserAssociateMission.findOne(searchCriteria)
+        }else {
+            userMission = await UserAssociateMission.find(searchCriteria)
+        }
         
          if(userMission) {
             return NextResponse.json({ userMission },{ status: 200 })

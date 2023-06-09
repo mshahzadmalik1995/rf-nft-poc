@@ -6,6 +6,10 @@ const nftConfigurationSchema = new mongoose.Schema(
             type:String,
             required:true
         },
+        missionCode:{
+            type:String,
+            required:true
+        },
         imageName: {
             type:String,
             required:true
