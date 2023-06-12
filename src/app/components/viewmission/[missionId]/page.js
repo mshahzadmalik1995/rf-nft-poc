@@ -105,7 +105,7 @@ const ViewMission = ({params}) => {
        // setUpdateUi(false);
     },[udpateUi])
 
-    console.log("setUserAssociateMissionData",userAssociateMissionData,udpateUi);
+   // console.log("setUserAssociateMissionData",userAssociateMissionData,udpateUi);
 
     useEffect(() => {
         const getMissionNftConfigurations = async (missionCode) => {
@@ -131,7 +131,7 @@ const ViewMission = ({params}) => {
     const buttonSubmit = (e) => {
         e.preventDefault();
         if(!checkUserAssociate){
-            router.push(`/components/registerformission?missionId=${missionId}`)
+            router.push(`/components/registerformission?missionId=${missionId}&missionCode=${missionCode}`)
         } 
     }
 
@@ -142,55 +142,6 @@ const ViewMission = ({params}) => {
         setUpdatedUserCheckListData(prevData => prevData.map(obj => obj.id === id ? {...obj, status: isChecked} : obj));
         console.log(updatedUserCheckListData)
     }
-
-  /*  useEffect(() => {
-        console.log(userMissionUpdateData)
-        //setUserMissionUpdateData(userMissionUpdateData);
-    },[userMissionUpdateData])
-
-    function delay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }*/
-
-   /* const updateUserAssociateDataFunction = async () => {
-        let totalComplete = 0;
-        console.log(`updateUserAssociateDataFunction Complete `);
-        updatedUserCheckListData.forEach(item => {
-           // console.log(item);
-            //console.log(item.status)
-           // console.log(item[status]);
-            if(item.status){
-             //   console.log(item[status]);
-                totalComplete++;
-            }
-        })
-        console.log(`total Complete ${totalComplete}`);
-        console.log(totalComplete === userAssociateMissionData.totalMissionChecklistCount);
-        const missionCompleted = totalComplete === userAssociateMissionData.totalMissionChecklistCount;
-        const updateValue = { ...userMissionUpdateData,
-            totalMissionChecklistCount:userAssociateMissionData.totalMissionChecklistCount,
-            missionCompleted: missionCompleted,
-            missionChecklistCountComplete: totalComplete,
-            missionCheckList: updatedUserCheckListData
-        };
-       setUserMissionUpdateData(updateValue);
-        await delay(5000);
-       /* setTimeout(() => {
-            setUserMissionUpdateData( { ...userMissionUpdateData,
-                totalMissionChecklistCount:userAssociateMissionData.totalMissionChecklistCount,
-                missionCompleted: missionCompleted,
-                missionChecklistCountComplete: totalComplete,
-                missionCheckList: updatedUserCheckListData
-            });
-          }, 5000); */
-        /*setUserMissionUpdateData( {
-            totalMissionChecklistCount:userAssociateMissionData.totalMissionChecklistCount,
-            missionCompleted: missionCompleted,
-            missionChecklistCountComplete: totalComplete,
-            missionCheckList: updatedUserCheckListData
-        });*/
-      /*U  console.log(userMissionUpdateData)
-    }*/
 
     const uploadDataToDb = async(e) => {
         e.preventDefault();
@@ -209,10 +160,6 @@ const ViewMission = ({params}) => {
             const data = await response.json();
             if (response.status === 200) {
                 console.log("data save successfully")
-                
-           // setUpdateUi(true);
-               // setUserAssociateMissionData(data.userMission);
-                //setUpdatedUserCheckListData(data.userMission.missionCheckList);
               setStatus('success')
             } else {
               setStatus('error')
@@ -234,14 +181,14 @@ const ViewMission = ({params}) => {
     return(
         missionData && <div className="flex flex-col items-center mt-2">
             <div className="relative flex items-center justify-center w-92 h-48 p-1 mt-1">
-                <div className="absolute inset-0 rounded-lg">
+                <div className="absolute inset-0 rounded-lg  ml-5">
                     <img
                         src={`/${imageName}`}
                         alt="background image"
                         className="w-92 h-48 items-center justify-center rounded-lg"
                     />
                 </div>
-                <div className="relative z-10  top-16 w-80 h-10 capitalize mx-1 ">
+                <div className="relative z-10  top-16 w-80 h-10 capitalize mx-1 ml-4">
                     <h1 className='text-lg font-bold text-white  break-word'>{missionData.missionName.substring(0, getPosition(missionData.missionName, " ", 2))}</h1>
                     <h1 className="text-lg font-bold text-red-700">{missionData.missionName.substring(getPosition(missionData.missionName, " ", 2)+1)}</h1>
                 </div>
@@ -287,10 +234,13 @@ const ViewMission = ({params}) => {
                           onClick={buttonSubmit}>Register</button>
                           </div> : 
                             <div className="flex flex-col w-full gap-2">
-                               {/* <div className="flex bg-black p-2 justify-center rounded-lg items-center mb-4">
+                                <div className="flex bg-black p-2 justify-center rounded-lg items-center mb-4">
                                     <span className='text-white'>{userAssociateMissionData.missionChecklistCountComplete}</span><span className="text-white">/{userAssociateMissionData.totalMissionChecklistCount} Completed</span>
                                     <div className="bg-blue-600 h-2.5 rounded-full dark:bg-gray-300" ></div>
-                    </div>*/}
+                                </div>
+
+                                {status === 'success' && <p className="text-green-600">Data saved successfully!</p>}
+                                {status === 'error' && <p className="text-red-600">There was an error submitting your data. Please try again.</p>}
                                 <div className="flex text-center justify-between w-full mt-3">
                                 <button className="bg-red-700 p-2 text-white rounded-lg text-sm" onClick = {uploadDataToDb}>submit</button>
                                 <button className="bg-red-700 p-2 text-white rounded-lg text-sm" onClick={(back) => router.back()}>Back</button>

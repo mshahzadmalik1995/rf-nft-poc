@@ -9,6 +9,7 @@ const RegisterForMission = () => {
     
     const [status, setStatus] = useState(null);
     const {userLoginData} = useContext(MyContext);
+    const [imageName, setImageName] = useState(null);
     //console.log(userLoginData)
     const [isCheck, setIsCheck] = useState(false);
     const [userData, setUserData] = useState({
@@ -20,6 +21,7 @@ const RegisterForMission = () => {
     })
     const searchParams = useSearchParams();
     const missionId = searchParams.get("missionId");
+    const missionCode = searchParams.get("missionCode");
 
     useEffect(() => {
         const getMission = async (missionId) => {
@@ -40,6 +42,27 @@ const RegisterForMission = () => {
             }
         }
         getMission(missionId);
+    },[])
+
+    useEffect(() => {
+        const getMissionNftConfigurations = async (missionCode) => {
+            try{
+                const response = await fetch(`/api/getnftconfiguration?missionCode=${missionCode}`, {
+                    method: 'GET',
+                    headers: {"Content_Type":"application/json"},
+                })
+                const data = await response.json()
+                console.log(data)
+                if(response.status === 200){
+                    setImageName(data.configuration.imageName)
+                } else {
+                    console.log("no data found while fetching mission!")
+                }
+            } catch(error) {
+                console.error('Error fetching data in fetching mission :', error);
+            }
+        }
+        getMissionNftConfigurations(missionCode);
     },[])
 
     const str1 = "All Explorer take the wheel";
@@ -104,16 +127,16 @@ const RegisterForMission = () => {
       };
 
     return(
-        <div className="flex flex-col items-center mt-2">
+        missionData && <div className="flex flex-col items-center mt-2">
              <div className="relative flex items-center justify-center w-92 h-48 p-1 mt-1">
-                <div className="absolute inset-0 rounded-lg">
+                <div className="absolute inset-0 rounded-lg ml-5">
                     <img
-                        src="/expedition1.jpg"
+                        src={`/${imageName}`}
                         alt="background image"
-                        className="w-92 h-48 items-center justify-center rounded-lg"
+                        className="w-96 h-48 items-center justify-center rounded-lg"
                     />
                 </div>
-                <div className="relative z-10  top-16 w-80 h-10 capitalize mx-1 ">
+                <div className="relative z-10  top-16 w-80 h-10 capitalize mx-1 ml-5">
                     <h1 className='text-lg font-bold text-white  break-word'>{missionData.missionName.substring(0, getPosition(missionData.missionName, " ", 2))}</h1>
                     <h1 className="text-lg font-bold text-red-700">{missionData.missionName.substring(getPosition(missionData.missionName, " ", 2)+1)}</h1>
                 </div>
