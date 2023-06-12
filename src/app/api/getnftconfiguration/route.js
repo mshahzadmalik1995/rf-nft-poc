@@ -15,9 +15,9 @@ export async function GET(req, res) {
             searchCriteria = {missionCode:missionCode, missionId:missionId};
         }
         await dbConnect();
-        console.log(searchCriteria)
+        //console.log(searchCriteria)
         const configuration = await NftConfiguration.findOne(searchCriteria);
-        console.log(configuration)
+      //  console.log(configuration)
         return NextResponse.json({
             configuration
         }, {

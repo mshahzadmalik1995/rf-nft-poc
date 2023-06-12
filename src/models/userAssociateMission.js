@@ -38,6 +38,14 @@ const userAssociateMissionSchema = new mongoose.Schema(
             type:String,
             required:true
         },
+        totalMissionChecklistCount:{
+            type:Number,
+            required:true
+        },
+        missionChecklistCountComplete:{
+            type:Number,
+            required:true
+        },
         missionCompleted: {
             type:Boolean,
             required:true

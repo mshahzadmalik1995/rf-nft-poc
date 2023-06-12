@@ -22,6 +22,7 @@ const ViewMission = ({params}) => {
 
     const [missionData, setMissionData] = useState();
     const [status, setStatus] = useState(null);
+    const [udpateUi, setUpdateUi] = useState(false);
     const [userAssociateMissionData, setUserAssociateMissionData] = useState();
     const [checkUserAssociate, setCheckUserAssociate] = useState(false);
     const [updatedUserCheckListData, setUpdatedUserCheckListData] = useState([])
@@ -29,6 +30,15 @@ const ViewMission = ({params}) => {
     const {userLoginData} = useContext(MyContext);
    // console.log(`_id ${userLoginData.username}`)
     const [imageName, setImageName] = useState(null);
+
+    const [userMissionUpdateData, setUserMissionUpdateData] = useState({
+        missionCheckList:[],
+        totalMissionChecklistCount:0,
+        missionChecklistCountComplete:0,
+        missionCompleted:false
+    })
+
+   
 
     
     
@@ -60,7 +70,8 @@ const ViewMission = ({params}) => {
         const userData = localStorage.getItem("myUserState");
         //console.log(userData)
         const updateDatad = JSON.parse(userData);
-        console.log(updateDatad._id)
+        //console.log(updateDatad._id)
+        console.log("in the userassociate mission api");
         setUserId(updateDatad._id)
         const getUserAssociateMissionData = async (missionId) => {
             try{
@@ -75,7 +86,7 @@ const ViewMission = ({params}) => {
                     console.log("in status blcok");
                     if(data.userMission && data.userMission !== null){
                         setCheckUserAssociate(true);
-                        console.log("in if blcok");
+                        console.log("datasaved");
                         setUserAssociateMissionData(data.userMission);
                         setUpdatedUserCheckListData(data.userMission.missionCheckList);
                     } else {
@@ -91,7 +102,10 @@ const ViewMission = ({params}) => {
             }
         }
         getUserAssociateMissionData(missionId);
-    },[])
+       // setUpdateUi(false);
+    },[udpateUi])
+
+    console.log("setUserAssociateMissionData",userAssociateMissionData,udpateUi);
 
     useEffect(() => {
         const getMissionNftConfigurations = async (missionCode) => {
@@ -129,18 +143,76 @@ const ViewMission = ({params}) => {
         console.log(updatedUserCheckListData)
     }
 
+  /*  useEffect(() => {
+        console.log(userMissionUpdateData)
+        //setUserMissionUpdateData(userMissionUpdateData);
+    },[userMissionUpdateData])
+
+    function delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }*/
+
+   /* const updateUserAssociateDataFunction = async () => {
+        let totalComplete = 0;
+        console.log(`updateUserAssociateDataFunction Complete `);
+        updatedUserCheckListData.forEach(item => {
+           // console.log(item);
+            //console.log(item.status)
+           // console.log(item[status]);
+            if(item.status){
+             //   console.log(item[status]);
+                totalComplete++;
+            }
+        })
+        console.log(`total Complete ${totalComplete}`);
+        console.log(totalComplete === userAssociateMissionData.totalMissionChecklistCount);
+        const missionCompleted = totalComplete === userAssociateMissionData.totalMissionChecklistCount;
+        const updateValue = { ...userMissionUpdateData,
+            totalMissionChecklistCount:userAssociateMissionData.totalMissionChecklistCount,
+            missionCompleted: missionCompleted,
+            missionChecklistCountComplete: totalComplete,
+            missionCheckList: updatedUserCheckListData
+        };
+       setUserMissionUpdateData(updateValue);
+        await delay(5000);
+       /* setTimeout(() => {
+            setUserMissionUpdateData( { ...userMissionUpdateData,
+                totalMissionChecklistCount:userAssociateMissionData.totalMissionChecklistCount,
+                missionCompleted: missionCompleted,
+                missionChecklistCountComplete: totalComplete,
+                missionCheckList: updatedUserCheckListData
+            });
+          }, 5000); */
+        /*setUserMissionUpdateData( {
+            totalMissionChecklistCount:userAssociateMissionData.totalMissionChecklistCount,
+            missionCompleted: missionCompleted,
+            missionChecklistCountComplete: totalComplete,
+            missionCheckList: updatedUserCheckListData
+        });*/
+      /*U  console.log(userMissionUpdateData)
+    }*/
+
     const uploadDataToDb = async(e) => {
         e.preventDefault();
-        console.log("in updatedatatodb")
-        console.log(updatedUserCheckListData)
+        console.log("uploadDataToDbcalled")
+       // console.log(updatedUserCheckListData)
+       // await updateUserAssociateDataFunction();
+        console.log(userMissionUpdateData)
         try {
             const response = await fetch(`/api/updateuserassociatemission?userId=${userId}&missionId=${missionId}`, {
               method: 'POST',
               headers: { "Content_Type": "application/json" },
-              body: JSON.stringify(updatedUserCheckListData)
+              body: JSON.stringify({missionCheckList:updatedUserCheckListData,
+                totalMissionChecklistCount : userAssociateMissionData.totalMissionChecklistCount})
+              //body: JSON.stringify(userMissionUpdateData)
             })
+            const data = await response.json();
             if (response.status === 200) {
                 console.log("data save successfully")
+                
+           // setUpdateUi(true);
+               // setUserAssociateMissionData(data.userMission);
+                //setUpdatedUserCheckListData(data.userMission.missionCheckList);
               setStatus('success')
             } else {
               setStatus('error')
@@ -149,6 +221,7 @@ const ViewMission = ({params}) => {
             console.log(e);
           }
           //setStatus(null)
+          setUpdateUi(!udpateUi);
     }
 
     const str1 = "All Explorer take the wheel";
@@ -209,11 +282,20 @@ const ViewMission = ({params}) => {
                     {
                         checkUserAssociate == false ?
                          <div>
-                        <button className="w-72 text-white bg-red-700 p-1 rounded-lg mt-4 mb-2 " 
-                          onClick={buttonSubmit}>Register</button></div> : <div className="flex text-center justify-between w-full mt-3">
-                            <button className="bg-red-700 p-2 text-white rounded-lg text-sm" onClick = {uploadDataToDb}>submit</button>
-                            <button className="bg-red-700 p-2 text-white rounded-lg text-sm" onClick={(back) => router.back()}>Back</button>
-                          </div>
+
+                            <button className="w-72 text-white bg-red-700 p-1 rounded-lg mt-4 mb-2 " 
+                          onClick={buttonSubmit}>Register</button>
+                          </div> : 
+                            <div className="flex flex-col w-full gap-2">
+                               {/* <div className="flex bg-black p-2 justify-center rounded-lg items-center mb-4">
+                                    <span className='text-white'>{userAssociateMissionData.missionChecklistCountComplete}</span><span className="text-white">/{userAssociateMissionData.totalMissionChecklistCount} Completed</span>
+                                    <div className="bg-blue-600 h-2.5 rounded-full dark:bg-gray-300" ></div>
+                    </div>*/}
+                                <div className="flex text-center justify-between w-full mt-3">
+                                <button className="bg-red-700 p-2 text-white rounded-lg text-sm" onClick = {uploadDataToDb}>submit</button>
+                                <button className="bg-red-700 p-2 text-white rounded-lg text-sm" onClick={(back) => router.back()}>Back</button>
+                                </div>
+                            </div>
                     }
               </div>
         </div>
