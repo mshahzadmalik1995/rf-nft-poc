@@ -24,7 +24,7 @@ export async function GET(req, res) {
             }
             flag = true;
         }
-       // console.log(searchCriteria)
+        console.log(searchCriteria)
         await dbConnect();
         if(flag) {
             userMission = await UserAssociateMission.findOne(searchCriteria)

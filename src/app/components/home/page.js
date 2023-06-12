@@ -28,7 +28,7 @@ const Home = () => {
                 } else {
                     console.log("no data found while fetching mission!")
                 }
-            } catch(e) {
+            } catch(error) {
                 console.error('Error fetching data in fetching mission :', error);
             }
         }
