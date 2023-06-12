@@ -8,7 +8,7 @@ const RegisterForMission = () => {
     const [buttonDisabled, setButtonDisabled] = useState(true);
     
     const [status, setStatus] = useState(null);
-    const {userLoginData} = useContext(MyContext);
+    //const {userLoginData} = useContext(MyContext);
     const [imageName, setImageName] = useState(null);
     //console.log(userLoginData)
     const [isCheck, setIsCheck] = useState(false);
@@ -17,13 +17,28 @@ const RegisterForMission = () => {
       emailId:"",
       contactNo:"",
       pincode:"",
-      cryptoAddress:""
+      cryptoAddress:"",
+      userId:""
     })
     const searchParams = useSearchParams();
     const missionId = searchParams.get("missionId");
     const missionCode = searchParams.get("missionCode");
 
+    let updatedUserLoginData = null;
+
     useEffect(() => {
+        const userLoginData = localStorage.getItem("myUserState");
+         updatedUserLoginData = JSON.parse(userLoginData);
+
+        // console.log(updatedUserLoginData)
+        setUserData( {
+            ...userData,
+            fullName: updatedUserLoginData.username,
+            emailId: updatedUserLoginData.email,
+            contactNo: updatedUserLoginData.contactNo,
+            pincode: updatedUserLoginData.pincode,
+            userId: updatedUserLoginData._id
+        })
         const getMission = async (missionId) => {
             try{
                 const response = await fetch(`/api/getmission?missionId=${missionId}`, {
@@ -98,13 +113,15 @@ const RegisterForMission = () => {
                 contactNo:userData.contactNo,
                 pinCode:userData.pincode,
                 cryptoAddress:userData.cryptoAddress,
-                userId:userLoginData?._id,
+                userId:userData.userId,
                 missionId:missionId,
                 missionCode:missionData.missionCode,
                 missionName:missionData.missionName,
                 missionDescription: missionData.missionDescription,
-                missionCompleted:true,
-                missionCheckList: missionData.missionCheckList
+                missionCompleted:false,
+                missionCheckList: missionData.missionCheckList,
+                totalMissionChecklistCount: missionData.checkListCount,
+                missionChecklistCountComplete:0,
             })
           })
           if(response.status === 200){
@@ -116,7 +133,7 @@ const RegisterForMission = () => {
                 cryptoAddress:""
             })
             setStatus('success')
-           // router.push("/components/home")
+           router.push("/components/home")
           } else {
             setStatus('error')
           }
@@ -151,17 +168,20 @@ const RegisterForMission = () => {
                 <div className="flex flex-col gap-2">
                     <label className="text-sm text-black font-bold">Email Id:</label>
                     <input type="text" placeholder="Enter the emailId" 
-                    className="border-2 rounded-lg p-1 w-72" name="emailId" value={userData.emailId} onChange={handleChange}/>
+                    className="border-2 rounded-lg p-1 w-72" name="emailId" 
+                    value={userData.emailId} onChange={handleChange} disabled="true"/>
                 </div>
                 <div className="flex flex-col gap-2">
                     <label className="text-sm text-black font-bold">Contact Number:</label>
                     <input type="number" placeholder="Enter the number" 
-                    className="border-2 rounded-lg p-1 w-72"  name="contactNo" value={userData.contactNo} onChange={handleChange}/>
+                    className="border-2 rounded-lg p-1 w-72"  name="contactNo"
+                     value={userData.contactNo} onChange={handleChange}  disabled="true"/>
                 </div>
                 <div className="flex flex-col gap-2">
                     <label className="text-sm text-black font-bold">Pincode:</label>
                     <input type="number" placeholder="Enter the pincode" 
-                    className="border-2 rounded-lg p-1 w-72" name="pincode" value={userData.pincode} onChange={handleChange}/>
+                    className="border-2 rounded-lg p-1 w-72" name="pincode"
+                     value={userData.pincode} onChange={handleChange}  disabled="true"/>
                 </div>
                 <div className="flex flex-col gap-2">
                     <label className="text-sm text-black font-bold">Crypto Address:</label>
