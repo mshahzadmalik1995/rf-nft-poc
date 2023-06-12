@@ -51,10 +51,11 @@ const AddMissionForm = () => {
 
     const handleTaskAdd = (e) => {
         const taskField = document.getElementById("add-task-field");
-        const taskValue = taskField.value;
+        const newTask = { id: tasks.length + 1, task: taskField.value, status: false };
 
-        if (taskValue !== "") {
-            setTasks([...tasks, taskValue]);
+        if (newTask.task !== "") {
+            setTasks((prevTasks) => [...prevTasks, newTask]);
+            console.log(newTask);
             taskField.value = "";
         }
     };
@@ -76,6 +77,8 @@ const AddMissionForm = () => {
                     missionCode: missionCode,
                     missionDescription: description,
                     missionCheckList: tasks,
+                    checkListCount: tasks.length,
+                    nftRewardCount: 0,
                     isValid: true
                 })
             })
@@ -156,7 +159,7 @@ const AddMissionForm = () => {
                                 <ul>
                                     {tasks.map((task, index) => (
                                         <li key={index}>
-                                            {task}
+                                            {task.task}
                                             <IconButton onClick={() => handleTaskDelete(index)}>
                                                 <HighlightOffIcon />
                                             </IconButton>

@@ -1,3 +1,4 @@
+import { FlashAutoOutlined } from "@material-ui/icons";
 import mongoose from "mongoose";
 
 const missionSchema = new mongoose.Schema(
@@ -14,13 +15,24 @@ const missionSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        missionCheckList:[
+        missionCheckList: [
             {
-                id:Number,
-                task:String,
-                status:Boolean
+                id: Number,
+                task: String,
+                status: Boolean
             }
         ],
+
+        checkListCount: {
+            type: Number,
+            required: true
+        },
+
+        nftRewardCount: {
+            type: Number,
+            required: true
+        },
+
         isValid: {
             type: Boolean,
             required: true
