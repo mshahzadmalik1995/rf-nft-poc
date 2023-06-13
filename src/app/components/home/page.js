@@ -5,12 +5,18 @@ import { useEffect, useState, useContext } from "react";
 import MissionCard from "../missioncard";
 import Header from "../header/page";
 import MyContext from "@/app/context/mycontext";
+
 const Home = () => {
     //const [data, setData] = useState(sampleData);
+    //const [userId, setUserId] = useState();
     const [data, setData] = useState();
     const [dataUser, setDataUser] = useState();
-    const {userLoginData} = useContext(MyContext);
+    //const {userLoginData} = useContext(MyContext);
+    const userData = localStorage.getItem("myUserState");
+    const parsedUserData = JSON.parse(userData);
+    //setUserId(parsedUserData._id);
    // console.log(`userLoginData ${userLoginData.username}`)
+
     useEffect(() => {
         const getMission = async () => {
             try{
@@ -35,11 +41,13 @@ const Home = () => {
         getMission();
 
         const getUserMission = async () => {
+
             try{
 
-                const response = await fetch(`/api/getuserassociatemission`, {
+                const response = await fetch(`/api/getuserassociatemission?userId=${parsedUserData._id}`, {
                     method: 'GET',
                     headers: {"Content_Type":"application/json"},
+                    
                 })
                 const data = await response.json()
                 setDataUser(data.userMission);
