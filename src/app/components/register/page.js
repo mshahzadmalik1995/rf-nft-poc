@@ -137,7 +137,6 @@ const Register = () => {
               name="password"
               autoComplete="Password"
               type="password"
-              autoFocus
               value={userData.password}
               onChange={handleChange}
             />
@@ -151,7 +150,6 @@ const Register = () => {
               name="email"
               autoComplete="Email id"
               type="email"
-              autoFocus
               value={userData.email}
               onChange={handleChange}
             />
@@ -165,7 +163,6 @@ const Register = () => {
               name="contactNo"
               type="number"
               autoComplete="Contact Number"
-              autoFocus
               value={userData.contactNo}
               onChange={handleChange}
             />
