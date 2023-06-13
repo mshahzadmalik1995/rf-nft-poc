@@ -33,9 +33,7 @@ const Home = () => {
             }
         }
         getMission();
-    },[])
-    
-    useEffect(() => {
+
         const getUserMission = async () => {
             try{
 
@@ -44,7 +42,7 @@ const Home = () => {
                     headers: {"Content_Type":"application/json"},
                 })
                 const data = await response.json()
-                setDataUser(data.mission);
+                setDataUser(data.userMission);
                 console.log(data)
                 if(response.status === 200){
                  //  router.push("/components/home")
@@ -58,7 +56,9 @@ const Home = () => {
             }
         }
         getUserMission();
+
     },[])
+    
 
     return (
         <div className="flex flex-col gap-2 relative">
