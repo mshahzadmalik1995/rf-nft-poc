@@ -1,4 +1,4 @@
-import { FlashAutoOutlined } from "@material-ui/icons";
+
 import mongoose from "mongoose";
 
 const missionSchema = new mongoose.Schema(

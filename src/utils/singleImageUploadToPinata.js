@@ -1,8 +1,5 @@
 const pinataSDK = require("@pinata/sdk")
 const fs = require("fs")
-const path = require("path")
-const axios = require("axios")
-const FormData = require('form-data')
 require("dotenv").config()
 
 //import {pinataSDK} from '@pinata/sdk';

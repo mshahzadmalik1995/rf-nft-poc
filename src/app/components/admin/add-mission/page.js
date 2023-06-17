@@ -9,6 +9,7 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { makeStyles } from "@material-ui/core/styles";
 import AdminHeader from "../admin-header/page";
 import { useRouter } from 'next/navigation';
+import NftModal from "./nftModal";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -35,6 +36,10 @@ const AddMissionForm = () => {
     const classes = useStyles();
     const router = useRouter();
     const [status, setStatus] = useState(null);
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
@@ -172,6 +177,11 @@ const AddMissionForm = () => {
                         {status === 'success' && <p className="text-green-600">Mission saved successfully!</p>}
                         {status === 'error' && <p className="text-red-600">There was an error submitting your data. Please try again.</p>}
 
+                        
+                        <Button variant="contained" className={classes.submit} margin="normal" color="secondary" onClick={handleOpen}>
+                            Upload Nft
+                        </Button>
+
                         <Button type="submit" className={classes.submit} margin="normal" variant="contained" color="primary">
                             Submit
                         </Button>
@@ -181,6 +191,7 @@ const AddMissionForm = () => {
                     </form>
                 </Box>
             </div>
+            <NftModal open={open} handleClose={handleClose} />
         </div>
     );
 };

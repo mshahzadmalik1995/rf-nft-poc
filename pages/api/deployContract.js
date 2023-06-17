@@ -9,8 +9,6 @@ const {
   import { dbConnect } from "@/utils/dbConn";
   import User from "@/models/user";
   import NftConfiguration from "@/models/nftconfiguration";
-  import { NextResponse } from "next/server";
-  import { exec } from 'child_process';
   
   const metadataTemplate = {
     name: "",
@@ -69,10 +67,10 @@ const {
       const filePath = body2.filePath;
       const jsonFilePath = body2.jsonFilePath;
       //console.log(`imagePath ${imagePath} , imageName : ${imageName} , filePath : ${filePath} , jsonFilePath : ${jsonFilePath}`);*/
-      const tokenUris = await handleTokenUris(imagePath, imageName);
+      //const tokenUris = await handleTokenUris(imagePath, imageName);
       console.log("image uploaded to pinata");
   
-      if (fs.existsSync(filePath)) {
+      /*if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
       }
   
@@ -86,10 +84,10 @@ const {
       const data1 = {
         address: nft1.address,
         abi: JSON.parse(nft1.interface.format("json")),
-      };
+      };*/
   
       //fs.writeFileSync("./pages/genericnft1.json", JSON.stringify(data1));
-      fs.writeFileSync(jsonFilePath, JSON.stringify(data1)); 
+      //fs.writeFileSync(jsonFilePath, JSON.stringify(data1)); 
       return res.status(200).json(`data saved successfully`);
    //  res.status(200).json({configuration: configuration});
     } catch (e) {
