@@ -14,6 +14,9 @@ const MissionCard = ({ props }) => {
         bar: {
             backgroundColor: theme.palette.error.main,
         },
+        completedBar: {
+            backgroundColor: theme.palette.success.main,
+        },
     }));
 
     const router = useRouter();
@@ -99,7 +102,7 @@ const MissionCard = ({ props }) => {
                     value={progress}
                     classes={{
                         root: classes.progress,
-                        bar: classes.bar,
+                        bar: progress === 100 ? classes.completedBar : classes.bar
                     }}
                 />
             </div>

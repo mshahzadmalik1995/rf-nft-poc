@@ -19,6 +19,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
+
     paper: {
         //marginTop: theme.spacing(8),
         display: "flex",
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        height: "120vh",
+        height: "100vh",
     },
 }));
 
