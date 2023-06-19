@@ -61,12 +61,10 @@ const ViewReport = () => {
 
                 } else {
                     console.log("no data found while fetching mission!")
-                    setStatus('error');
 
                 }
             } catch (e) {
                 console.error('Error fetching data in fetching mission :', error);
-                setStatus('error');
             }
         }
         getUserAssociateMissionData();
@@ -93,6 +91,30 @@ const ViewReport = () => {
     }
 
 
+
+    async function handleMint(event) {
+        event.preventDefault();
+
+        try {
+            const response = await fetch(`/api/deploy`, {
+                method: 'GET',
+                headers: { "Content_Type": "application/json" },
+            })
+            const data = await response.json()
+
+            if (response.status === 200) {
+                console.log(data)
+                setStatus(true);
+            } else {
+                setStatus(false);
+            }
+        } catch (e) {
+            setStatus(false);
+        }
+    }
+
+
+
     return (
         <div className="flex flex-col gap-2 relative">
             <AdminHeader />
@@ -107,6 +129,12 @@ const ViewReport = () => {
                         View Report
                     </Typography>
                     {walletConnected === true && <p className="text-green-600">Wallet connected successfully.</p>}
+                    {status === true && <p className="text-green-600">NFT rewarded successfully to the eligible customers</p>}
+                    {status === false && <p className="text-red-600">Server Error</p>}
+                    <br></br>
+                    <Button variant="contained" onClick={handleMint} color="primary">
+                        Mint All
+                    </Button>
                     <IconButton title="Click to go back to home page" className={classes.backButton} onClick={handleBack}>
                         <ArrowBack />
                     </IconButton>
@@ -118,8 +146,8 @@ const ViewReport = () => {
                                 <TableCell className={classes.tableHeadRow}>Wallet Address</TableCell>
                                 <TableCell className={classes.tableHeadRow}>Mission Registered</TableCell>
                                 <TableCell className={classes.tableHeadRow}>Checklist Status</TableCell>
-                                <TableCell className={classes.tableHeadRow}>NFT Rewarded</TableCell>
-                                <TableCell className={classes.tableHeadRow}>Mint NFT</TableCell>
+                                <TableCell className={classes.tableHeadRow}>Mission Completed</TableCell>
+                                {/* <TableCell className={classes.tableHeadRow}>Mint NFT</TableCell> */}
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -130,11 +158,11 @@ const ViewReport = () => {
                                     <TableCell>{user.missionCode}</TableCell>
                                     <TableCell>{user.missionStatus}</TableCell>
                                     <TableCell>{user.missionCompleted ? "Yes" : "No"}</TableCell>
-                                    <TableCell>
-                                        <Button disbalevariant="contained" disabled={user.nftRewarded === "Yes" || user.missionStatus != user.missionCheckList.length + " of " + user.missionCheckList.length} color="primary">
+                                    {/* <TableCell>
+                                        <Button disbalevariant="contained" onClick={handleMint} disabled={user.nftRewarded == "Yes" && user.missionStatus == user.missionCheckList.length + " of " + user.missionCheckList.length} color="primary">
                                             Mint
                                         </Button>
-                                    </TableCell>
+                                    </TableCell> */}
                                 </TableRow>
                             ))}
                         </TableBody>
