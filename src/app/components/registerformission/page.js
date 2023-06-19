@@ -6,6 +6,7 @@ const RegisterForMission = () => {
 
     const [missionData, setMissionData] = useState();
     const [buttonDisabled, setButtonDisabled] = useState(true);
+    const router = useRouter()
     
     const [status, setStatus] = useState(null);
     //const {userLoginData} = useContext(MyContext);
@@ -59,7 +60,7 @@ const RegisterForMission = () => {
         getMission(missionId);
     },[])
 
-    useEffect(() => {
+    /*useEffect(() => {
         const getMissionNftConfigurations = async (missionCode) => {
             try{
                 const response = await fetch(`/api/getnftconfiguration?missionCode=${missionCode}`, {
@@ -78,7 +79,7 @@ const RegisterForMission = () => {
             }
         }
         getMissionNftConfigurations(missionCode);
-    },[])
+    },[])*/
 
     const str1 = "All Explorer take the wheel";
     function getPosition(string, substring, index) {
@@ -148,7 +149,7 @@ const RegisterForMission = () => {
              <div className="relative flex items-center justify-center w-92 h-48 p-1 mt-1">
                 <div className="absolute inset-0 rounded-lg ml-5">
                     <img
-                        src={`/${imageName}`}
+                        src={`${missionData.missionImagePath}`}
                         alt="background image"
                         className="w-96 h-48 items-center justify-center rounded-lg"
                     />

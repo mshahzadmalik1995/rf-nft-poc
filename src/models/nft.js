@@ -18,6 +18,10 @@ const nftSchema = new mongoose.Schema(
             type:String,
             required:true
         },
+        nftContractName:{
+            type:String,
+            required:true,
+        },
         nftAddress:{
             type:String,
             required:true

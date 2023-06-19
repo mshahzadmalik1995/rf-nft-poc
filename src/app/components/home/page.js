@@ -20,7 +20,7 @@ const Home = () => {
 
     useEffect(() => {
 
-        const getUserMissionData = async () => {
+      /*  const getUserMissionData = async () => {
 
             try{
 
@@ -45,7 +45,7 @@ const Home = () => {
                 console.error('Error fetching data in fetching user mission :', e);
             }
         }
-        getUserMissionData();
+        getUserMissionData();*/
 
         const getMission = async () => {
             try{
@@ -81,7 +81,7 @@ const Home = () => {
     return (
         <div className="flex flex-col gap-2 relative">
         <Header />
-        <div className="mt-10" hidden={showMyMissions}>
+        {/*<div className="mt-10" hidden={showMyMissions}>
             <h1 className="text-black-400 font-bold p-2 text-2xl">Enrolled Missions</h1>
             <div className="flex absolute flex-wrap p-2 gap-2 mt-4">
                 {
@@ -102,7 +102,7 @@ const Home = () => {
             <br></br>
             <br></br>
         </div>
-        <br></br>
+            <br></br> */}
 
             <div className="mt-10">
                 <h1 className="text-black-400 font-bold p-2 text-2xl">New Missions Available</h1>

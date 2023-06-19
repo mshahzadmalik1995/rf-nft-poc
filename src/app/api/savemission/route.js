@@ -1,12 +1,16 @@
-import {dbConnect} from "@/utils/dbConn";
+import {dbConnect, parseObjectId} from "@/utils/dbConn";
 import Mission from "@/models/mission";
 import { NextResponse } from "next/server";
+import Nft from "@/models/nft";
 
 export async function POST(req, rest) {
     try{
         const body = await req.json();
         await dbConnect();
-        await Mission.create(body);
+        const mission = await Mission.create(body);
+        console.log("mission", mission)
+        const nft = await Nft.findByIdAndUpdate({_id:parseObjectId(body.nftId)}, {missionId: mission._id.toString(), isAssociated:true}, {new:true})
+        console.log("nft", nft)
         return NextResponse.json({
             message: "data saved successfully!"
         }, {

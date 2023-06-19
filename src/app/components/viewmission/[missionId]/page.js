@@ -107,7 +107,7 @@ const ViewMission = ({params}) => {
 
    // console.log("setUserAssociateMissionData",userAssociateMissionData,udpateUi);
 
-    useEffect(() => {
+    /*useEffect(() => {
         const getMissionNftConfigurations = async (missionCode) => {
             try{
                 const response = await fetch(`/api/getnftconfiguration?missionCode=${missionCode}`, {
@@ -126,7 +126,7 @@ const ViewMission = ({params}) => {
             }
         }
         getMissionNftConfigurations(missionCode);
-    },[])
+    },[])*/
 
     const buttonSubmit = (e) => {
         e.preventDefault();
@@ -183,7 +183,7 @@ const ViewMission = ({params}) => {
             <div className="relative flex items-center justify-center w-92 h-48 p-1 mt-1">
                 <div className="absolute inset-0 rounded-lg  ml-5">
                     <img
-                        src={`/${imageName}`}
+                        src={`${missionData.missionImagePath}`}
                         alt="background image"
                         className="w-92 h-48 items-center justify-center rounded-lg"
                     />

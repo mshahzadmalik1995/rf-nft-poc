@@ -1,8 +1,8 @@
 'use client';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
-    Box, Grid, TextField, Button, Container,
-    CssBaseline, Typography, IconButton
+     Grid, TextField, Button, Container,
+    CssBaseline, Typography, IconButton,Box,FormControl, InputLabel, MenuItem, Select
 } from "@material-ui/core";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
@@ -25,14 +25,31 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 2, 2),
     },
+    selectMenu: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    input: {
+        display: 'none',
+      },
 }));
+
+const styles = {
+    selectMenu: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+  };
 
 
 const AddMissionForm = () => {
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
     const [tasks, setTasks] = useState([]);
-    const [missionCode, setMissionCode] = useState("");
+    const [missionData, setMissionData] = useState({
+        title:"",
+        description:"",
+        missionCode:"",
+        nftId:""
+    })
     const classes = useStyles();
     const router = useRouter();
     const [status, setStatus] = useState(null);
@@ -40,19 +57,37 @@ const AddMissionForm = () => {
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [nftData, setNftData] = useState([]);
+    const [selectedOption, setSelectedOption] = useState('');
+    const [missionImage, setMissionImage] = useState(null);
 
-    const handleTitleChange = (e) => {
-        setTitle(e.target.value);
-    };
-
-    const handleMissionCodeChange = (e) => {
-
-        setMissionCode(e.target.value);
+    const valueChange = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        setMissionData((prev) => ({...prev, [name]:value}));
     }
+    
 
-    const handleDescriptionChange = (e) => {
-        setDescription(e.target.value);
-    };
+    useEffect(() => {
+        const getNft = async() => {
+
+            try{
+                const response = await fetch(`/api/getnfts`, {
+                    method: "GET",
+                    headers: {"Content-type":"application/json"},
+                })
+                const data = await response.json();
+                if(response.status === 200) {
+                    setNftData(data.nftData);
+                } else {
+                    console.log("no data found while fetching nfts!")
+                }
+            } catch(e) {
+                console.error('Error fetching data in fetching nfts :', error);
+            }
+        }
+        getNft()
+    }, [open])
 
     const handleTaskAdd = (e) => {
         const taskField = document.getElementById("add-task-field");
@@ -73,41 +108,60 @@ const AddMissionForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const response = await fetch('/api/savemission', {
+        try{
+            const formData = new FormData();
+            formData.append("image", missionImage);
+            formData.append("missionName", missionData.title);
+            formData.append("missionCode", missionData.missionCode);
+            formData.append("missionDescription", missionData.description);
+            formData.append("missionCheckList", JSON.stringify(tasks));
+            formData.append("checkListCount", tasks.length);
+            formData.append("nftRewardCount", 0);
+            formData.append("nftId", missionData.nftId)
+            formData.append("isValid", true);
+            const response = await fetch('/api/savemissionupdate', {
                 method: 'POST',
-                headers: { "Content_Type": "application/json" },
-                body: JSON.stringify({
-                    missionName: title,
-                    missionCode: missionCode,
-                    missionDescription: description,
-                    missionCheckList: tasks,
-                    checkListCount: tasks.length,
-                    nftRewardCount: 0,
-                    isValid: true
-                })
-            })
-            if (response.status === 200) {
+                headers: { "Content_Type": "multipart/form-data" },
+                body: formData
+            });
+
+            console.log(response)
+          
+              if (response.status=== 200) {
+                setStatus('success')
                 handleCancel()
                 setStatus('success')
                 router.push("/components/admin/home")
-            } else {
-                setStatus('error')
+                console.log('File uploaded successfully.');
+              } else {
+                console.error('Error uploading file.');
+              }
+
+            }catch(e) {
+
             }
-        } catch (e) {
-            console.log(e);
-        }
     };
 
     const handleCancel = () => {
-        setTitle("");
-        setMissionCode("");
-        setDescription("");
+        setMissionData((prev) => ({...prev, title:"", description:"", missionCode:""}))
+        setMissionImage(null);
         setTasks([]);
+        setMissionImage(null)
         router.push("/components/admin/home")
     };
 
+    const handleChange = (event) => {
+        setSelectedOption(event.target.value);
+        setMissionData((prev) => ({...prev, nftId: event.target.value}));
+        console.log(selectedOption)
+      };
 
+      const handleImageUpload = (e) => {
+        const files = e.target.files[0];
+        //console.log(files.name)
+        console.log(files)
+        setMissionImage(files);
+      }
 
     return (
         <div className="flex flex-col gap-2 relative">
@@ -120,24 +174,27 @@ const AddMissionForm = () => {
                         </Typography>
                         <TextField
                             label="Misson Code"
-                            value={missionCode}
-                            onChange={handleMissionCodeChange}
+                            name="missionCode"
+                            value={missionData.missionCode}
+                            onChange={valueChange}
                             variant="outlined"
                             fullWidth
                             margin="normal"
                         />
                         <TextField
                             label="Title"
-                            value={title}
-                            onChange={handleTitleChange}
+                            name="title"
+                            value={missionData.title}
+                            onChange={valueChange}
                             variant="outlined"
                             fullWidth
                             margin="normal"
                         />
                         <TextField
                             label="Description"
-                            value={description}
-                            onChange={handleDescriptionChange}
+                            name="description"
+                            value={missionData.description}
+                            onChange={valueChange}
                             variant="outlined"
                             fullWidth
                             margin="normal"
@@ -145,6 +202,25 @@ const AddMissionForm = () => {
                             minRows={4}
                             inputProps={{ maxLength: 100 }}
                         />
+
+                     <FormControl fullWidth>
+                            <InputLabel id="dropdown-label">Select NFT</InputLabel>
+                            <Select
+                                labelId="dropdown-label"
+                                id="dropdown"
+                                onChange={handleChange}
+                                value={selectedOption}
+                            >
+                                {nftData ? nftData.map((nft, index) => (
+                                <MenuItem key={index} value={nft._id}>
+                                    {nft.nftName} 
+                                </MenuItem>
+                                )) : <MenuItem value="">
+                                <em>None</em>
+                                </MenuItem> 
+                                }
+                            </Select>
+                        </FormControl>
                         <Grid container spacing={2} alignItems="center">
                             <Grid item xs={11}>
                                 <TextField
@@ -171,6 +247,26 @@ const AddMissionForm = () => {
                                         </li>
                                     ))}
                                 </ul>
+                            </Grid>
+                        </Grid>
+
+                        <Grid container direction="column" alignItems="center" spacing={2}>
+                            <Grid item>
+                                <input
+                                accept="image/*"
+                                className={classes.input}
+                                id="image-upload"
+                                type="file"
+                                onChange={handleImageUpload}
+                                />
+                                <label htmlFor="image-upload">
+                                <Button variant="contained" color="primary" component="span">
+                                    Upload Image
+                                </Button>
+                                </label>
+                            </Grid>
+                            <Grid item>
+                                {missionImage && <label>{missionImage.name}</label>}
                             </Grid>
                         </Grid>
 

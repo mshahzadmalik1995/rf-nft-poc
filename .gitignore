@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+/public/uploads/nft/
+/public/uploads/mission/
+
 .env.local
 .env
 

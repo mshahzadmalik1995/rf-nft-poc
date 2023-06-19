@@ -52,10 +52,11 @@ export const config = {
         // File upload successful
         try 
         {
-            console.log(req.file)
+          //  console.log(req.file)
             const {originalname, destination, filename} = req.file;
             const {nftName, nftDescription} = req.body;
             const nftImagePath = destination.concat("/",filename);
+            let nftImagePathWithSlice = nftImagePath.slice(8);
             const tokenUris = await handleTokenUris(nftImagePath, originalname);
             console.log("image uploaded to pinata");
             const Nft1 = await hre.ethers.getContractFactory("GenericNft");
@@ -67,16 +68,19 @@ export const config = {
   
             console.log(`Nft contract deployed to address: ${nft1.address}`);
 
+
+
             const nftData = {
                 nftName: nftName,
                 nftDescription: nftDescription,
                 nftImageName: originalname,
-                nftImagePath: nftImagePath,
+                nftImagePath: nftImagePathWithSlice,
                 nftTokenUri: tokenUris,
                 missionId: "0",
                 isAssociated:false,
                 nftAddress: nftAddress,
-                nftAbi: nftAbi
+                nftAbi: nftAbi,
+                nftContractName:"GenericNft"
             }
             await dbConnect();
             await NFT.create(nftData);

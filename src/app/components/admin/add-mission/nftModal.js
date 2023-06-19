@@ -46,11 +46,12 @@ const NftModal = (props) =>  {
         nftDescription:"",
     })
 
-  const handleImageUpload = (e) => {
+  const handleImageUploadForModal = (e) => {
     const files = e.target.files[0];
     //console.log(files.name)
     console.log(files)
     setImage(files);
+    //setImage(URL.createObjectURL(files))
   }
 
   const valueChange = (e) => {
@@ -63,6 +64,7 @@ const closeModal = (e) => {
     e.preventDefault();
     setData((prev) => ({...prev, nftName:"", nftDescription:""}))
     setImage(null);
+    setStatus(null)
     props.handleClose();
 }
 
@@ -73,7 +75,6 @@ const handleSubmit = async(e) => {
         formData.append("image", image);
         formData.append("nftName", data.nftName);
         formData.append("nftDescription", data.nftDescription);
-
         const response = await fetch('/api/uploadImageAnddeploy', {
             method: 'POST',
             headers: { "Content_Type": "multipart/form-data" },
@@ -90,6 +91,8 @@ const handleSubmit = async(e) => {
         console.log(error);
     }
 }
+
+console.log("image", image)
 
   return (
     <div>
@@ -133,11 +136,11 @@ const handleSubmit = async(e) => {
                         <input
                         accept="image/*"
                         className={classes.input}
-                        id="image-upload"
+                        id="image-upload-modal"
                         type="file"
-                        onChange={handleImageUpload}
+                        onChange={handleImageUploadForModal}
                         />
-                        <label htmlFor="image-upload">
+                        <label htmlFor="image-upload-modal">
                         <Button variant="contained" color="primary" component="span">
                             Upload Image
                         </Button>
@@ -150,7 +153,7 @@ const handleSubmit = async(e) => {
 
                 
 
-                {status === 'success' && <p className="text-green-600">Mission saved successfully!</p>}
+                {status === 'success' && <p className="text-green-600">NFT saved successfully!</p>}
                 {status === 'error' && <p className="text-red-600">There was an error submitting your data. Please try again.</p>}
             
                 <Button

@@ -22,13 +22,13 @@ const MissionCard = ({ props }) => {
     const router = useRouter();
     const classes = useStyles();
     const { userLoginData } = useContext(MyContext);
-    const { _id, missionCode, missionName, missionDescription, missionCheckList } = props;
+    const { _id, missionCode, missionName, missionDescription, missionCheckList, missionImagePath } = props;
     const [imageName, setImageName] = useState(null);
     const [progress, setProgress] = useState(null);
     const [progressStatus, setProgressStatus] = useState(null);
 
-    useEffect(() => {
-        const getMissionNftConfigurations = async (missionCode) => {
+   /* useEffect(() => {
+        /*const getMissionNftConfigurations = async (missionCode) => {
             try {
                 const response = await fetch(`/api/getnftconfiguration?missionCode=${missionCode}`, {
                     method: 'GET',
@@ -44,8 +44,8 @@ const MissionCard = ({ props }) => {
             } catch (e) {
                 console.error('Error fetching data in fetching mission :', error);
             }
-        }
-        const calculateProgress = () => {
+        }*/
+        /*const calculateProgress = () => {
             let ctr = 0;
             for (let j = 0; j < missionCheckList.length; j++) {
                 if (missionCheckList[j].status) {
@@ -60,9 +60,9 @@ const MissionCard = ({ props }) => {
             setProgress(ctr / missionCheckList.length * 100);
         }
 
-        getMissionNftConfigurations(missionCode);
-        calculateProgress();
-    }, [])
+       // getMissionNftConfigurations(missionCode);
+        calculateProgress();*/
+    //}, [])
 
 
 
@@ -70,14 +70,15 @@ const MissionCard = ({ props }) => {
         e.preventDefault();
         router.push(`/components/viewmission/${_id}?missionCode=${missionCode}`)
     }
+    console.log("missionImagePath", missionImagePath)
     return (
         <div className="flex flex-col p-2 mt-2">
             <h1 className="text-lg text-red-500 ">{`Mission ${missionCode}`}</h1>
-            <p>{`${progressStatus} Completed`}</p>
+           {/* <p>{`${progressStatus} Completed`}</p> */}
             <div className="relative w-96 h-50 p-1 mt-1">
                 <div className="absolute inset-0 rounded-lg">
                     <img
-                        src={`/${imageName}`}
+                        src={missionImagePath}
                         alt="background image"
                         className="w-96 h-50 rounded-lg"
                     />
@@ -97,14 +98,14 @@ const MissionCard = ({ props }) => {
                     </div>
                 </div>
                 <br></br>
-                <LinearProgress
+               {/* <LinearProgress
                     variant="determinate"
                     value={progress}
                     classes={{
                         root: classes.progress,
                         bar: progress === 100 ? classes.completedBar : classes.bar
                     }}
-                />
+                />*/}
             </div>
         </div>
     )
