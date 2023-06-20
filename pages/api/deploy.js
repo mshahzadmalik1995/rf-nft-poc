@@ -10,6 +10,7 @@ export default async function transferNFT(req, res) {
         getUserAssociateMissionData(req, res);
         console.log("Execution Completed at:", new Date());
     });
+
 }
 
 async function getUserAssociateMissionData(req, res) {
@@ -29,7 +30,7 @@ async function getUserAssociateMissionData(req, res) {
                     mintNFT(nft.nftAddress, cryptoAddress, userAssociateMissionData[i].missionId, userAssociateMissionData[i].userId, res);
                 }
             }
-            return res.status(200).json(`NFT rewarded successfully to the eligible customers`);
+            //  return res.status(200).json(`NFT rewarded successfully to the eligible customers`);
 
         } else {
             return res.status(500).json(`No records found`);
