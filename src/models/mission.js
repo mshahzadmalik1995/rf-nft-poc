@@ -44,6 +44,10 @@ const missionSchema = new mongoose.Schema(
             type:String,
             required:true
         },
+        nftImagePath:{
+            type:String,
+            required:true
+        },
         isValid: {
             type: Boolean,
             required: true

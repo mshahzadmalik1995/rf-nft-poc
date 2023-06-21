@@ -125,7 +125,8 @@ const RegisterForMission = () => {
                 missionChecklistCountComplete:0,
                 missionImageName: missionData.missionImageName,
                 missionImagePath: missionData.missionImagePath,
-                nftId: missionData.nftId
+                nftId: missionData.nftId,
+                nftImagePath:missionData.nftImagePath
             })
           })
           if(response.status === 200){

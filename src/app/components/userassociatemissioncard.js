@@ -23,31 +23,13 @@ const UserAssociateMissionCard = ({ props }) => {
     const router = useRouter();
     const classes = useStyles();
     const { userLoginData } = useContext(MyContext);
-    const { _id, missionId, missionCode, missionName, missionDescription, missionCheckList, missionImagePath } = props;
+    const { _id, missionId, missionCode, missionName, missionDescription, missionCheckList, missionImagePath, nftImagePath } = props;
     const [imageName, setImageName] = useState(null);
     const [progress, setProgress] = useState(null);
     const [nftData, setNftData] = useState();
     const [progressStatus, setProgressStatus] = useState(null);
 
-    useEffect(() => { const getNftData = async () => {
-        try {
-
-            const response = await fetch(`/api/getnfts?missionId=${missionId}`, {
-                method: 'GET',
-                headers: { "Content_Type": "application/json" },
-            })
-            const data = await response.json()
-            if (response.status === 200) {
-                setNftData(data.nftData);
-                console.log("inside if block")
-            } else {
-                console.log("no data found while fetching mission!")
-            }
-        } catch (e) {
-            console.error('Error fetching data in fetching mission :', e);
-        }
-    }
-    getNftData();
+    useEffect(() => { 
         
         const calculateProgress = () => {
             let ctr = 0;
@@ -90,7 +72,7 @@ const UserAssociateMissionCard = ({ props }) => {
                 </div>
                 <div className="relative z-10 flex justify-between items-center mb-2">
                     <div className="flex gap-1 items-center">
-                      {nftData &&  <img src={nftData.nftImagePath} alt="background image" className="w-10 h-10 rounded-full" /> }
+                      {nftImagePath &&  <img src={nftImagePath} alt="background image" className="w-10 h-10 rounded-full" /> }
                         <p className="text-sm text-white">NFT Token Reward</p>
                     </div>
                     <div className="items-center">

@@ -62,6 +62,10 @@ const userAssociateMissionSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
+        nftImagePath:{
+            type:String,
+            required:false,
+        },
         missionCheckList: [
             {
                 id: Number,

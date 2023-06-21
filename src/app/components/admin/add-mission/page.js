@@ -48,7 +48,8 @@ const AddMissionForm = () => {
         title:"",
         description:"",
         missionCode:"",
-        nftId:""
+        nftId:"",
+        nftImagePath:""
     })
     const classes = useStyles();
     const router = useRouter();
@@ -119,6 +120,7 @@ const AddMissionForm = () => {
             formData.append("nftRewardCount", 0);
             formData.append("nftId", missionData.nftId)
             formData.append("isValid", true);
+            formData.append("nftImagePath", missionData.nftImagePath)
             const response = await fetch('/api/savemissionupdate', {
                 method: 'POST',
                 headers: { "Content_Type": "multipart/form-data" },
@@ -153,7 +155,10 @@ const AddMissionForm = () => {
 
     const handleChange = (event) => {
         setSelectedOption(event.target.value);
-        setMissionData((prev) => ({...prev, nftId: event.target.value}));
+        const nft = nftData.find((obj) => obj._id === event.target.value);
+        setMissionData((prev) => ({...prev, nftId: event.target.value, nftImagePath: nft.nftImagePath}));
+        console.log("missionData", missionData)
+        
         console.log(selectedOption)
       };
 

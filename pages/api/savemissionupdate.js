@@ -35,7 +35,7 @@ export default async function savemissionupdate(req, res)  {
         {
           //  console.log(req.file)
             const {originalname, destination, filename} = req.file;
-            const {nftId, nftRewardCount, missionName, missionCode, missionDescription, missionCheckList, checkListCount, isValid} = req.body;
+            const {nftId, nftRewardCount, missionName, missionCode, missionDescription, missionCheckList, checkListCount, isValid, nftImagePath} = req.body;
             console.log("missionChecklist", JSON.parse(missionCheckList));
             const missionImagePath = destination.concat("/",filename);
             let missionImagePathTemp = missionImagePath.slice(8);
@@ -50,7 +50,8 @@ export default async function savemissionupdate(req, res)  {
               nftId:nftId,
               missionImageName:originalname,
               missionImagePath:missionImagePathTemp,
-              isValid:isValid
+              isValid:isValid,
+              nftImagePath:nftImagePath
             }
             await dbConnect();
             const mission = await Mission.create(missionData);

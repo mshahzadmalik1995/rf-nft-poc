@@ -199,7 +199,7 @@ const ViewMission = ({params}) => {
                     <span className="text-black text-sm">58 people rewarded</span>
                 </div>
                 <div className="flex items-center bg-yellow-100 border-yellow-400 border-2 rounded-lg gap-2 p-2">
-                    <img src="/token1.png" alt="" className="w-12 h-12 rounded-full"/>
+                    <img src={missionData.nftImagePath} alt="" className="w-12 h-12 rounded-full"/>
                     <div className="flex flex-col">
                         <h2 className="text-red-600 text-sm">NFT Token Name</h2>
                         <p className="text-xs">Lorem ipsum dolor sit amet, consecutor adisapic elit sed to eliptis</p>
