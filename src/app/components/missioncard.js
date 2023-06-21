@@ -63,11 +63,11 @@ const MissionCard = ({ props }) => {
         <div className="flex flex-col p-2 mt-2">
             <h1 className="text-lg text-red-500 ">{`Mission ${missionCode}`}</h1>
             <div className="relative w-96 h-50 p-1 mt-1">
-                <div className="absolute inset-0 rounded-lg">
+                <div className="absolute inset-0 h-50 rounded-lg">
                     <img
                         src={missionImagePath}
                         alt="background image"
-                        className="w-96 h-50 rounded-lg"
+                        className="w-96 max-h-60 rounded-lg"
                     />
                 </div>
                 <div className="relative z-10 flex flex-col items-start w-80 h-40 mt-4 ml-4">

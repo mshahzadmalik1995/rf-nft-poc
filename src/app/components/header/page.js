@@ -12,11 +12,46 @@ const Header = () => {
     var updatedUserLoginData;
     //console.log(updatedUserLoginData.username)
     const [userName, setUserName] = useState();
+    const [userData, setUserData] = useState();
+    const [userShowingData, setUserShowingData] = useState({
+        totalMissionCount:"0",
+        totalMissionComplete:"0",
+    })
 
     useEffect(() => {
         const userLoginData = localStorage.getItem("myUserState");
         updatedUserLoginData = JSON.parse(userLoginData);
        setUserName(updatedUserLoginData.username)
+       const getUserMissionData = async () => {
+
+        try{
+
+            const response = await fetch(`/api/getuserassociatemission?userId=${updatedUserLoginData._id}`, {
+                method: 'GET',
+                headers: {"Content_Type":"application/json"},
+                
+            })
+            const data = await response.json()
+            console.log(data)
+            if(Object.keys(data.userMission).length != 0 && response.status === 200){
+                setUserData(data.userMission);
+                const missionData = data.userMission;
+                console.log("missionDAta", missionData)
+                console.log(missionData.length)
+                const value = missionData.filter((data) => data.missionCompleted === true);
+                console.log("value", value);
+                console.log(value.length)
+                setUserShowingData((prev) => ({...prev, totalMissionCount: missionData.length, totalMissionComplete : value.length}));
+                console.log(userShowingData)
+            }
+            else{
+                console.log("no data found while fetching user mission!.")
+            }
+        } catch(e) {
+            console.error('Error fetching data in fetching user mission :', e);
+        }
+    }
+    getUserMissionData();
     },[])
     return (
         <div className="flex flex-col flex-wrap  mt-2">
@@ -55,7 +90,8 @@ const Header = () => {
                         <div className="flex flex-col">
                             <span className="text-red-800 text-sm">Mission</span>
                             <span className='text-white text-sm'>Status</span>
-                            <span className="text-red-800 "><span className="text-4xl font-bold">2</span>/5</span>
+                            {/*<span className="text-red-800 "><span className="text-4xl font-bold">2</span>/5</span>*/}
+                            <span className="text-red-800 "><span className="text-4xl font-bold">{userShowingData.totalMissionComplete}</span>/{userShowingData.totalMissionCount}</span>
                         </div>
                 </div>
             </div>

@@ -63,7 +63,7 @@ const UserAssociateMissionCard = ({ props }) => {
                     <img
                         src={missionImagePath}
                         alt="background image"
-                        className="w-96 h-50 rounded-lg"
+                        className="w-96 max-h-64 rounded-lg"
                     />
                 </div>
                 <div className="relative z-10 flex flex-col items-start  w-80 h-40 mt-1 ml-4 ">
