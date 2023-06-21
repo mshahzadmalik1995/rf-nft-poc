@@ -88,12 +88,12 @@ const Home = () => {
     
 
     return (
-        <div className="flex flex-col gap-2  w-full">
+        <div className="flex flex-col flex-wrap gap-2 p-2 w-full">
             <Header />
 
          {  showMyMissions  && <div className={`${showMyMissions ? `mt-2` : `mt-0`} `}>
                 <h1 className="text-black-400 font-bold p-2 text-2xl">Enrolled Missions</h1>
-                <div className="flex absolute flex-wrap p-2 gap-2 mt-2">
+                <div className="flex flex-wrap p-2 gap-2 mt-2">
                     {
                         dataUser && dataUser.map((value, index) => {
                             return <UserAssociateMissionCard props={value} key={index} />
@@ -102,9 +102,9 @@ const Home = () => {
                 </div>
                 </div> }
 
-            <div className={`${showMyMissions ? `sm:mt-96 lg:mt-96`: `mt-16` }`}>
+            <div className="mt-16">
                 <h1 className="text-black-400 font-bold p-2 text-2xl">New Missions Available</h1>
-                <div className="flex absolute flex-wrap p-2 gap-2 mt-2">
+                <div className="flex flex-wrap p-2 gap-2 mt-2">
                     {
                         data && data.map((value, index) => {
                             return <MissionCard props={value} key={index} />
