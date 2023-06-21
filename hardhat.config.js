@@ -6,8 +6,8 @@ require("dotenv").config()
 
 require("hardhat-deploy");
 
-const PRIVATE_KEY = process.env.NEXT_PUBLIC_PRIVATE_KEY;
-const SEPOLIA_RPC_URL = process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL;
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
+const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL;
 
 
 module.exports = {
@@ -20,7 +20,7 @@ module.exports = {
       chainId: 11155111
     }
   },
-  namedAccounts : {
+  namedAccounts: {
     deployer: {
       default: 0
     },
