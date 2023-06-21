@@ -14,15 +14,15 @@ import UserAssociateMissionCard from "../userassociatemissioncard";
 const Home = () => {
     const [data, setData] = useState();
     const [dataUser, setDataUser] = useState();
-    const userData = localStorage.getItem("myUserState");
-    const parsedUserData = JSON.parse(userData);
    // const [showMyMissions, setShowMyMissions] = useState();
    const [showMyMissions, setShowMyMissions] = useState(true);
     //var missionIdToRemove = [];
     const missionIdToRemove = [];
     const [dynamicMargin, setDynamicMargin] = useState(0);
-
+    
     useEffect(() => {
+        const userData = localStorage.getItem("myUserState");
+        const parsedUserData = JSON.parse(userData);
         const getUserMissionData = async () => {
 
             try{
@@ -40,7 +40,6 @@ const Home = () => {
                     });
                     console.log("missionidtoremove array:",missionIdToRemove)
                     setShowMyMissions(true);
-                    setDynamicMargin(Object.keys(data.userMission).length * 500);
                 }
                 else{
                     //setShowMyMissions("hidden")
@@ -52,9 +51,6 @@ const Home = () => {
             }
         }
         getUserMissionData();
-    },[])
-
-    useEffect(() => {
 
         const getMission = async () => {
             try{
@@ -81,10 +77,7 @@ const Home = () => {
             }
         }
         getMission();
-
     },[])
-
-    console.log(`dynamicMargin ${dynamicMargin}`)
     
 
     return (
