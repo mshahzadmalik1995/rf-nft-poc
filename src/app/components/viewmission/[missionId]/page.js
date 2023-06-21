@@ -188,7 +188,7 @@ const ViewMission = ({params}) => {
                         className="w-92 h-48 items-center justify-center rounded-lg"
                     />
                 </div>
-                <div className="relative z-10  top-16 w-80 h-10 capitalize mx-1 ml-4">
+                <div className="relative z-10  top-8 w-80 h-10 capitalize  ml-6">
                     <h1 className='text-lg font-bold text-white  break-word'>{missionData.missionName.substring(0, getPosition(missionData.missionName, " ", 2))}</h1>
                     <h1 className="text-lg font-bold text-red-700">{missionData.missionName.substring(getPosition(missionData.missionName, " ", 2)+1)}</h1>
                 </div>

@@ -8,6 +8,7 @@ import { ProgressBar, Step } from "react-step-progress-bar";
 import MissionCard from "../missioncard";
 import Header from "../header/page";
 import MyContext from "@/app/context/mycontext";
+import UserAssociateMissionCard from "../userassociatemissioncard";
 
 
 const Home = () => {
@@ -15,12 +16,14 @@ const Home = () => {
     const [dataUser, setDataUser] = useState();
     const userData = localStorage.getItem("myUserState");
     const parsedUserData = JSON.parse(userData);
-    const [showMyMissions, setShowMyMissions] = useState();
-    var missionIdToRemove = [];
+   // const [showMyMissions, setShowMyMissions] = useState();
+   const [showMyMissions, setShowMyMissions] = useState(true);
+    //var missionIdToRemove = [];
+    const missionIdToRemove = [];
+    const [dynamicMargin, setDynamicMargin] = useState(0);
 
     useEffect(() => {
-
-      /*  const getUserMissionData = async () => {
+        const getUserMissionData = async () => {
 
             try{
 
@@ -36,16 +39,22 @@ const Home = () => {
                         missionIdToRemove.push(userMission.missionId)
                     });
                     console.log("missionidtoremove array:",missionIdToRemove)
+                    setShowMyMissions(true);
+                    setDynamicMargin(Object.keys(data.userMission).length * 500);
                 }
                 else{
-                    setShowMyMissions("hidden")
+                    //setShowMyMissions("hidden")
+                    setShowMyMissions((prev) => !prev);
                     console.log("no data found while fetching user mission!.")
                 }
             } catch(e) {
                 console.error('Error fetching data in fetching user mission :', e);
             }
         }
-        getUserMissionData();*/
+        getUserMissionData();
+    },[])
+
+    useEffect(() => {
 
         const getMission = async () => {
             try{
@@ -56,15 +65,13 @@ const Home = () => {
                 })
                 const data = await response.json()
                 console.log("response from API: ", data)
+                const missionData = data.mission;
                 if(Object.keys(data.mission.length != 0)){
-                    data.mission.forEach((mis , index) => {
-                        var isMissionPresent = missionIdToRemove.includes(mis._id);
-                        
-                        if(isMissionPresent){
-                            delete data.mission[index]
-                        }
-                    });
-                 setData(data.mission);
+                    const filterData = missionData.filter((item) => !missionIdToRemove.includes(item._id));
+                    console.log(`missionIdToRemove ${missionIdToRemove}`)
+                    console.log(`filterData ${filterData}`)
+                 //setData(data.mission);
+                 setData(filterData)
                  console.log("inside if block. filtered JSON:", data.mission)
                 } else {
                     console.log("no data found while fetching all missions!")
@@ -76,44 +83,35 @@ const Home = () => {
         getMission();
 
     },[])
+
+    console.log(`dynamicMargin ${dynamicMargin}`)
     
 
     return (
-        <div className="flex flex-col gap-2 relative">
-        <Header />
-        {/*<div className="mt-10" hidden={showMyMissions}>
-            <h1 className="text-black-400 font-bold p-2 text-2xl">Enrolled Missions</h1>
-            <div className="flex absolute flex-wrap p-2 gap-2 mt-4">
-                {
-                    dataUser && dataUser.map((value, index) => {
-                        return <MissionCard props={value} key={index} />
-                    })
-                }
-            </div>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-            <br></br>
-        </div>
-            <br></br> */}
+        <div className="flex flex-col gap-2  w-full">
+            <Header />
 
-            <div className="mt-10">
+         {  showMyMissions  && <div className={`${showMyMissions ? `mt-2` : `mt-0`} `}>
+                <h1 className="text-black-400 font-bold p-2 text-2xl">Enrolled Missions</h1>
+                <div className="flex absolute flex-wrap p-2 gap-2 mt-2">
+                    {
+                        dataUser && dataUser.map((value, index) => {
+                            return <UserAssociateMissionCard props={value} key={index} />
+                        })
+                    }
+                </div>
+                </div> }
+
+            <div className={`${showMyMissions ? `sm:mt-96 lg:mt-96`: `mt-16` }`}>
                 <h1 className="text-black-400 font-bold p-2 text-2xl">New Missions Available</h1>
-                <div className="flex absolute flex-wrap p-2 gap-2 mt-4">
+                <div className="flex absolute flex-wrap p-2 gap-2 mt-2">
                     {
                         data && data.map((value, index) => {
                             return <MissionCard props={value} key={index} />
                         })
                     }
                 </div>
-            </div>
+                </div>
         </div>
     )
 }

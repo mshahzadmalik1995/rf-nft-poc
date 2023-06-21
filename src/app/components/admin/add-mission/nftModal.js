@@ -85,14 +85,14 @@ const handleSubmit = async(e) => {
             setStatus('success')
             console.log('File uploaded successfully.');
           } else {
+            setStatus('error');
             console.error('Error uploading file.');
           }
     }catch(error) {
+      setStatus('error');
         console.log(error);
     }
 }
-
-console.log("image", image)
 
   return (
     <div>

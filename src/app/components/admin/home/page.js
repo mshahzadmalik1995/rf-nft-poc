@@ -37,11 +37,12 @@ const Home = () => {
                     headers: { "Content_Type": "application/json" },
                 })
                 const data = await response.json()
-                setData(data.mission);
+               // setData(data.mission);
                 console.log(data)
                 if (response.status === 200) {
                     //  router.push("/components/home")
                     //setData(data);
+                setData(data.mission);
                     console.log("inside if block")
                 } else {
                     console.log("no data found while fetching mission!")

@@ -68,7 +68,19 @@ const userAssociateMissionSchema = new mongoose.Schema(
                 task: String,
                 status: Boolean
             }
-        ]
+        ],
+        nftId:{
+            type:String,
+            required:true
+        },
+        missionImageName:{
+            type:String,
+            required:true
+        },
+        missionImagePath:{
+            type:String,
+            required:true
+        },
 
     }, {
     timestamps: true,

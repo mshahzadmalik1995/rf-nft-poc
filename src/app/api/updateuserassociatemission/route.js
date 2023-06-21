@@ -5,7 +5,7 @@ import UserAssociateMission from "@/models/userAssociateMission";
 export async function POST(req, res) {
     try{
         const body = await req.json();
-        console.log(body);
+       // console.log(body);
         //const {totalMissionChecklistCount, missionChecklistCountComplete, missionCompleted, missionCheckList} = body;
         const {missionCheckList, totalMissionChecklistCount} = body;
         let totalComplete = 0;

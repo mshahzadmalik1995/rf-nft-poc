@@ -138,7 +138,8 @@ const AddMissionForm = () => {
               }
 
             }catch(e) {
-
+                setStatus('error')
+                console.error(`Error while uploading the mission data ${e}`)
             }
     };
 
