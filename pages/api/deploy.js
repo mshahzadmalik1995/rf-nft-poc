@@ -5,12 +5,11 @@ import Nft from "@/models/nft";
 const schedule = require("node-schedule");
 
 export default async function transferNFT(req, res) {
-    schedule.scheduleJob("*/5 * * * *", async () => {
+    schedule.scheduleJob("*/1 * * * *", async () => {
         console.log("Executing task at:", new Date());
-        getUserAssociateMissionData(req, res);
+        await getUserAssociateMissionData(req, res);
         console.log("Execution Completed at:", new Date());
     });
-
 }
 
 async function getUserAssociateMissionData(req, res) {
@@ -26,8 +25,12 @@ async function getUserAssociateMissionData(req, res) {
                 const username = userAssociateMissionData[i].fullName;
 
                 if (userAssociateMissionData[i].missionCompleted) {
-                    const nft = await Nft.findOne({ missionId: userAssociateMissionData[i].missionId });
-                    mintNFT(nft.nftAddress, cryptoAddress, userAssociateMissionData[i].missionId, userAssociateMissionData[i].userId, res);
+                    if (userAssociateMissionData[i].tokenId == null) {
+                        const nft = await Nft.findOne({ missionId: userAssociateMissionData[i].missionId });
+                        mintNFT(nft.nftAddress, cryptoAddress, userAssociateMissionData[i].missionId, userAssociateMissionData[i].userId, res);
+                    } else {
+                        console.log('NFT already rewarded to the user :', username);
+                    }
                 }
             }
             //  return res.status(200).json(`NFT rewarded successfully to the eligible customers`);
@@ -63,17 +66,23 @@ async function mintNFT(contractAddress, cryptoAddress, missionId, userId, res) {
         console.log('NFT transferred successfully to user with wallet address: ', contractAddress);
         console.log('Token Id of the NFT: ', tokenId)
 
-        // const response = await fetch(`/api/updateuserassociatemissionnft?userId=${userId}&missionId=${missionId}`, {
-        //     method: 'POST',
-        //     headers: { "Content_Type": "application/json" },
-        //     body: JSON.stringify({
-        //         tokenId: tokenId,
-        //         nftAddress: contractAddress
-        //     })
-        // })
-        // const data = await response.json();
+        updateNftDetails(missionId, userId, tokenId, contractAddress);
 
     } catch (e) {
         return res.status(500).json(`Server error while claiming NFT ${e}`);
     }
+}
+
+async function updateNftDetails(missionId, userId, tokenId, contractAddress) {
+
+    let searchCriteria = {
+        userId: userId,
+        missionId: missionId
+    };
+
+    const userMission = await UserAssociateMission.findOneAndUpdate(
+        searchCriteria,
+        { tokenId: tokenId, nftAddress: contractAddress },
+        { new: true }
+    );
 }

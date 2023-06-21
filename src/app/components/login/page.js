@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import bgImage from '../images/image.jpg'
+import bgImage from '../images/image1.jpg'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useContext } from "react";
@@ -14,6 +14,7 @@ import {
     CssBaseline,
     TextField,
     Typography,
+    FormLabel,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
@@ -25,14 +26,15 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        paddingTop: '15%',
     },
     avatar: {
         margin: theme.spacing(1),
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: "40%",
-        marginTop: theme.spacing(1),
+        width: "fit-content",
+        marginTop: theme.spacing(4),
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
@@ -94,35 +96,34 @@ const Login = () => {
             <Container component="main">
                 <CssBaseline />
                 <div className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h4">
-                        Royal Enfield Login
+                    <Typography component="h1" variant="h2" style={{ color: 'red', fontWeight: 'bolder', fontFamily: 'Gill Sans' }}>
+                        Royal Enfield
                     </Typography>
                     <form className={classes.form} onSubmit={handleSubmit}>
+                        <FormLabel id="username" style={{ color: 'white' }}>Username*</FormLabel>
                         <TextField
                             variant="outlined"
                             margin="normal"
                             required
                             fullWidth
                             id="username"
-                            label="Username"
                             name="username"
                             autoComplete="username"
                             autoFocus
+                            style={{ background: 'white' }}
                             value={userData.username}
                             onChange={handleChange}
                         />
+                        <FormLabel id="password" style={{ color: 'white' }}>Password*</FormLabel>
                         <TextField
                             variant="outlined"
                             margin="normal"
                             required
                             fullWidth
                             name="password"
-                            label="Password"
                             type="password"
                             id="password"
+                            style={{ background: 'white' }}
                             autoComplete="current-password"
                             value={userData.password}
                             onChange={handleChange}
@@ -130,7 +131,7 @@ const Login = () => {
 
                         <div>
                             <Link href="/components/register">
-                                <h1 style={{ textAlign: "right" }}>
+                                <h1 style={{ textAlign: "right", color: 'white' }}>
                                     Register User
                                 </h1>
                             </Link>
@@ -140,10 +141,10 @@ const Login = () => {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            color="primary"
+                            color="secondary"
                             className={classes.submit}
                         >
-                            Sign In
+                            Login
                         </Button>
                     </form>
                 </div>
