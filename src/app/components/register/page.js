@@ -6,6 +6,7 @@ import {
   Button,
   Container,
   CssBaseline,
+  FormLabel,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -13,6 +14,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
+import bgImage from '../images/image1.jpg'
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -20,14 +23,19 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    paddingTop: "3%"
   },
   form: {
-    width: "90%",
-    marginTop: theme.spacing(1),
+    width: "fit-content",
+    margin: theme.spacing(1, 1, 0),
+  },
+  backgroundImage: {
+    backgroundImage: `url(${bgImage.src})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    height: "100vh",
+    overflow: "auto",
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -101,58 +109,62 @@ const Register = () => {
   };
 
   return (
-    <Box>
-      <img src="/RE1.jpg" alt="Royal enfield" className="w-100 h-30 rounded-lg" />
+    <Box className={classes.backgroundImage}>
       <Container component="main">
         <CssBaseline />
-
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h4">
-            Royal Enfield Register
+          <img
+            src="/royalenfield.png"
+            alt="company logo"
+            style={{ width: '30em' }}
+          />
+          <Typography component="h1" variant="h5" style={{ color: 'red' }}>
+            <b>Register User</b>
           </Typography>
           <form className={classes.form} onSubmit={handleSubmit} action={"/components/Home/page.js"}>
+            <FormLabel id="username" style={{ color: 'white' }}>Username*</FormLabel>
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
               id="username"
-              label="Full Name"
               name="username"
+              style={{ background: 'white' }}
               autoComplete="username"
               autoFocus
               value={userData.username}
               onChange={handleChange}
             />
+            <FormLabel id="password" style={{ color: 'white' }}>Password*</FormLabel>
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
               id="password"
-              label="Password"
               name="password"
+              style={{ background: 'white' }}
               autoComplete="Password"
               type="password"
               value={userData.password}
               onChange={handleChange}
             />
+            <FormLabel id="email" style={{ color: 'white' }}>Email Id*</FormLabel>
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
               id="email"
-              label="Email Id"
               name="email"
               autoComplete="Email id"
+              style={{ background: 'white' }}
               type="email"
               value={userData.email}
               onChange={handleChange}
             />
+            <FormLabel id="contactNo" style={{ color: 'white' }}>Contact Number*</FormLabel>
             <TextField
               variant="outlined"
               margin="normal"
@@ -162,10 +174,12 @@ const Register = () => {
               label="Contact Number"
               name="contactNo"
               type="number"
+              style={{ background: 'white' }}
               autoComplete="Contact Number"
               value={userData.contactNo}
               onChange={handleChange}
             />
+            <FormLabel id="pincode" style={{ color: 'white' }}>Pincode*</FormLabel>
             <TextField
               variant="outlined"
               margin="normal"
@@ -175,23 +189,24 @@ const Register = () => {
               label="Pincode"
               type="number"
               id="pincode"
+              style={{ background: 'white' }}
               autoComplete="Pincode"
               value={userData.pincode}
               onChange={handleChange}
             />
             <div>
               <br></br>
-              <label>
+              <label style={{ color: 'white' }}>
                 <b>Disclaimer:</b> By signing this form/checking this box, you acknowledge and agree that we may use the information you share with us, to communicate with you through e-mails, text messages, WhatsApp and calls, in order to provide our product or service related information and/or for promotional and marketing purposes. All information provided will be secured and processed as per our privacy policy.
               </label>
               <br></br>
               <br></br>
-              <input type="checkbox" id="disclaimer" name="disclaimer" value={isCheck} onChange={checkboxChange} />
-              <label>    I accept the terms and conditions as well as the privacy policy </label>
+              <input style={{ background: 'white' }} type="checkbox" id="disclaimer" name="disclaimer" value={isCheck} onChange={checkboxChange} />
+              <label style={{ color: 'white' }}>    I accept the terms and conditions as well as the privacy policy </label>
             </div>
             <div>
               <Link href="/components/login">
-                <h1 style={{ textAlign: "right" }}>
+                <h1 style={{ textAlign: "right", color: "white" }}>
                   Back to Sign in
                 </h1>
               </Link>
@@ -203,7 +218,7 @@ const Register = () => {
               type="submit"
               fullWidth
               variant="contained"
-              color="primary"
+              color="secondary"
               className={classes.submit}
               onclick={handleSubmit}
               disabled={buttonDisabled}
@@ -213,7 +228,7 @@ const Register = () => {
           </form>
         </div>
       </Container>
-    </Box>
+    </Box >
   );
 };
 export default Register;

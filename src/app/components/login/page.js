@@ -16,7 +16,6 @@ import {
     Typography,
     FormLabel,
 } from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,13 +27,9 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         paddingTop: '15%',
     },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
     form: {
         width: "fit-content",
-        marginTop: theme.spacing(4),
+        margin: theme.spacing(4, 0, 0),
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
@@ -96,9 +91,11 @@ const Login = () => {
             <Container component="main">
                 <CssBaseline />
                 <div className={classes.paper}>
-                    <Typography component="h1" variant="h2" style={{ color: 'red', fontWeight: 'bolder', fontFamily: 'Gill Sans' }}>
-                        Royal Enfield
-                    </Typography>
+                    <img
+                        src="/royalenfield.png"
+                        alt="company logo"
+                        style={{ width: '30em' }}
+                    />
                     <form className={classes.form} onSubmit={handleSubmit}>
                         <FormLabel id="username" style={{ color: 'white' }}>Username*</FormLabel>
                         <TextField
