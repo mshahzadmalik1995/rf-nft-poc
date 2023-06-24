@@ -1,7 +1,8 @@
 const { ethers } = require('hardhat');
-import { dbConnect } from "@/utils/dbConn";
+import { dbConnect, parseObjectId } from "@/utils/dbConn";
 import UserAssociateMission from "@/models/userAssociateMission";
 import Nft from "@/models/nft";
+import User from "@/models/user";
 const schedule = require("node-schedule");
 
 export default async function transferNFT(req, res) {
@@ -85,4 +86,9 @@ async function updateNftDetails(missionId, userId, tokenId, contractAddress) {
         { tokenId: tokenId, nftAddress: contractAddress },
         { new: true }
     );
+    const user = await User.findByIdAndUpdate({
+        _id: parseObjectId(userId), isShowReward:{$ne:true}
+    },{
+        isShowReward: true
+    }, {new : true})
 }

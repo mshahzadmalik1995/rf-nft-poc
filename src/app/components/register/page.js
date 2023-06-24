@@ -85,7 +85,8 @@ const Register = () => {
           password: userData.password,
           contactNo: userData.contactNo,
           pincode: userData.pincode,
-          role: "User"
+          role: "User",
+          isShowReward:false
         })
       })
       if (response.status === 200) {

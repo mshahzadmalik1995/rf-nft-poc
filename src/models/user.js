@@ -26,6 +26,10 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        isShowReward:{
+            type:Boolean,
+            required:false
+        }
     },
     {
         timestamps: true,

@@ -73,7 +73,10 @@ const Login = () => {
             if (response.status === 200) {
                 setStatus('success')
                 userUpdateValue(data.user)
-                if (data.user.role == 'Admin') {
+                if(data.user.isShowReward !== null && data.user.isShowReward === true) {
+                    router.push("/components/reward")
+                }
+                else if (data.user.role == 'Admin') {
                     router.push("/components/admin/home")
                 } else {
                     router.push("/components/home")

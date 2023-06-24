@@ -50,7 +50,6 @@ const Home = () => {
                 console.error('Error fetching data in fetching user mission :', e);
             }
         }
-        getUserMissionData();
 
         const getMission = async () => {
             try{
@@ -76,7 +75,11 @@ const Home = () => {
                 console.error('Error fetching data in fetching all mission :', e);
             }
         }
-        getMission();
+        const fetchDataAndProcess = async () => {
+           await getUserMissionData();
+           await getMission();
+        }
+        fetchDataAndProcess()
     },[])
     
 

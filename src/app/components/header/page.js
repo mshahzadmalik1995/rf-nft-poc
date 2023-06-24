@@ -13,6 +13,7 @@ const Header = () => {
     //console.log(updatedUserLoginData.username)
     const [userName, setUserName] = useState();
     const [userData, setUserData] = useState();
+    const [userNftData, setUserNftData] = useState();
     const [userShowingData, setUserShowingData] = useState({
         totalMissionCount:"0",
         totalMissionComplete:"0",
@@ -42,6 +43,8 @@ const Header = () => {
                 console.log("value", value);
                 console.log(value.length)
                 setUserShowingData((prev) => ({...prev, totalMissionCount: missionData.length, totalMissionComplete : value.length}));
+                const nftAssign = value.fileter((data) => data.tokenId !== null);
+                setUserNftData(nftAssign);
                 console.log(userShowingData)
             }
             else{
