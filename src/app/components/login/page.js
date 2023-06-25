@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
     form: {
         width: "fit-content",
-        margin: theme.spacing(4, 0, 0),
+        margin: theme.spacing(10, 0, 0),
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
@@ -73,7 +73,7 @@ const Login = () => {
             if (response.status === 200) {
                 setStatus('success')
                 userUpdateValue(data.user)
-                if(data.user.isShowReward !== null && data.user.isShowReward === true) {
+                if (data.user.isShowReward !== null && data.user.isShowReward === true) {
                     router.push("/components/reward")
                 }
                 else if (data.user.role == 'Admin') {
