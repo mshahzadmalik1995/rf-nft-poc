@@ -281,7 +281,7 @@ const AddMissionForm = () => {
 
                         
                         <Button variant="contained" className={classes.submit} margin="normal" color="secondary" onClick={handleOpen}>
-                            Upload Nft
+                            Create Nft
                         </Button>
 
                         <Button type="submit" className={classes.submit} margin="normal" variant="contained" color="primary">

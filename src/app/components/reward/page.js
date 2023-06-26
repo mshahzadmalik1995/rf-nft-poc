@@ -1,7 +1,7 @@
 'use client';
 
 import sampleData from "@/app/data/data";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../header/page";
 import { useRouter } from 'next/navigation';
 import {
@@ -15,6 +15,27 @@ import {
         e.preventDefault();
         router.push("/components/dashboard");
       };
+
+    useEffect(() => {
+        const userData = localStorage.getItem("myUserState");
+        const parsedUserData = JSON.parse(userData);
+        const updateUser = async() => {
+            try{
+                const response = await fetch(`/api/updateuser?userId=${parsedUserData._id}`, {
+                  method: 'POST',
+                  headers: {"Content_Type":"application/json"},
+                })
+                if(response.status === 200){
+                  
+                  setStatus('success')
+                 router.push("/components/home")
+                }
+              } catch(e) {
+                console.log(e);
+              }
+        }
+        updateUser()
+    }, [])
     
     return (
         <div className="flex flex-col gap-2 relative">

@@ -151,11 +151,11 @@ const RegisterForMission = () => {
     return(
         missionData && <div className="flex flex-col items-center mt-2">
              <div className="relative flex items-center justify-center w-92 h-48 p-1 mt-1">
-                <div className="absolute inset-0 rounded-lg ml-5">
+                <div className="absolute inset-0 min-w-full rounded-lg ml-5">
                     <img
                         src={`${missionData.missionImagePath}`}
                         alt="background image"
-                        className="w-96 h-48 items-center justify-center rounded-lg"
+                        className="w-96 h-48 min-w-full items-center justify-center rounded-lg"
                     />
                 </div>
                 <div className="relative z-10  top-8 w-80 h-10 capitalize mx-1 ml-5">
