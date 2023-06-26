@@ -25,8 +25,7 @@ import Image from "next/image";
                 })
                 if(response.status === 200){
                   
-                  setStatus('success')
-                 router.push("/components/home")
+                  console.log("data updated")
                 }
               } catch(e) {
                 console.log(e);
@@ -96,7 +95,7 @@ import Image from "next/image";
                         <span className="text-sm font-medium items-center break-words">You can trade this token or redeem it for discounts on apparels on the Royal Enfield Store</span>
                     </div>
 
-                <button className="w-72 text-white bg-red-600 p-1 rounded-lg mt-3  p-2 disabled:opacity-25" 
+                <button className="w-72 text-white bg-red-600  rounded-lg mt-3  p-2 disabled:opacity-25" 
                    onClick={handleSubmit}>My Dashboard</button>
               </div>
         </div>
