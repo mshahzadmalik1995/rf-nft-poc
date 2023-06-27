@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 import { TextField, styled } from '@mui/material';
 import { Grid, makeStyles } from '@material-ui/core';
 import { useState } from 'react';
@@ -38,6 +40,7 @@ const NftModal = (props) =>  {
   const handleClose = () => setOpen(false);
   const [status, setStatus] = useState(null);
   const classes = useStyles();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [image, setImage] = useState(null);
 
@@ -68,10 +71,13 @@ const closeModal = (e) => {
     props.handleClose();
 }
 
+console.log(`isLoading ${isLoading}`);
+
 const handleSubmit = async(e) => {
     e.preventDefault();
     try{
         const formData = new FormData();
+        setIsLoading(true);
         formData.append("image", image);
         formData.append("nftName", data.nftName);
         formData.append("nftDescription", data.nftDescription);
@@ -88,11 +94,15 @@ const handleSubmit = async(e) => {
             setStatus('error');
             console.error('Error uploading file.');
           }
+          setIsLoading(false);
     }catch(error) {
       setStatus('error');
         console.log(error);
     }
 }
+
+
+
 
   return (
     <div>
@@ -168,6 +178,13 @@ const handleSubmit = async(e) => {
                     Submit
                     </Button>
                 </Box>
+
+                { isLoading && <Backdrop
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                    open
+                  >
+                  <CircularProgress color="inherit" />
+                  </Backdrop> }
 
                 </StyledBox>
             </StyledBox>

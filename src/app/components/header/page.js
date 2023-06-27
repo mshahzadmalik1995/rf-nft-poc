@@ -44,6 +44,7 @@ const Header = () => {
                 console.log(value.length)
                 setUserShowingData((prev) => ({...prev, totalMissionCount: missionData.length, totalMissionComplete : value.length}));
                 const nftAssign = value.filter((data) => data.tokenId !== null);
+                console.log("nftAssign", nftAssign)
                 setUserNftData(nftAssign);
                 console.log(userShowingData)
             }
@@ -68,12 +69,14 @@ const Header = () => {
                     />
                 </div>
                 <div className="relative z-10 flex justify-between p-1">
-                    <div className="flex gap-3 items-center justify-between">
+                    <div className="flex gap-10 items-center justify-between">
                         <div className="relative">
                             <img src="/token3.jpg" alt="background image" className="w-12 h-12 rounded-full"/>
                             <img src="/token2.jpg" alt="background image" className="absolute top-0 left-4   w-12 h-12 rounded-full"/>
+                            <img src="/token2.jpg" alt="background image" className="absolute top-0 left-8   w-12 h-12 rounded-full"/>
+                            <img src="/token2.jpg" alt="background image" className="absolute top-0 left-12   w-12 h-12 rounded-full"/>
                         </div>
-                        <p className="ml-3 text-sm text-white border bg-transparent p-1 rounded-2xl">2 NFT Tokens</p>
+                        <p className="ml-3 text-sm text-white border bg-transparent p-1 rounded-2xl">{userNftData && userNftData.length} NFT Tokens</p>
                     </div>
                     <div className="flex gap-2 items-center">
                         <div className="border rounded-full  p-2">
