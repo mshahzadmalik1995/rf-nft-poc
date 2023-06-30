@@ -115,30 +115,29 @@ const handleSubmit = async(e) => {
         <Box sx={style}>
             <StyledBox>
                 <Box flex={1} sx={{display:"flex", flexDirection:"row", justifyContent:"space-between"}}>
-                    <Typography variant="h4">Upload the NFT!</Typography>
+                    <Typography variant="h4">Upload the NFT</Typography>
                     <RxCross1 size="2rem" color="black" onClick={closeModal}/>
                 </Box>
                 <StyledBox>
                 <Box flex={1} sx={{display:"flex",
-                    flexDirection: "column", gap:"1rem",
-                    alignItems:"center"}}>
+                    flexDirection: "column", gap:"1rem"}}>
+                    <p style={{ color: 'black' }}>Enter the NFT Name</p>
                     <TextField
                         id="outlined-basic"
-                        label="Enter the Nft name"
                         variant="filled"
                         name="nftName"
                         value={data.nftName}
                         onChange={valueChange}
                         fullWidth
                     />
+                    <p style={{ color: 'black' }}>Enter the NFT Description</p>
                     <TextField
-                    id="outlined-basic"
-                    label="Enter the Nft description"
-                    variant="filled"
-                    name="nftDescription"
-                    value={data.nftDescription}
-                    onChange={valueChange}
-                    fullWidth
+                        id="outlined-basic"
+                        variant="filled"
+                        name="nftDescription"
+                        value={data.nftDescription}
+                        onChange={valueChange}
+                        fullWidth
                     />
 
                 <Grid container direction="column" alignItems="center" spacing={2}>
@@ -166,12 +165,11 @@ const handleSubmit = async(e) => {
                 {status === 'success' && <p className="text-green-600">NFT saved successfully!</p>}
                 {status === 'error' && <p className="text-red-600">There was an error submitting your data. Please try again.</p>}
             
-                <Button
+                <Button variant="contained" color="primary" align="center"
                     sx={{
                         textAlign: "center",
-                        background: "#0049fb",
-                        width: 300,
-                        padding: 1,
+                        background: "#1C76D6",
+                        width: 330,
                     }}
                     onClick={handleSubmit}
                     >
