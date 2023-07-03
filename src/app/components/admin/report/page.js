@@ -2,29 +2,33 @@
 import React, { useEffect, useState } from "react";
 import { Table, TableHead, TableRow, TableCell, Typography, TableBody, Button, Box, IconButton } from "@material-ui/core";
 import AdminHeader from "../admin-header/page";
-import { ArrowBack } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRouter } from 'next/navigation';
-import { AccountCircle } from '@material-ui/icons';
+import bgImage from '../../images/image1.jpg'
 
 
-const styles = makeStyles(() => ({
+const styles = makeStyles((theme) => ({
     table: {
         border: "1px solid #ddd",
+        color: 'white',
+        margin: theme.spacing(1)
     },
     tableHeadRow: {
         fontWeight: "bold",
         marginBottom: "2em",
+        color: 'white'
     },
-    backButton: {
-        position: "absolute",
-        color: "red",
-        right: 16
+    root: {
+        backgroundColor: 'IndianRed',
+        minHeight: '100vh',
+        overflow: 'auto',
+        backgroundImage: `url(${bgImage.src})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
     },
-    wallet: {
-        position: "absolute",
-        left: 16
-    },
+    mint: {
+        margin: theme.spacing(1)
+    }
 }));
 
 const ViewReport = () => {
@@ -32,7 +36,6 @@ const ViewReport = () => {
     const router = useRouter();
     const classes = styles();
     const [status, setStatus] = useState(null);
-    const [walletConnected, setWalletConnected] = useState(false);
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
@@ -70,27 +73,6 @@ const ViewReport = () => {
         getUserAssociateMissionData();
     }, [])
 
-    const handleBack = () => {
-        router.push("/components/admin/home")
-    };
-
-    const handleConnectWallet = () => {
-        if (window.ethereum) {
-            window.ethereum
-                .request({ method: "eth_requestAccounts" })
-                .then((accounts) => {
-                    setWalletConnected(true);
-                    console.log("Wallet connected:", accounts);
-                })
-                .catch((error) => {
-                    console.error("Wallet connection error:", error);
-                });
-        } else {
-            console.error("MetaMask not detected");
-        }
-    }
-
-
 
     async function handleMint(event) {
         event.preventDefault();
@@ -116,29 +98,16 @@ const ViewReport = () => {
 
 
     return (
-        <div className="flex flex-col gap-2 relative">
+        <div className={classes.root}>
             <AdminHeader />
             <div align="center">
-                <Box marginTop={5} display="flex" flexDirection="column" alignItems="center">
-
-                    <IconButton title="Click to connect the wallet" className={classes.wallet} onClick={handleConnectWallet}>
-                        <AccountCircle />
-                    </IconButton>
-
-                    <Typography variant="h5" gutterBottom>
-                        View Report
+                <Box marginTop={1} display="flex" flexDirection="column" alignItems="center">
+                    <Typography variant="h4" style={{ color: 'white' }} gutterBottom>
+                        Mission Status Report
                     </Typography>
-                    {walletConnected === true && <p className="text-green-600">Wallet connected successfully.</p>}
                     {status === true && <p className="text-green-600">NFT rewarded successfully to the eligible customers</p>}
                     {status === false && <p className="text-red-600">Server Error</p>}
-                    <br></br>
-                    <Button variant="contained" onClick={handleMint} color="primary">
-                        Mint All
-                    </Button>
-                    <IconButton title="Click to go back to home page" className={classes.backButton} onClick={handleBack}>
-                        <ArrowBack />
-                    </IconButton>
-                    <br></br>
+
                     <Table className={classes.table} variant="outlined">
                         <TableHead>
                             <TableRow>
@@ -153,11 +122,11 @@ const ViewReport = () => {
                         <TableBody>
                             {users.map((user) => (
                                 <TableRow key={user._id}>
-                                    <TableCell>{user.fullName}</TableCell>
-                                    <TableCell>{user.cryptoAddress}</TableCell>
-                                    <TableCell>{user.missionCode}</TableCell>
-                                    <TableCell>{user.missionStatus}</TableCell>
-                                    <TableCell>{user.missionCompleted ? "Yes" : "No"}</TableCell>
+                                    <TableCell className={classes.tableHeadRow}>{user.fullName}</TableCell>
+                                    <TableCell className={classes.tableHeadRow}>{user.cryptoAddress}</TableCell>
+                                    <TableCell className={classes.tableHeadRow}>{user.missionCode}</TableCell>
+                                    <TableCell className={classes.tableHeadRow}>{user.missionStatus}</TableCell>
+                                    <TableCell className={classes.tableHeadRow}>{user.missionCompleted ? "Yes" : "No"}</TableCell>
                                     {/* <TableCell>
                                         <Button disbalevariant="contained" onClick={handleMint} disabled={user.nftRewarded == "Yes" && user.missionStatus == user.missionCheckList.length + " of " + user.missionCheckList.length} color="primary">
                                             Mint
@@ -167,6 +136,9 @@ const ViewReport = () => {
                             ))}
                         </TableBody>
                     </Table>
+                    <Button variant="contained" className={classes.mint} onClick={handleMint} color="secondary">
+                        Mint All
+                    </Button>
                 </Box>
             </div>
         </div>

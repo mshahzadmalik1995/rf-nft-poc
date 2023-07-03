@@ -110,7 +110,7 @@ const Login = () => {
                             name="username"
                             autoComplete="username"
                             autoFocus
-                            style={{ background: 'white' }}
+                            style={{ background: 'white', marginBottom: '16px' }}
                             value={userData.username}
                             onChange={handleChange}
                         />
@@ -123,7 +123,7 @@ const Login = () => {
                             name="password"
                             type="password"
                             id="password"
-                            style={{ background: 'white' }}
+                            style={{ background: 'white', marginBottom: '16px' }}
                             autoComplete="current-password"
                             value={userData.password}
                             onChange={handleChange}
