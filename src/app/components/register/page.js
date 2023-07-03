@@ -86,7 +86,7 @@ const Register = () => {
           contactNo: userData.contactNo,
           pincode: userData.pincode,
           role: "User",
-          isShowReward:false
+          isShowReward: false
         })
       })
       if (response.status === 200) {
@@ -131,7 +131,7 @@ const Register = () => {
               fullWidth
               id="username"
               name="username"
-              style={{ background: 'white' }}
+              style={{ background: 'white', marginBottom: '16px' }}
               autoComplete="username"
               autoFocus
               value={userData.username}
@@ -145,7 +145,7 @@ const Register = () => {
               fullWidth
               id="password"
               name="password"
-              style={{ background: 'white' }}
+              style={{ background: 'white', marginBottom: '16px' }}
               autoComplete="Password"
               type="password"
               value={userData.password}
@@ -160,7 +160,7 @@ const Register = () => {
               id="email"
               name="email"
               autoComplete="Email id"
-              style={{ background: 'white' }}
+              style={{ background: 'white', marginBottom: '16px' }}
               type="email"
               value={userData.email}
               onChange={handleChange}
@@ -175,7 +175,7 @@ const Register = () => {
               label="Contact Number"
               name="contactNo"
               type="number"
-              style={{ background: 'white' }}
+              style={{ background: 'white', marginBottom: '16px' }}
               autoComplete="Contact Number"
               value={userData.contactNo}
               onChange={handleChange}
@@ -190,7 +190,7 @@ const Register = () => {
               label="Pincode"
               type="number"
               id="pincode"
-              style={{ background: 'white' }}
+              style={{ background: 'white', marginBottom: '16px' }}
               autoComplete="Pincode"
               value={userData.pincode}
               onChange={handleChange}
