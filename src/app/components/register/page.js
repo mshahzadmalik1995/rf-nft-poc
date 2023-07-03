@@ -172,7 +172,6 @@ const Register = () => {
               required
               fullWidth
               id="contactNo"
-              label="Contact Number"
               name="contactNo"
               type="number"
               style={{ background: 'white', marginBottom: '16px' }}
@@ -187,7 +186,6 @@ const Register = () => {
               required
               fullWidth
               name="pincode"
-              label="Pincode"
               type="number"
               id="pincode"
               style={{ background: 'white', marginBottom: '16px' }}

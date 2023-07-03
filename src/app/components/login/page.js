@@ -130,10 +130,11 @@ const Login = () => {
                         />
 
                         <div>
-                            <Link href="/components/register">
-                                <h1 style={{ textAlign: "right", color: 'white' }}>
-                                    Register User
-                                </h1>
+                            <Link href="/components/register" style={{ color: 'white' }}>
+                                Register user
+                            </Link>
+                            <Link href="/" style={{ float: "right", color: 'white' }}>
+                                Forgot password?
                             </Link>
                         </div>
                         {status === 'error' && <p className="text-red-600">Wrong credential, try again.</p>}
@@ -142,6 +143,7 @@ const Login = () => {
                             fullWidth
                             variant="contained"
                             color="secondary"
+                            style={{ backgroundColor: 'red' }}
                             className={classes.submit}
                         >
                             Login

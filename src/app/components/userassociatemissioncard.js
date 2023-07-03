@@ -7,7 +7,7 @@ import { LinearProgress, makeStyles } from '@material-ui/core';
 const UserAssociateMissionCard = ({ props }) => {
     //const {name, missionName, description, backgroundImage, tokenImage, tokenDescription} = props;
 
-    
+
     const useStyles = makeStyles((theme) => ({
         progress: {
             backgroundColor: theme.palette.error.main,
@@ -29,8 +29,8 @@ const UserAssociateMissionCard = ({ props }) => {
     const [nftData, setNftData] = useState();
     const [progressStatus, setProgressStatus] = useState(null);
 
-    useEffect(() => { 
-        
+    useEffect(() => {
+
         const calculateProgress = () => {
             let ctr = 0;
             for (let j = 0; j < missionCheckList.length; j++) {
@@ -56,8 +56,9 @@ const UserAssociateMissionCard = ({ props }) => {
     }
     return (
         <div className="flex flex-col p-2 mt-2">
-            <h1 className="text-lg text-red-500 ">{`Mission ${missionCode}`}</h1>
-            <p>{`${progressStatus} Completed`}</p> 
+            <h1 className="text-lg text-red-500 ">{`Mission ${missionCode}`}
+                <span style={{ float: 'right', color: 'black' }}>{`${progressStatus} Completed`}</span>
+            </h1>
             <div className="relative w-96 h-50 p-1 mt-1">
                 <div className="absolute inset-0 rounded-lg">
                     <img
@@ -72,7 +73,7 @@ const UserAssociateMissionCard = ({ props }) => {
                 </div>
                 <div className="relative z-10 flex justify-between items-center mb-2">
                     <div className="flex gap-1 items-center">
-                      {nftImagePath &&  <img src={nftImagePath} alt="background image" className="w-10 h-10 rounded-full" /> }
+                        {nftImagePath && <img src={nftImagePath} alt="background image" className="w-10 h-10 rounded-full" />}
                         <p className="text-sm text-white">NFT Token Reward</p>
                     </div>
                     <div className="items-center">
