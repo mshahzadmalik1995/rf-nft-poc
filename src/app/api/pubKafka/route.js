@@ -6,7 +6,10 @@ export async function POST(req, res) {
     const body = await req.json();
     const { message } = body;
     const kafkaConfig = new KafkaConfig();
-    const messages = [{ key: "key1", value: message }];
+    const messages = [
+      { key: "key1", value: message },
+      { key: "key2", value: "message123" },
+    ];
     kafkaConfig.produce("my-topic", messages);
 
     return NextResponse.json(
