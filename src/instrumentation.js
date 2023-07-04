@@ -1,6 +1,6 @@
-import transferNFT from "../pages/utils/mint";
+// import transferNFT from "../pages/utils/mint";
 
 export async function register() {
   console.log("server started.......");
-  await transferNFT();
+  // await transferNFT();
 }
