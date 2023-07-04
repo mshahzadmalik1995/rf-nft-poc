@@ -39,7 +39,7 @@ const UserAssociateMissionCard = ({ props }) => {
                 }
             }
             if (ctr == missionCheckList.length) {
-                setProgressStatus('Mission');
+                setProgressStatus('');
             } else {
                 setProgressStatus(ctr + ' of ' + missionCheckList.length);
             }

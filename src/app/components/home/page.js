@@ -16,6 +16,7 @@ const Home = () => {
     const [dataUser, setDataUser] = useState();
     // const [showMyMissions, setShowMyMissions] = useState();
     const [showMyMissions, setShowMyMissions] = useState(true);
+    const [showMissions, setShowMissions] = useState(true);
     //var missionIdToRemove = [];
     const missionIdToRemove = [];
     const [dynamicMargin, setDynamicMargin] = useState(0);
@@ -66,6 +67,9 @@ const Home = () => {
                     console.log(`missionIdToRemove ${missionIdToRemove}`)
                     console.log(`filterData ${filterData}`)
                     //setData(data.mission);
+                    if (filterData.length == 0) {
+                        setShowMissions(false);
+                    }
                     setData(filterData)
                     console.log("inside if block. filtered JSON:", data.mission)
                 } else {
@@ -98,7 +102,7 @@ const Home = () => {
                 </div>
             </div>}
 
-            <div className="mt-16">
+            {showMissions && <div className="mt-16">
                 <h1 className="text-black-400 font-bold p-2 text-2xl">New Missions Available</h1>
                 <div className="flex flex-wrap p-2 gap-2 mt-2">
                     {
@@ -107,7 +111,7 @@ const Home = () => {
                         })
                     }
                 </div>
-            </div>
+            </div>}
         </div>
     )
 }
