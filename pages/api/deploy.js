@@ -6,6 +6,7 @@ import User from "@/models/user";
 const schedule = require("node-schedule");
 
 export default async function transferNFT(req, res) {
+    console.log("insider transfer Nft");
     schedule.scheduleJob("*/1 * * * *", async () => {
         console.log("Executing task at:", new Date());
         await getUserAssociateMissionData(req, res);

@@ -101,6 +101,35 @@ const handleSubmit = async(e) => {
     }
 }
 
+/*const handleSubmit = async(e) => {
+  e.preventDefault();
+  try{
+      const formData = new FormData();
+      setIsLoading(true);
+      formData.append("image", image);
+      formData.append("nftName", data.nftName);
+      formData.append("nftDescription", data.nftDescription);
+      formData.append("networkConnect", "sepolia")
+      const response = await fetch('/api/deploytask', {
+          method: 'POST',
+          headers: { "Content_Type": "multipart/form-data" },
+          body: formData
+      });
+    
+        if (response.ok) {
+          setStatus('success')
+          console.log('File uploaded successfully.');
+        } else {
+          setStatus('error');
+          console.error('Error uploading file.');
+        }
+        setIsLoading(false);
+  }catch(error) {
+    setStatus('error');
+      console.log(error);
+  }
+}*/
+
 
 
 

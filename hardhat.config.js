@@ -5,6 +5,9 @@ require("@nomiclabs/hardhat-etherscan")
 require("dotenv").config()
 
 require("hardhat-deploy");
+//require(".src/src/tasks/deployContract")
+//require("./src/tasks/deployContract")
+//require("./tasks/deployContract");
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const SEPOLIA_RPC_URL = process.env.SEPOLIA_RPC_URL;
