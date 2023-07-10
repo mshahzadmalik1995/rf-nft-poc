@@ -140,8 +140,6 @@ const AddMissionForm = () => {
             if (response.status === 200) {
                 setStatus('success')
                 handleCancel()
-                setStatus('success')
-                router.push("/components/admin/home")
                 console.log('File uploaded successfully.');
             } else {
                 console.error('Error uploading file.');
