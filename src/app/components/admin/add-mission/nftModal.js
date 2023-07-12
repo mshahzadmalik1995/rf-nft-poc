@@ -47,15 +47,10 @@ const NftModal = (props) =>  {
     const [data, setData] = useState({
         nftName:"",
         nftDescription:"",
+        imageByteArray:"",
+        rarity:"",
+        tokenCtr:"",
     })
-
-  const handleImageUploadForModal = (e) => {
-    const files = e.target.files[0];
-    //console.log(files.name)
-    console.log(files)
-    setImage(files);
-    //setImage(URL.createObjectURL(files))
-  }
 
   const valueChange = (e) => {
     const name = e.target.name;
@@ -65,13 +60,113 @@ const NftModal = (props) =>  {
 
 const closeModal = (e) => {
     e.preventDefault();
-    setData((prev) => ({...prev, nftName:"", nftDescription:""}))
+    setData((prev) => ({...prev, nftName:"", nftDescription:"", imageByteArray:""}))
     setImage(null);
     setStatus(null)
+    
     props.handleClose();
 }
 
-console.log(`isLoading ${isLoading}`);
+//console.log(`isLoading ${isLoading}`);
+
+
+
+const handleImageUploadForModal = (e) => {
+  const files = e.target.files[0];
+  //console.log(files.name)
+  //console.log(files)
+  setImage(files);
+  
+  const reader = new FileReader();
+  reader.onload = async () => {
+    const byteArray = Array.from(new Uint8Array(reader.result));
+    //await sendByteArrayToAPI(byteArray);
+    console.log("byteArray", byteArray)
+    setData((prev) => ({...prev, imageByteArray:byteArray}));
+    //formData.append("imageByteArray", byteArray);
+  };
+  reader.readAsArrayBuffer(files);
+  console.log("data", data)
+  //setImage(URL.createObjectURL(files))
+}
+
+
+//console.log("data", data)
+
+/*const handleSubmit = async(e) => {
+  e.preventDefault();
+  try{
+      const formData = new FormData();
+      setIsLoading(true);
+      console.log("data", data)
+      formData.append("image", image);
+      formData.append("nftName", data.nftName);
+      formData.append("nftDescription", data.nftDescription);
+      formData.append("imageByteArray", data.imageByteArray);
+      formData.append("rarity", data.rarity);
+      formData.append("tokenCtr","0");
+     // console.log("formData",formData)
+      const response = await fetch('/api/uploadImageAnddeployUsingkafka', {
+          method: 'POST',
+          headers: { "Content_Type": "multipart/form-data" },
+          body: formData
+      });
+    
+        if (response.ok) {
+          setStatus('success')
+          console.log('File uploaded successfully.');
+        } else {
+          setStatus('error');
+          console.error('Error uploading file.');
+        }
+        setIsLoading(false);
+  }catch(error) {
+    setStatus('error');
+      console.log(error);
+  }
+}*/
+
+/*const handleSubmit = async(e) => {
+  e.preventDefault();
+  try{
+      const formData = new FormData();
+      setIsLoading(true);
+
+      const reader = new FileReader();
+      reader.onload = async () => {
+        const byteArray = Array.from(new Uint8Array(reader.result));
+        //await sendByteArrayToAPI(byteArray);
+        console.log("byteArray", byteArray)
+        setData((prev) => ({...prev, imageByteArray:byteArray}));
+       // formData.append("image", byteArray);
+      };
+      reader.readAsArrayBuffer(image);
+     formData.append("image", image);
+      formData.append("nftName", data.nftName);
+      formData.append("nftDescription", data.nftDescription);
+      const response = await fetch('/api/deploytaskkafka', {
+          method: 'POST',
+          headers: { "Content_Type": "multipart/json" },
+          body: JSON.stringify({
+            nftName:data.nftName,
+            nftDescription: data.nftDescription,
+            imageByteArray: data.imageByteArray
+          })
+      });
+    
+        if (response.ok) {
+          setStatus('success')
+          console.log('File uploaded successfully.');
+        } else {
+          setStatus('error');
+          console.error('Error uploading file.');
+        }
+        setIsLoading(false);
+  }catch(error) {
+    setStatus('error');
+      console.log(error);
+  }
+}*/
 
 const handleSubmit = async(e) => {
     e.preventDefault();
@@ -81,6 +176,8 @@ const handleSubmit = async(e) => {
         formData.append("image", image);
         formData.append("nftName", data.nftName);
         formData.append("nftDescription", data.nftDescription);
+        formData.append("rarity", data.rarity);
+        formData.append("tokenCtr","0");
         const response = await fetch('/api/uploadImageAnddeploy', {
             method: 'POST',
             headers: { "Content_Type": "multipart/form-data" },
@@ -165,6 +262,15 @@ const handleSubmit = async(e) => {
                         variant="filled"
                         name="nftDescription"
                         value={data.nftDescription}
+                        onChange={valueChange}
+                        fullWidth
+                    />
+                    <p style={{ color: 'black' }}>Enter the Rarity</p>
+                    <TextField
+                        id="outlined-basic"
+                        variant="filled"
+                        name="rarity"
+                        value={data.rarity}
                         onChange={valueChange}
                         fullWidth
                     />

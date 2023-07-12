@@ -4,7 +4,7 @@ const hre = require('hardhat');
 const fs = require("fs");
 const {storeTokenUriMetadata, storeImageInPinata} = require("../src/utils/singleImageUploadToPinata")
 //import { dbConnect } from '@/utils/dbConn';
-const {dbConnect} = require("../src/utils/dbConn2")
+//const {dbConnect} = require("../src/utils/dbConn2")
 
 const metadataTemplate = {
     name: "",
@@ -21,17 +21,17 @@ async function main() {
     /*const imagePath = './images/randomNft/haircut.png';
     const imageName= "haircut.png";
     const filePath= './images/myTokenURIs.json';*/
-    const connect = await dbConnect();
+    //const connect = await dbConnect();
    // console.log("connect", connect)
-    const imagePath = './public/uploads/product.png';
-    const imageName= "product.png";
+    const imagePath = './public/uploads/shampoo1.png';
+    const imageName= "shampoo1.png";
     const filePath= './public/uploads/myTokenURIs2.json';
     const networkName = hre.network.name;
     console.log(`networkName ${networkName}`)
-    const param1 = process.argv[1];
+    /*const param1 = process.argv[1];
     console.log("param1", param1)
     console.log("param2", process.argv[0]);
-    console.log("param3", process.argv[2])
+    console.log("param3", process.argv[2])*/
 //const connect = await dbConnect();
    // console.log("connect", connect);
     const tokenUris = await handleTokenUris(imagePath, imageName);
@@ -42,6 +42,8 @@ async function main() {
     const Nft1 = await hre.ethers.getContractFactory('GenericNft');
     const nft1 = await Nft1.deploy(tokenUris, "abc", "abc");
     await nft1.deployed();
+    console.log(nft1)
+    console.log(nft1.interface.format('json'));
     console.log(`Nft contract deployed to address: ${nft1.address}`);
     const data1 = {
         address: nft1.address,
