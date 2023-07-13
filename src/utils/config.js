@@ -5,9 +5,10 @@ class KafkaConfig {
     this.kafka = new Kafka({
       clientId: "nodejs-kafka",
       brokers: ["localhost:9092"],
+      allowAutoTopicCreation: true
     });
     this.producer = this.kafka.producer();
-    this.consumer = this.kafka.consumer({ groupId: "test-group" });
+    this.consumer = this.kafka.consumer({ groupId: "test-group"});
   }
 
   async produce(topic, messages) {
