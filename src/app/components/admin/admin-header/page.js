@@ -62,6 +62,14 @@ const AdminHeader = () => {
         router.push("/components/admin/add-mission")
     };
 
+    const handleCreateNFT = (e) => {
+        router.push("/components/admin/create-nft")
+    };
+
+    const handleCreateChecklist = (e) => {
+        router.push("/components/admin/create-checklist")
+    };
+
     const handleDashboard = () => {
         router.push("/components/admin/home")
     }
@@ -73,14 +81,15 @@ const AdminHeader = () => {
                 alt="company logo"
                 style={{ width: '23em', alignSelf: 'center', margin: '1em' }}
             />
+            <h1 className='font-bold text-white text-center'>Hello {userName}, Welcome to Royal Enfield</h1>
             <br />
             <AppBar position="static" className={classes.appBar}>
                 <Toolbar>
                     <Button color="inherit" onClick={handleDashboard}>Dashboard</Button>
                     <Button color="inherit" onClick={handleTaskAdd}>Add Mission</Button>
                     <Button color="inherit" onClick={handleViewReport}>View Report</Button>
-                    <div style={{ flexGrow: .8 }}></div>
-                    <h1 className='font-bold text-white text-center'>Hello {userName}, Welcome to Royal Enfield</h1>
+                    <Button color="inherit" onClick={handleCreateNFT}>Create NFT</Button>
+                    <Button color="inherit" onClick={handleCreateChecklist}>Create Checklist</Button>
                     <div style={{ flexGrow: 1 }}></div>
                     <Button color="inherit" onClick={handleConnectWallet}>
                         Connect Wallet

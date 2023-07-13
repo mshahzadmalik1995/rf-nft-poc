@@ -7,7 +7,7 @@ const schedule = require("node-schedule");
 
 export default async function transferNFT() {
   console.log("inside transferNFT");
-  schedule.scheduleJob("*/1 * * * *", async () => {
+  schedule.scheduleJob("0 */12 * * *", async () => {
     console.log("Executing task at:", new Date());
     await getUserAssociateMissionData();
     console.log("Execution Completed at:", new Date());

@@ -40,6 +40,15 @@ const nftSchema = new mongoose.Schema(
         isAssociated:{
             type:Boolean,
             required:true
+        },
+        rarity: {
+            type: Number,
+            required: true
+        },
+        tokenCtr: {
+            type: Number,
+            required: true,
+            default: 0
         }
     },{
         timestamps: true,

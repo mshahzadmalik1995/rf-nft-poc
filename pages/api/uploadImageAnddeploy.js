@@ -54,7 +54,7 @@ export const config = {
         {
           //  console.log(req.file)
             const {originalname, destination, filename} = req.file;
-            const {nftName, nftDescription} = req.body;
+            const {nftName, nftDescription, rarity, tokenCtr} = req.body;
             const nftImagePath = destination.concat("/",filename);
             let nftImagePathWithSlice = nftImagePath.slice(8);
             const tokenUris = await handleTokenUris(nftImagePath, originalname);
@@ -80,7 +80,9 @@ export const config = {
                 isAssociated:false,
                 nftAddress: nftAddress,
                 nftAbi: nftAbi,
-                nftContractName:"GenericNft"
+                nftContractName:"GenericNft",
+                rarity:rarity,
+                tokenCtr:tokenCtr
             }
             await dbConnect();
             await NFT.create(nftData);

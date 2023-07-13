@@ -1,5 +1,6 @@
 import multer from 'multer';
 import { exec } from 'child_process';
+import KafkaConfig from "../../src/utils/config";
 const {
     storeTokenUriMetadata,
     storeImageInPinata,
@@ -30,13 +31,56 @@ const storage = multer.diskStorage({
   
 const upload = multer({ storage });
 
-export const config = {
+/*export const config = {
     api: {
       bodyParser: false,
     },
-  };
+  };*/
 
-  export default async function uploadImageAndDeploy(req, res) {
+  export default async function uploadImageAndDeployKafka(req, res) {
+    
+    
+        // File upload successful
+        try 
+        {
+          //  console.log(req.file)
+           // const {originalname, destination, filename} = req.file;
+          // console.log(req);
+        //  console.log(req.body)
+          //const body = await req.json();
+         //  console.log(body)
+           // const {nftName, nftDescription} = req.body;
+          // const message = JSON.stringify(req.body);
+           const {message} = req.body;
+            console.log(message)
+            const kafkaConfig = new KafkaConfig();
+            const messages = [
+              { key: "key1", value: message },
+            ];
+            kafkaConfig.produce("my-topic", messages);
+           // const nftImagePath = destination.concat("/",filename);
+            //let nftImagePathWithSlice = nftImagePath.slice(8);
+            //const nftImagePathWithSlice = nftImagePath.slice(8);
+           // console.log("originalname", originalname)
+           // const tokenUris = await handleTokenUris(nftImagePath, originalname);
+           //const commandExecute = `yarn hardhat run --network ${network} scripts/deploy.js`
+            //const commandExecute = `yarn hardhat deployContract --network ${networkConnect} ${nftName} ${nftDescription} ${originalname} ${nftImagePathWithSlice}`
+           // const commandExecute = `yarn hardhat deployContract --network ${networkConnect}  ${nftName} ${nftDescription} ${originalname} ${nftImagePath}`
+           /* console.log("commandExecute", commandExecute);
+            exec(commandExecute, (error, stdout, stderr) => {
+                if (error) {
+                  console.error(`Error executing command: ${error}`);
+                  return;
+                }
+                console.log(`Command output: ${stdout}`);
+              });*/
+            res.status(200).json("data saved successfully")
+        } catch (e) {
+        return res.status(500).json(`Server error while user saving ${e}`);
+        }
+}
+
+  /*export default async function uploadImageAndDeploy(req, res) {
     upload.single('image')(req, res, async function (err) {
         if (err instanceof multer.MulterError) {
           return res.status(500).json(err);
@@ -73,7 +117,7 @@ export const config = {
 
       });
 }
-
+*/
 
   
 async function handleTokenUris(imagesLocation, imageName) {
