@@ -4,6 +4,7 @@ import { useContext, useState, useEffect } from 'react';
 import MyContext from "@/app/context/mycontext";
 import { LinearProgress, makeStyles } from '@material-ui/core';
 
+
 const MissionCard = ({ props }) => {
     //const {name, missionName, description, backgroundImage, tokenImage, tokenDescription} = props;
 
@@ -22,37 +23,36 @@ const MissionCard = ({ props }) => {
     const router = useRouter();
     const classes = useStyles();
     const { userLoginData } = useContext(MyContext);
-    const { _id, missionCode, missionName, missionDescription, missionCheckList, missionImagePath, nftImagePath } = props;
+    const { _id, missionCode, missionName, missionDescription, missionCheckList, missionImagePath, nftImagePath, endDate } = props;
     const [nftData, setNftData] = useState();
     const [imageName, setImageName] = useState(null);
     const [progress, setProgress] = useState(null);
     const [progressStatus, setProgressStatus] = useState(null);
+    const today = new Date();
+    const isGray = new Date(endDate) < today;
 
-   /* useEffect(() => {
-
-        const getNftData = async () => {
-            try {
-
-                const response = await fetch(`/api/getnfts?missionId=${_id}`, {
-                    method: 'GET',
-                    headers: { "Content_Type": "application/json" },
-                })
-                const data = await response.json()
-                if (response.status === 200) {
-                    setNftData(data.nftData);
-                    console.log("inside if block")
-                } else {
-                    console.log("no data found while fetching mission!")
-                }
-            } catch (e) {
-                console.error('Error fetching data in fetching mission :', e);
-            }
-        }
-        getNftData();
-    },[])*/
-
-  
-
+    /* useEffect(() => {
+ 
+     const getNftData = async () => {
+         try {
+ 
+             const response = await fetch(`/api/getnfts?missionId=${_id}`, {
+                 method: 'GET',
+                 headers: { "Content_Type": "application/json" },
+             })
+             const data = await response.json()
+             if (response.status === 200) {
+                 setNftData(data.nftData);
+                 console.log("inside if block")
+             } else {
+                 console.log("no data found while fetching mission!")
+             }
+         } catch (e) {
+             console.error('Error fetching data in fetching mission :', e);
+         }
+     }
+     getNftData();
+ },[])*/
 
 
     const buttonSubmit = (e) => {
@@ -61,13 +61,14 @@ const MissionCard = ({ props }) => {
     }
     return (
         <div className="flex flex-col p-2 mt-2">
-            <h1 className="text-lg text-red-500 ">{`Mission ${missionCode}`}</h1>
+            <h1 className="text-lg text-red-500 ">{`Mission ${missionCode}`} </h1>
             <div className="relative w-96 h-50 p-1 mt-1">
                 <div className="absolute inset-0 h-50 rounded-lg">
                     <img
                         src={missionImagePath}
                         alt="background image"
                         className="w-96 max-h-60 rounded-lg"
+                        style={{ filter: isGray ? 'grayscale(1)' : 'none' }}
                     />
                 </div>
                 <div className="relative z-10 flex flex-col items-start w-80 h-40 mt-4 ml-4">
@@ -76,12 +77,11 @@ const MissionCard = ({ props }) => {
                 </div>
                 <div className="relative z-10 flex justify-between items-center">
                     <div className="flex gap-1 items-center">
-                      {nftImagePath &&  <img src={nftImagePath} alt="background image" className="w-10 h-10 rounded-full" /> }
+                        {nftImagePath && <img src={nftImagePath} alt="background image" className="w-10 h-10 rounded-full" />}
                         <p className="text-sm text-white">NFT Token Reward</p>
                     </div>
                     <div className="items-center">
-                        <button className="bg-red-600 text-white text-sm cursor-pointer rounded-lg p-1"
-                            onClick={buttonSubmit}>View Mission</button>
+                        <button className="bg-red-600 text-white text-sm cursor-pointer rounded-lg p-1" disabled={isGray} onClick={buttonSubmit}>View Mission</button>
                     </div>
                 </div>
                 <br></br>

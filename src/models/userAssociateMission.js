@@ -62,9 +62,9 @@ const userAssociateMissionSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
-        nftImagePath:{
-            type:String,
-            required:false,
+        nftImagePath: {
+            type: String,
+            required: false,
         },
         missionCheckList: [
             {
@@ -73,18 +73,22 @@ const userAssociateMissionSchema = new mongoose.Schema(
                 status: Boolean
             }
         ],
-        nftId:{
-            type:String,
-            required:true
+        nftId: {
+            type: String,
+            required: true
         },
-        missionImageName:{
-            type:String,
-            required:true
+        missionImageName: {
+            type: String,
+            required: true
         },
-        missionImagePath:{
-            type:String,
-            required:true
+        missionImagePath: {
+            type: String,
+            required: true
         },
+        isNFTRewarded: {
+            type: Boolean,
+            required: false
+        }
 
     }, {
     timestamps: true,

@@ -11,6 +11,7 @@ import AdminHeader from "../admin-header/page";
 import { useRouter } from 'next/navigation';
 import NftModal from "./nftModal";
 import bgImage from '../../images/image1.jpg'
+import DatePicker from 'react-datepicker';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -57,25 +58,37 @@ const AddMissionForm = () => {
         description: "",
         missionCode: "",
         nftId: "",
-        nftImagePath: ""
+        nftImagePath: "",
+        startDate: "",
+        endDate: ""
     })
     const classes = useStyles();
     const router = useRouter();
     const [status, setStatus] = useState(null);
     const [open, setOpen] = useState(false);
+    const today = new Date();
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [nftData, setNftData] = useState([]);
     const [selectedOption, setSelectedOption] = useState('');
     const [missionImage, setMissionImage] = useState(null);
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+
+    const handleStartDateChange = (date) => {
+        setStartDate(date);
+    };
+
+    const handleEndDateChange = (date) => {
+        setEndDate(date);
+    };
 
     const valueChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
         setMissionData((prev) => ({ ...prev, [name]: value }));
     }
-
 
     useEffect(() => {
         const getNft = async () => {
@@ -216,6 +229,34 @@ const AddMissionForm = () => {
                         minRows={4}
                         inputProps={{ maxLength: 100 }}
                     />
+                    <Grid container spacing={2} style={{ marginBottom: '16px' }}>
+                        <Grid item xs={6}>
+                            <FormLabel id="startDate" style={{ color: 'white', marginRight: '16px' }}>Start Date*</FormLabel>
+                            <DatePicker
+                                selected={startDate}
+                                onChange={handleStartDateChange}
+                                dateFormat="dd/MM/yyyy"
+                                showIcon
+                                minDate={today}
+                                showYearDropdown
+                                placeholderText="DD/MM/YYYY"
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+
+                            <FormLabel id="endDate" style={{ color: 'white', marginRight: '16px' }}>End Date*</FormLabel>
+                            <DatePicker
+                                showIcon
+                                showYearDropdown
+                                selected={endDate}
+                                minDate={startDate || today}
+                                onChange={handleEndDateChange}
+                                dateFormat="dd/MM/yyyy"
+                                placeholderText="DD/MM/YYYY"
+                            />
+                        </Grid>
+                    </Grid>
+
                     <FormLabel id="username" style={{ color: 'white' }}>Select NFT*</FormLabel>
                     <FormControl className={classes.formControl}>
                         <Select
@@ -301,10 +342,10 @@ const AddMissionForm = () => {
                         </Button>
                     </Grid>
                 </form>
-            </Box>
+            </Box >
 
             <NftModal open={open} handleClose={handleClose} />
-        </div>
+        </div >
     );
 };
 

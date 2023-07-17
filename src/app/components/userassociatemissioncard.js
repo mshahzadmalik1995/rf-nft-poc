@@ -23,11 +23,13 @@ const UserAssociateMissionCard = ({ props }) => {
     const router = useRouter();
     const classes = useStyles();
     const { userLoginData } = useContext(MyContext);
-    const { _id, missionId, missionCode, missionName, missionDescription, missionCheckList, missionImagePath, nftImagePath } = props;
+    const { _id, missionId, missionCode, missionName, missionDescription, missionCheckList, missionImagePath, nftImagePath, endDate } = props;
     const [imageName, setImageName] = useState(null);
     const [progress, setProgress] = useState(null);
     const [nftData, setNftData] = useState();
     const [progressStatus, setProgressStatus] = useState(null);
+    const today = new Date();
+    const isGray = new Date(endDate) < today;
 
     useEffect(() => {
 
@@ -65,6 +67,7 @@ const UserAssociateMissionCard = ({ props }) => {
                         src={missionImagePath}
                         alt="background image"
                         className="w-96 max-h-64 rounded-lg"
+                        style={{ filter: isGray ? 'grayscale(1)' : 'none' }}
                     />
                 </div>
                 <div className="relative z-10 flex flex-col items-start  w-80 h-40 mt-1 ml-4 ">
@@ -77,8 +80,7 @@ const UserAssociateMissionCard = ({ props }) => {
                         <p className="text-sm text-white">NFT Token Reward</p>
                     </div>
                     <div className="items-center">
-                        <button className="bg-red-600 text-white text-sm cursor-pointer rounded-lg p-1"
-                            onClick={buttonSubmit}>View Mission</button>
+                        <button className="bg-red-600 text-white text-sm cursor-pointer rounded-lg p-1" disabled={isGray} onClick={buttonSubmit}>View Mission</button>
                     </div>
                 </div>
                 <LinearProgress

@@ -31,6 +31,7 @@ const AdminHeader = () => {
 
     const handleLogout = () => {
         userUpdateValue(null);
+        localStorage.clear();
         router.push("/");
         console.log('Logged out');
     };

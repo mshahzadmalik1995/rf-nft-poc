@@ -32,26 +32,35 @@ const missionSchema = new mongoose.Schema(
             type: Number,
             required: true
         },
-        nftId:{
-            type:String,
-            required:true
+        nftId: {
+            type: String,
+            required: true
         },
-        missionImageName:{
-            type:String,
-            required:true
+        missionImageName: {
+            type: String,
+            required: true
         },
-        missionImagePath:{
-            type:String,
-            required:true
+        missionImagePath: {
+            type: String,
+            required: true
         },
-        nftImagePath:{
-            type:String,
-            required:true
+        nftImagePath: {
+            type: String,
+            required: true
         },
         isValid: {
             type: Boolean,
             required: true
-        }
+        },
+        startDate: {
+            type: Date,
+            required: true
+        },
+        endDate: {
+            type: Date,
+            required: true
+        },
+
     }, {
     timestamps: true,
 })

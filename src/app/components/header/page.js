@@ -4,6 +4,7 @@ import { FaShoppingCart } from 'react-icons/fa'
 import { BsFillDatabaseFill } from 'react-icons/bs'
 import MyContext from "@/app/context/mycontext";
 import { useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 const Header = () => {
 
 
@@ -14,10 +15,17 @@ const Header = () => {
     const [userName, setUserName] = useState();
     const [userData, setUserData] = useState();
     const [userNftData, setUserNftData] = useState();
+    const router = useRouter();
     const [userShowingData, setUserShowingData] = useState({
         totalMissionCount: "0",
         totalMissionComplete: "0",
     })
+
+    const handleLogout = () => {
+        localStorage.clear();
+        router.push("/");
+        console.log('Logged out');
+    };
 
     useEffect(() => {
         const userLoginData = localStorage.getItem("myUserState");
@@ -90,7 +98,7 @@ const Header = () => {
                         <div className="border rounded-full  p-2">
                             <FaShoppingCart size="1rem" color="white" />
                         </div>
-                        <RxAvatar size="2rem" color="white" />
+                        <RxAvatar size="2rem" color="white" title="Click to logout" onClick={handleLogout} />
                     </div>
                 </div>
                 <div className="relative z-10 flex flex-col mt-3">

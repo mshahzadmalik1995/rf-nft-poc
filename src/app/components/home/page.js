@@ -9,9 +9,11 @@ import MissionCard from "../missioncard";
 import Header from "../header/page";
 import MyContext from "@/app/context/mycontext";
 import UserAssociateMissionCard from "../userassociatemissioncard";
+import withAuth from "../authentication/page";
+import { useRouter } from 'next/router';
 
 
-const Home = () => {
+const Home = ({ router }) => {
     const [data, setData] = useState();
     const [dataUser, setDataUser] = useState();
     // const [showMyMissions, setShowMyMissions] = useState();
@@ -35,7 +37,6 @@ const Home = () => {
                 })
                 const data = await response.json()
                 if (Object.keys(data.userMission).length != 0 && response.status === 200) {
-                    setDataUser(data.userMission);
                     data.userMission.forEach((userMission, index) => {
                         missionIdToRemove.push(userMission.missionId)
                     });
@@ -64,12 +65,14 @@ const Home = () => {
                 const missionData = data.mission;
                 if (Object.keys(data.mission.length != 0)) {
                     const filterData = missionData.filter((item) => !missionIdToRemove.includes(item._id));
+                    const userMissions = missionData.filter((item) => missionIdToRemove.includes(item._id));
                     console.log(`missionIdToRemove ${missionIdToRemove}`)
                     console.log(`filterData ${filterData}`)
                     //setData(data.mission);
                     if (filterData.length == 0) {
                         setShowMissions(false);
                     }
+                    setDataUser(userMissions)
                     setData(filterData)
                     console.log("inside if block. filtered JSON:", data.mission)
                 } else {
@@ -116,4 +119,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default withAuth(Home);
