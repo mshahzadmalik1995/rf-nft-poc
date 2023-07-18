@@ -47,7 +47,6 @@ const Login = () => {
     const classes = useStyles();
     const [status, setStatus] = useState(null);
     const { userUpdateValue } = useContext(MyContext);
-    const { isAuthenticated, login, logout } = useContext(AuthContext);
 
     const [userData, setUserData] = useState({
         username: "",
