@@ -11,6 +11,7 @@ import MyContext from "@/app/context/mycontext";
 import { FaShoppingCart } from 'react-icons/fa'
 import { RxAvatar } from 'react-icons/rx'
 import { checkCustomRoutes } from 'next/dist/lib/load-custom-routes';
+import withAuth from '../../authentication/page';
 
 const ViewMission = ({ params }) => {
 
@@ -276,4 +277,4 @@ const ViewMission = ({ params }) => {
     )
 }
 
-export default ViewMission;
+export default withAuth(ViewMission);

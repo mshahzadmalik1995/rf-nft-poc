@@ -17,7 +17,6 @@ import {
     FormLabel,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { AuthContext } from "@/app/context/authcontext";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -75,7 +74,7 @@ const Login = () => {
             if (response.status === 200) {
                 setStatus('success')
                 userUpdateValue(data.user)
-                login();
+                localStorage.setItem('isAuthenticated', true);
                 if (data.user.isShowReward !== null && data.user.isShowReward === true) {
                     router.push("/components/reward")
                 }

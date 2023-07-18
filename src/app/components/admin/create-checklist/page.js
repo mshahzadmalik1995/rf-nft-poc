@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AdminHeader from "../admin-header/page";
 import { useRouter } from 'next/navigation';
 import bgImage from '../../images/image1.jpg'
+import withAuth from "../../authentication/page";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -177,4 +178,4 @@ const CreateNFTForm = () => {
     );
 };
 
-export default CreateNFTForm;
+export default withAuth(CreateNFTForm);
