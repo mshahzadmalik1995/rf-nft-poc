@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import { FaShoppingCart } from 'react-icons/fa'
 import { RxAvatar } from 'react-icons/rx'
+import withAuth from "../authentication/page";
 
 const Reward = () => {
     // const [data, setData] = useState(sampleData);
@@ -124,4 +125,4 @@ const Reward = () => {
     )
 }
 
-export default Reward;
+export default withAuth(Reward);

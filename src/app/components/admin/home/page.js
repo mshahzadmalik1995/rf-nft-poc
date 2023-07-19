@@ -6,6 +6,7 @@ import AdminHeader from "../admin-header/page";
 import { useRouter } from 'next/navigation';
 import { makeStyles } from "@material-ui/core/styles";
 import bgImage from '../../images/image1.jpg'
+import withAuth from "../../authentication/page";
 
 const styles = makeStyles((theme) => ({
     root: {
@@ -62,4 +63,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default withAuth(Home);

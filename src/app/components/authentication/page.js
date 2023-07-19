@@ -1,22 +1,23 @@
 "use client"
-import { AuthContext } from '@/app/context/authcontext';
 import { useEffect, useContext } from 'react';
+import { useRouter } from 'next/navigation';
 
 const withAuth = (WrappedComponent) => {
-    return ({ router, ...props }) => {
+    return ({ ...props }) => {
         // Check if user is authenticated, otherwise redirect to login
-        const { isAuthenticated, login, logout } = useContext(AuthContext);
+        const isAuthenticated = localStorage.getItem('isAuthenticated');
+        const router = useRouter();
         useEffect(() => {
-            if (!isAuthenticated && router) {
+            if (!isAuthenticated) {
                 router.push('/components/login');
             }
-        }, [isAuthenticated, router]);
+        }, [isAuthenticated]);
 
         if (!isAuthenticated) {
-            return <p style={{ textAlign: "center" }}>Not authorized</p>; // Or render a loading state if desired
+            return <p style={{ textAlign: "center" }}>Loading the page..</p>; // Or render a loading state if desired
         }
 
-        return <WrappedComponent {...props} router={router} />;
+        return <WrappedComponent {...props} />;
     };
 };
 

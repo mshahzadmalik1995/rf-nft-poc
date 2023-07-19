@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import NftModal from "./nftModal";
 import bgImage from '../../images/image1.jpg'
 import DatePicker from 'react-datepicker';
+import withAuth from "../../authentication/page";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -349,4 +350,4 @@ const AddMissionForm = () => {
     );
 };
 
-export default AddMissionForm;
+export default withAuth(AddMissionForm);

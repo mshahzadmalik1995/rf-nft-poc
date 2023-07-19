@@ -23,6 +23,7 @@ import Link from "next/link";
 import { useRouter } from 'next/navigation';
 import bgImage from '../images/image1.jpg';
 import homePage from '../home/page.js'
+import withAuth from "../authentication/page";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -268,4 +269,4 @@ const Upload = () => {
     </Container >
   );
 };
-export default Upload;
+export default withAuth(Upload);

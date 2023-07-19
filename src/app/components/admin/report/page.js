@@ -5,6 +5,7 @@ import AdminHeader from "../admin-header/page";
 import { makeStyles } from "@material-ui/core/styles";
 import { useRouter } from 'next/navigation';
 import bgImage from '../../images/image1.jpg'
+import withAuth from "../../authentication/page";
 
 
 const styles = makeStyles((theme) => ({
@@ -146,4 +147,4 @@ const ViewReport = () => {
 };
 
 
-export default ViewReport;
+export default withAuth(ViewReport);

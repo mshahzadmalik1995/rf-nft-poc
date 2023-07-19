@@ -1,19 +1,16 @@
 'use client';
 
-import sampleData from "@/app/data/data";
 import { useEffect, useState, useContext } from "react";
 import React from "react";
 import "react-step-progress-bar/styles.css";
-import { ProgressBar, Step } from "react-step-progress-bar";
 import MissionCard from "../missioncard";
 import Header from "../header/page";
-import MyContext from "@/app/context/mycontext";
 import UserAssociateMissionCard from "../userassociatemissioncard";
 import withAuth from "../authentication/page";
-import { useRouter } from 'next/router';
 
 
-const Home = ({ router }) => {
+
+const Home = () => {
     const [data, setData] = useState();
     const [dataUser, setDataUser] = useState();
     // const [showMyMissions, setShowMyMissions] = useState();
