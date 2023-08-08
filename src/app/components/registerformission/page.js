@@ -105,6 +105,11 @@ const RegisterForMission = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const missionmodifychecklist = missionData
+                                        .missionCheckList
+                                            .filter((item) => item.status === true)
+                                            .map((item) => ({...item, completeStatus:false}));
+        console.log(missionmodifychecklist)
         try {
             const response = await fetch('/api/saveuserassociatemission', {
                 method: 'POST',
@@ -121,8 +126,8 @@ const RegisterForMission = () => {
                     missionName: missionData.missionName,
                     missionDescription: missionData.missionDescription,
                     missionCompleted: false,
-                    missionCheckList: missionData.missionCheckList,
-                    totalMissionChecklistCount: missionData.checkListCount,
+                    missionCheckList: missionmodifychecklist,
+                    totalMissionChecklistCount: missionmodifychecklist.length,
                     missionChecklistCountComplete: 0,
                     missionImageName: missionData.missionImageName,
                     missionImagePath: missionData.missionImagePath,

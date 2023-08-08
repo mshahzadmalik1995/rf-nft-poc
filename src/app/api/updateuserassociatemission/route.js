@@ -10,7 +10,7 @@ export async function POST(req, res) {
         const {missionCheckList, totalMissionChecklistCount} = body;
         let totalComplete = 0;
         missionCheckList.forEach(item => {
-            if(item.status){
+            if(item.completeStatus){
                 totalComplete++;
             }
         })

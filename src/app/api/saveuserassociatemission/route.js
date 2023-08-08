@@ -6,6 +6,8 @@ export async function POST(req, res) {
     try{
         const body = await req.json();
         await dbConnect();
+        console.log(body)
+        console.log(body.missionCheckList)
         await UserAssociateMission.create(body);
         return NextResponse.json({
             message: "user associate mission saved successfully"

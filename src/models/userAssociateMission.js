@@ -66,13 +66,9 @@ const userAssociateMissionSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
-        missionCheckList: [
-            {
-                id: Number,
-                task: String,
-                status: Boolean
-            }
-        ],
+        missionCheckList: {
+            type: ["Mixed"],
+        },
         nftId: {
             type: String,
             required: true

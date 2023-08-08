@@ -34,6 +34,7 @@ const Home = () => {
                 })
                 const data = await response.json()
                 if (Object.keys(data.userMission).length != 0 && response.status === 200) {
+                    setDataUser(data.userMission)
                     data.userMission.forEach((userMission, index) => {
                         missionIdToRemove.push(userMission.missionId)
                     });
@@ -62,14 +63,14 @@ const Home = () => {
                 const missionData = data.mission;
                 if (Object.keys(data.mission.length != 0)) {
                     const filterData = missionData.filter((item) => !missionIdToRemove.includes(item._id));
-                    const userMissions = missionData.filter((item) => missionIdToRemove.includes(item._id));
+                    //const userMissions = missionData.filter((item) => missionIdToRemove.includes(item._id));
                     console.log(`missionIdToRemove ${missionIdToRemove}`)
                     console.log(`filterData ${filterData}`)
                     //setData(data.mission);
                     if (filterData.length == 0) {
                         setShowMissions(false);
                     }
-                    setDataUser(userMissions)
+                 //   setDataUser(userMissions)
                     setData(filterData)
                     console.log("inside if block. filtered JSON:", data.mission)
                 } else {
@@ -107,7 +108,7 @@ const Home = () => {
                 <div className="flex flex-wrap p-2 gap-2 mt-2">
                     {
                         data && data.map((value, index) => {
-                            return <MissionCard props={value} key={index} />
+                             return  <MissionCard props={value} key={index} />
                         })
                     }
                 </div>
