@@ -36,7 +36,7 @@ const UserAssociateMissionCard = ({ props }) => {
         const calculateProgress = () => {
             let ctr = 0;
             for (let j = 0; j < missionCheckList.length; j++) {
-                if (missionCheckList[j].status) {
+                if (missionCheckList[j].completeStatus) {
                     ctr++;
                 }
             }
@@ -57,7 +57,7 @@ const UserAssociateMissionCard = ({ props }) => {
         router.push(`/components/viewmission/${missionId}?missionCode=${missionCode}`)
     }
     return (
-        <div className="flex flex-col p-2 mt-2">
+      !isGray &&  <div className="flex flex-col p-2 mt-2">
             <h1 className="text-lg text-red-500 ">{`Mission ${missionCode}`}
                 <span style={{ float: 'right', color: 'black' }}>{`${progressStatus} Completed`}</span>
             </h1>

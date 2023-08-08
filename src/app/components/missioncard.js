@@ -30,6 +30,7 @@ const MissionCard = ({ props }) => {
     const [progressStatus, setProgressStatus] = useState(null);
     const today = new Date();
     const isGray = new Date(endDate) < today;
+    const [isShow, setIsShow] = useState(isGray);
 
     /* useEffect(() => {
  
@@ -60,7 +61,7 @@ const MissionCard = ({ props }) => {
         router.push(`/components/viewmission/${_id}?missionCode=${missionCode}`)
     }
     return (
-        <div className="flex flex-col p-2 mt-2">
+          !isShow && <div className="flex flex-col p-2 mt-2">
             <h1 className="text-lg text-red-500 ">{`Mission ${missionCode}`} </h1>
             <div className="relative w-96 h-50 p-1 mt-1">
                 <div className="absolute inset-0 h-50 rounded-lg">
@@ -86,7 +87,8 @@ const MissionCard = ({ props }) => {
                 </div>
                 <br></br>
             </div>
-        </div>
+        </div> 
+    
     )
 }
 

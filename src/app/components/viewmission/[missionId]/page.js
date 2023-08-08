@@ -142,7 +142,8 @@ const ViewMission = ({ params }) => {
         console.log(`id ${id}`);
         const isChecked = event.target.checked;
         console.log(`isChecked ${isChecked}`)
-        setUpdatedUserCheckListData(prevData => prevData.map(obj => obj.id === id ? { ...obj, status: isChecked } : obj));
+        console.log(updatedUserCheckListData)
+        setUpdatedUserCheckListData(prevData => prevData.map(obj => obj._id === id ? { ...obj, completeStatus: isChecked } : obj));
         console.log(updatedUserCheckListData)
     }
 
@@ -239,13 +240,18 @@ const ViewMission = ({ params }) => {
                 {checkUserAssociate == false ? missionData.missionCheckList && <div className="flex flex-col gap-2">
                     {
                         missionData.missionCheckList.map((value, index) => {
+                           if(value.name) {
                             return <MissionCheckList props={value} key={index} />
+                           }
                         })
                     }
                 </div> : userAssociateMissionData.missionCheckList && <div className="flex flex-col gap-2">
                     {
                         userAssociateMissionData.missionCheckList.map((value, index) => {
-                            return <MissionCheckListForRegisterUser value={value} key={index} handleCheckboxChange={handleCheckboxChange} />
+                            if(value.name) {
+                                return <MissionCheckListForRegisterUser value={value} key={index} handleCheckboxChange={handleCheckboxChange} />
+                            }
+                            //return <MissionCheckListForRegisterUser value={value} key={index} handleCheckboxChange={handleCheckboxChange} />
 
                             // return <MissionCheckListForRegisterUser value={value} key={index}/>
                         })
