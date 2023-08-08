@@ -5,6 +5,7 @@ import { BsFillDatabaseFill } from 'react-icons/bs'
 import MyContext from "@/app/context/mycontext";
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 const Header = () => {
 
 
@@ -26,6 +27,7 @@ const Header = () => {
         router.push("/");
         console.log('Logged out');
     };
+
 
     useEffect(() => {
         const userLoginData = localStorage.getItem("myUserState");
@@ -92,7 +94,9 @@ const Header = () => {
                             <img src="/token2.jpg" alt="background image" className="absolute top-0 left-8   w-12 h-12 rounded-full" />
                             <img src="/token2.jpg" alt="background image" className="absolute top-0 left-12   w-12 h-12 rounded-full" />
                         </div>
-                        <p className="ml-3 text-sm text-white border bg-transparent p-1 rounded-2xl">{userNftData && userNftData.length} NFT Tokens</p>
+                        <Link title='Click here to claim nft' href={"/components/claimnft"}>
+                            <p className="ml-3 text-sm text-white border bg-transparent p-1 rounded-2xl">{userNftData && userNftData.length} NFT Tokens</p>
+                        </Link>
                     </div>
                     <div className="flex gap-2 items-center">
                         <div className="border rounded-full  p-2">

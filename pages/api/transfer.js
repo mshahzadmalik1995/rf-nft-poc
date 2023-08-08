@@ -33,7 +33,7 @@ async function getUserAssociateMissionData(req, res) {
             const contractAddress = userAssociateMissionData.nftAddress;
 
             if (userAssociateMissionData.missionCompleted) {
-                transferNFT(contractAddress, cryptoAddress, tokenId, userAssociateMissionData.missionId, userAssociateMissionData.userId, res);
+                await transferNFT(contractAddress, cryptoAddress, tokenId, userAssociateMissionData.missionId, userAssociateMissionData.userId, res);
             } else {
                 return res.status(500).json(`Mission completion status pending`);
             }
