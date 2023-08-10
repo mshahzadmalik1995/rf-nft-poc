@@ -13,7 +13,7 @@ export default async function transferNFT(req, res) {
         console.log("Execution Completed at:", new Date());
     });
 
-    await getUserAssociateMissionData(req, res);
+   // await getUserAssociateMissionData(req, res);
 }
 
 async function getUserAssociateMissionData(req, res) {
