@@ -54,7 +54,7 @@ const ViewReport = () => {
                     for (let i = 0; i < data.userMission.length; i++) {
                         let ctr = 0;
                         for (let j = 0; j < data.userMission[i].missionCheckList.length; j++) {
-                            if (data.userMission[i].missionCheckList[j].status) {
+                            if (data.userMission[i].missionCheckList[j].completeStatus) {
                                 ctr++;
                             }
                         }
