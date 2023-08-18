@@ -28,7 +28,7 @@ const userAssociateMissionSchema = new mongoose.Schema(
         },
         missionCode: {
             type: String,
-            required: true
+            required: false
         },
         missionName: {
             type: String,
@@ -84,7 +84,15 @@ const userAssociateMissionSchema = new mongoose.Schema(
         isNFTRewarded: {
             type: Boolean,
             required: false
-        }
+        },
+        startDate: {
+          type: Date,
+          required: false,
+        },
+        endDate: {
+          type: Date,
+          required: false,
+        },
 
     }, {
     timestamps: true,
